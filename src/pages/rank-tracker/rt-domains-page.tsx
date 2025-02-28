@@ -15,12 +15,21 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useDebounceValue } from "usehooks-ts";
 import { getErrorMessage } from "../../utils/get-error-message.ts";
 import { RequestAxiosError } from "../../types";
+import Pagination from "../../components/pagination.tsx";
+import { domainNameValidator } from "../../utils/domain-name-validator.ts";
 
 const validationSchema = z.object({
-  domain: z.string().nonempty({
-    message: "This field is required",
-  }),
+  domain: z
+    .string()
+    .nonempty({
+      message: "This field is required",
+    })
+    .refine((value) => domainNameValidator(value), {
+      message: "Invalid domain name",
+    }),
 });
+
+const PER_PAGE = 30;
 
 function RtDomainsPage() {
   const [addDomainModalOpen, setAddDomainModalOpen] = useState(false);
@@ -77,6 +86,16 @@ function RtDomainsPage() {
     await refetch();
   };
 
+  const handleNextPage = async () => {
+    setPage(page + 1);
+    await refetch();
+  };
+
+  const handlePrevPage = async () => {
+    setPage(page - 1);
+    await refetch();
+  };
+
   useEffect(() => {
     if (isError) {
       toast.error("Ups! Something went wrong");
@@ -105,11 +124,22 @@ function RtDomainsPage() {
       </div>
 
       {domains?.userTotal ? (
-        <DomainsTable
-          className={"mt-4"}
-          domains={domains?.data ?? []}
-          onDeleted={handleDeleted}
-        />
+        <>
+          <DomainsTable
+            className={"mt-4"}
+            domains={domains?.data ?? []}
+            onDeleted={handleDeleted}
+          />
+          <div className={"mt-4 flex justify-end"}>
+            <Pagination
+              page={page}
+              total={domains.total}
+              perPage={PER_PAGE}
+              onPrevPage={handlePrevPage}
+              onNextPage={handleNextPage}
+            />
+          </div>
+        </>
       ) : (
         ""
       )}
