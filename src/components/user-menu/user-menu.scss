@@ -1,0 +1,32 @@
+$avatar-bg: gray;
+$avatar-text-color: white;
+$menu-width: 300px;
+$menu-bg: #fff;
+
+.user-menu {
+  position: relative;
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $avatar-bg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $avatar-text-color;
+    cursor: pointer;
+  }
+
+  &__menu {
+    position: absolute;
+    width: $menu-width;
+    background: $menu-bg;
+    right: 0;
+    height: 100px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+
+}
