@@ -5,9 +5,10 @@ import KeywordsTableRow from "./keywords-table-row.tsx";
 
 type Props = ComponentProps<"div"> & {
   keywords: Keyword[];
+  onDeleted: () => void;
 };
 
-function KeywordsTable({ className, keywords, ...rest }: Props) {
+function KeywordsTable({ className, keywords, onDeleted, ...rest }: Props) {
   const containerClasses = clsx(className);
 
   return (
@@ -64,7 +65,11 @@ function KeywordsTable({ className, keywords, ...rest }: Props) {
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
           {keywords.map((keyword) => (
-            <KeywordsTableRow key={keyword.keywordId} keyword={keyword} />
+            <KeywordsTableRow
+              key={keyword.keywordId}
+              keyword={keyword}
+              onDeleted={onDeleted}
+            />
           ))}
         </tbody>
       </table>

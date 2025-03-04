@@ -64,6 +64,18 @@ export function useKeywords() {
     return response.data;
   };
 
+  const deleteKeywordFn = async (keywordId: string) => {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_API_URL}/rank-tracker/keywords/${keywordId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
   const createKeywordsQueryOptions = (
     page = 1,
     searchText = "",
@@ -89,5 +101,6 @@ export function useKeywords() {
   return {
     createKeywordsQueryOptions,
     addKeywordFn,
+    deleteKeywordFn,
   };
 }

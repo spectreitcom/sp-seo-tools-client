@@ -108,13 +108,7 @@ function RtKeywordsPage() {
   };
 
   const handleAdded = async () => {
-    setSearchText("");
-    searchParams.set("page", "1");
-    searchParams.set("searchText", "");
-    searchParams.set("device", "");
-    searchParams.set("searchEngineId", "");
-    searchParams.set("domainId", "");
-    setSearchParams(searchParams);
+    resetFilters();
     await refetch();
   };
 
@@ -126,6 +120,20 @@ function RtKeywordsPage() {
     searchParams.set("domainId", filter.domainId);
     setSearchParams(searchParams);
     setSearchText(filter.searchText);
+  };
+
+  const handleDeleted = async () => {
+    resetFilters();
+    await refetch();
+  };
+
+  const resetFilters = () => {
+    setSearchText("");
+    searchParams.set("page", "1");
+    searchParams.set("searchText", "");
+    searchParams.set("device", "");
+    searchParams.set("searchEngineId", "");
+    searchParams.set("domainId", "");
   };
 
   useEffect(() => {
@@ -157,7 +165,11 @@ function RtKeywordsPage() {
 
       {keywords?.userTotal ? (
         <>
-          <KeywordsTable keywords={keywords.data} className={"mt-4"} />
+          <KeywordsTable
+            keywords={keywords.data}
+            className={"mt-4"}
+            onDeleted={handleDeleted}
+          />
           <div className={"mt-4 flex justify-end"}>
             <Pagination
               page={getPage()}

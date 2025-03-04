@@ -1,12 +1,38 @@
-import { Keyword } from "../hooks";
+import { Keyword, useKeywords } from "../hooks";
 import IconButton from "./icon-button.tsx";
 import { TrashIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
+import Alert from "./alert.tsx";
+import { useMutation } from "@tanstack/react-query";
+import { RequestAxiosError } from "../types";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../utils/get-error-message.ts";
 
 type Props = {
   keyword: Keyword;
+  onDeleted: () => void;
 };
 
-function KeywordsTableRow({ keyword }: Props) {
+function KeywordsTableRow({ keyword, onDeleted }: Props) {
+  const [showAlert, setShowAlert] = useState(false);
+  const { deleteKeywordFn } = useKeywords();
+
+  const { isPending, mutate } = useMutation({
+    mutationFn: deleteKeywordFn,
+    onSuccess: () => {
+      toast.success("Keyword was removed successfully");
+      setShowAlert(false);
+      onDeleted();
+    },
+    onError: (error: RequestAxiosError) => {
+      toast.error(getErrorMessage(error));
+    },
+  });
+
+  const handleConfirm = () => {
+    mutate(keyword.keywordId);
+  };
+
   return (
     <tr>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
@@ -31,19 +57,17 @@ function KeywordsTableRow({ keyword }: Props) {
         <IconButton
           size={"sm"}
           color={"danger"}
-          onClick={() => {}}
+          onClick={() => setShowAlert(true)}
           icon={<TrashIcon className={"size-4"} />}
         />
-        {/*<Alert*/}
-        {/*    open={showAlert}*/}
-        {/*    onClose={() => setShowAlert(false)}*/}
-        {/*    onConfirm={handleConfirm}*/}
-        {/*    title={"Delete domain"}*/}
-        {/*    description={*/}
-        {/*        "Removing domain will delete all keywords associated with it and other associated data."*/}
-        {/*    }*/}
-        {/*    loading={isPending}*/}
-        {/*/>*/}
+        <Alert
+          open={showAlert}
+          onClose={() => setShowAlert(false)}
+          onConfirm={handleConfirm}
+          title={"Delete keyword"}
+          description={"Removing keyword will delete all associated data."}
+          loading={isPending}
+        />
       </td>
     </tr>
   );
