@@ -132,7 +132,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
           <Select
             label={"Domain"}
             value={value}
-            onChange={onChange}
+            onChange={(option) => onChange(option.value)}
             error={error?.message}
             options={
               domains?.data.map((domain) => ({
@@ -165,7 +165,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             className={"mt-4"}
             label={"Search engine"}
             value={value}
-            onChange={onChange}
+            onChange={(option) => onChange(option.value)}
             options={
               searchEngines?.map((searchEngine) => ({
                 value: searchEngine.searchEngineId,
@@ -184,7 +184,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             className={"mt-4"}
             label={"Localization"}
             value={value}
-            onChange={onChange}
+            onChange={(option) => onChange(option.value)}
             options={
               localizations?.map((localization) => ({
                 label: localization.name,
@@ -205,7 +205,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             className={"mt-4"}
             options={devices ?? []}
             value={value}
-            onChange={onChange}
+            onChange={(option) => onChange(option.value)}
             placeholder={"Some placeholder"}
             error={error?.message}
           />

@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider } from "react-router";
 import router from "./router.tsx";
 import { Toaster } from "react-hot-toast";
@@ -18,6 +17,6 @@ createRoot(document.getElementById("root")!).render(
         <Toaster />
       </StrictMode>
     </GoogleOAuthProvider>
-    <ReactQueryDevtools initialIsOpen={false} />
+    {/*<ReactQueryDevtools initialIsOpen={false} />*/}
   </QueryClientProvider>,
 );

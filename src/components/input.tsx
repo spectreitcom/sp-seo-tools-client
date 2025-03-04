@@ -22,12 +22,12 @@ function Input({ disabled, className, label, error, ...rest }: Props) {
       {label && (
         <label
           htmlFor={id}
-          className="block text-sm/6 font-medium text-gray-900"
+          className="block text-sm/6 font-medium text-gray-900 mb-2"
         >
           {label}
         </label>
       )}
-      <div className="mt-2 grid grid-cols-1">
+      <div className="grid grid-cols-1">
         <input id={id} className={classes} disabled={disabled} {...rest} />
         {error && (
           <ExclamationCircleIcon

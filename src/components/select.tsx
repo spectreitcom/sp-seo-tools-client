@@ -43,7 +43,7 @@ function DropdownIcon() {
 }
 
 type Props<T> = {
-  value: T | null | undefined;
+  value: T | null | undefined | string;
   onChange: (value: T) => void;
   label?: string;
   className?: string;
@@ -71,7 +71,7 @@ function Select<T extends SelectOption>({
       return (
         <ListboxOption
           key={option.value}
-          value={option.value}
+          value={option}
           className={clsx(
             // Basic layout
             "group/option grid cursor-pointer grid-cols-[--spacing(5)_1fr] items-baseline gap-x-2 py-2.5 pr-3.5 pl-2 sm:grid-cols-[--spacing(4)_1fr] sm:py-1.5 sm:pr-3 sm:pl-1.5",
@@ -133,7 +133,7 @@ function Select<T extends SelectOption>({
           </ListboxButton>
           <ListboxOptions
             className={clsx(
-              "shadow rounded-md overflow-hidden absolute right-0 left-0 bg-white",
+              "shadow rounded-md absolute right-0 left-0 bg-white max-h-36 z-10 overflow-scroll",
             )}
           >
             {renderOptions()}

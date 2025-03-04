@@ -20,7 +20,7 @@ function InputWithInlineAddon({
   const id = useId();
 
   const classes = clsx(
-    "flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600",
+    "h-10 flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600",
     error &&
       "outline-red-300 focus:outline-red-600 placeholder:text-red-300 focus-within:outline-red-600",
   );
@@ -30,12 +30,12 @@ function InputWithInlineAddon({
       {label && (
         <label
           htmlFor={id}
-          className="block text-sm/6 font-medium text-gray-900"
+          className="block text-sm/6 font-medium text-gray-900 mb-2"
         >
           {label}
         </label>
       )}
-      <div className="mt-2">
+      <div>
         <div className={classes}>
           {leadingAddon && (
             <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">

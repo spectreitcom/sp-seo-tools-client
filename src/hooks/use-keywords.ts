@@ -26,7 +26,13 @@ export type CreateKeywordPayload = {
 export function useKeywords() {
   const { getAccessToken } = useAuth();
 
-  const retrieveDomainsFn = async (page: number, searchText: string) => {
+  const retrieveDomainsFn = async (
+    page: number,
+    searchText: string,
+    device: string,
+    searchEngineId: string,
+    domainId: string,
+  ) => {
     const response = await axios.get<CollectionData<Keyword>>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords`,
       {
@@ -36,6 +42,9 @@ export function useKeywords() {
         params: {
           page,
           searchText,
+          device,
+          searchEngineId,
+          domainId,
         },
       },
     );
@@ -58,11 +67,22 @@ export function useKeywords() {
   const createKeywordsQueryOptions = (
     page = 1,
     searchText = "",
+    device = "",
+    searchEngineId = "",
+    domainId = "",
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
-      queryFn: () => retrieveDomainsFn(page, searchText),
-      queryKey: ["keywords", page, searchText],
+      queryFn: () =>
+        retrieveDomainsFn(page, searchText, device, searchEngineId, domainId),
+      queryKey: [
+        "keywords",
+        page,
+        searchText,
+        device,
+        searchEngineId,
+        domainId,
+      ],
       refetchInterval,
     });
 
