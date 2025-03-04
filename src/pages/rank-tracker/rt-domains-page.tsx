@@ -9,7 +9,6 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useDomains } from "../../hooks/use-domains.ts";
 import toast from "react-hot-toast";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useDebounceValue } from "usehooks-ts";
@@ -17,6 +16,7 @@ import { getErrorMessage } from "../../utils/get-error-message.ts";
 import { RequestAxiosError } from "../../types";
 import Pagination from "../../components/pagination.tsx";
 import { domainNameValidator } from "../../utils/domain-name-validator.ts";
+import { useDomains } from "../../hooks";
 
 const validationSchema = z.object({
   domain: z

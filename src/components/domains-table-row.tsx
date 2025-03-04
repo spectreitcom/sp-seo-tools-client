@@ -1,12 +1,12 @@
 import IconButton from "./icon-button.tsx";
 import { TrashIcon } from "@heroicons/react/16/solid";
-import { Domain, useDomains } from "../hooks/use-domains.ts";
 import Alert from "./alert.tsx";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
+import { Domain, useDomains } from "../hooks";
 
 type Props = {
   domain: Domain;
