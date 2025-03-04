@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
-import { Domain } from "../hooks/use-domains.ts";
 import clsx from "clsx";
 import DomainsTableRow from "./domains-table-row.tsx";
+import { Domain } from "../hooks";
 
 type Props = ComponentProps<"div"> & {
   domains: Domain[];

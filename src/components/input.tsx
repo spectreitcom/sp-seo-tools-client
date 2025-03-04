@@ -11,7 +11,7 @@ function Input({ disabled, className, label, error, ...rest }: Props) {
   const id = useId();
 
   const classes = clsx(
-    "col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-10 pl-3 text-base outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:pr-9 sm:text-sm/6 text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600",
+    "h-10 col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-10 pl-3 text-base outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:pr-9 sm:text-sm/6 text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600",
     error &&
       "text-red-900 outline-red-300 focus:outline-red-600 placeholder:text-red-300",
     className,

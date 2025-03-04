@@ -1,13 +1,13 @@
-import { PlusIcon } from "@heroicons/react/16/solid";
 import { ComponentProps } from "react";
 import Button from "./button.tsx";
+import { PlusIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
 
 type Props = ComponentProps<"div"> & {
   onAction: () => void;
 };
 
-function NoDomainsPlaceholder({ className, onAction, ...rest }: Props) {
+function NoKeywordsPlaceholder({ className, onAction, ...rest }: Props) {
   const containerClasses = clsx(
     "text-center py-16 rounded-md bg-gray-100    ",
     className,
@@ -30,18 +30,18 @@ function NoDomainsPlaceholder({ className, onAction, ...rest }: Props) {
           strokeLinejoin="round"
         />
       </svg>
-      <h3 className="mt-2 text-sm font-semibold text-gray-900">No domains</h3>
+      <h3 className="mt-2 text-sm font-semibold text-gray-900">No keywords</h3>
       <p className="mt-1 text-sm text-gray-500">
-        Get started by creating a new domain.
+        Get started by creating a new keyword.
       </p>
       <div className="mt-6 flex justify-center">
         <Button size={"xl"} onClick={onAction}>
           <PlusIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5" />
-          New domain
+          Add keyword
         </Button>
       </div>
     </div>
   );
 }
 
-export default NoDomainsPlaceholder;
+export default NoKeywordsPlaceholder;

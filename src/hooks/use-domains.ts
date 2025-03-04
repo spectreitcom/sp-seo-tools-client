@@ -57,12 +57,14 @@ export function useDomains() {
   const createDomainsQueryOptions = (
     page = 1,
     searchText = "",
+    enabled = true,
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
       queryFn: () => retrieveDomainsFn(page, searchText),
       queryKey: ["domains", page, searchText],
       refetchInterval,
+      enabled,
     });
 
   return {
