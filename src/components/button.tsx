@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import clsx from "clsx";
+import Spinner from "./loader/spinner.tsx";
 
 type Props = ComponentProps<"button"> & {
   size: "xs" | "sm" | "lg" | "xl" | "xxl";
@@ -39,11 +40,18 @@ function Button({
     size === "xxl" && "px-3.5 py-2.5 text-sm",
     block && "w-full",
     className,
+    // disabled state
+    "disabled:opacity-50 disabled:cursor-not-allowed",
   );
 
   return (
     <button className={cssClasses} disabled={disabled || loading} {...rest}>
-      {children}
+      {loading && (
+        <span className={"mr-2"}>
+          <Spinner borderWidth={2} width={15} />
+        </span>
+      )}
+      <span>{children}</span>
     </button>
   );
 }
