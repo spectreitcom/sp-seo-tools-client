@@ -79,6 +79,7 @@ function RtKeywordsPage() {
     data: keywords,
     isError,
     refetch,
+    isLoading,
   } = useQuery(
     createKeywordsQueryOptions(
       getPage(),
@@ -184,7 +185,7 @@ function RtKeywordsPage() {
         ""
       )}
 
-      {!keywords?.userTotal && (
+      {!keywords?.userTotal && !isLoading && (
         <NoKeywordsPlaceholder
           onAction={() => setAddKeywordModalOpen(true)}
           className={"mt-8"}
