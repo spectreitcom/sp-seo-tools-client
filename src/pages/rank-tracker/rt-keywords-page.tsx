@@ -8,8 +8,7 @@ import toast from "react-hot-toast";
 import AddKeywordAsideModal from "../../components/add-keyword-aside-modal.tsx";
 import NoKeywordsPlaceholder from "../../components/no-keywords-placeholder.tsx";
 import Button from "../../components/button.tsx";
-import { useKeywords } from "../../hooks";
-import { useSearchParams } from "react-router";
+import { useKeywords, useKeywordsFilters } from "../../hooks";
 import KeywordsFilters, {
   KeywordsFilter,
 } from "../../components/keywords-filters.tsx";
@@ -19,63 +18,24 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 const PER_PAGE = 30;
 
 function RtKeywordsPage() {
-  const [searchParams, setSearchParams] = useSearchParams({
-    page: "1",
-    searchText: "",
-    device: "",
-    searchEngineId: "",
-    domainId: "",
-  });
-  const [searchText, setSearchText] = useDebounceValue(
-    searchParams.get("searchText"),
-    1000,
-  );
+  const {
+    reset: resetFilters,
+    getPage,
+    updatePage,
+    commit,
+    getSearchText,
+    getDevice,
+    getSearchEngineId,
+    getDomainId,
+    updateDomainId,
+    updateSearchText,
+    updateDevice,
+    updateSearchEngineId,
+  } = useKeywordsFilters();
+
+  const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
   const [addKeywordModalOpen, setAddKeywordModalOpen] = useState(false);
   const { createKeywordsQueryOptions } = useKeywords();
-
-  const getPage = () => {
-    const page = searchParams.get("page");
-    if (!page) {
-      return 1;
-    }
-    const pageNumber = parseInt(page);
-    if (isNaN(pageNumber)) {
-      return 1;
-    }
-    return pageNumber;
-  };
-
-  const getSearchText = () => {
-    const searchText = searchParams.get("searchText");
-    if (!searchText) {
-      return "";
-    }
-    return searchText;
-  };
-
-  const getDevice = () => {
-    const device = searchParams.get("device");
-    if (!device) {
-      return "";
-    }
-    return device;
-  };
-
-  const getSearchEngineId = () => {
-    const searchEngineId = searchParams.get("searchEngineId");
-    if (!searchEngineId) {
-      return "";
-    }
-    return searchEngineId;
-  };
-
-  const getDomainId = () => {
-    const domainId = searchParams.get("domainId");
-    if (!domainId) {
-      return "";
-    }
-    return domainId;
-  };
 
   const {
     data: keywords,
@@ -93,36 +53,28 @@ function RtKeywordsPage() {
   );
 
   const handleNextPage = async () => {
-    searchParams.set("page", (getPage() + 1).toString());
-    searchParams.set("searchText", getSearchText());
-    searchParams.set("device", getDevice());
-    searchParams.set("searchEngineId", getSearchEngineId());
-    searchParams.set("domainId", getDomainId());
-    setSearchParams(searchParams);
+    updatePage(getPage() + 1);
+    commit();
   };
 
   const handlePrevPage = async () => {
-    searchParams.set("page", (getPage() - 1).toString());
-    searchParams.set("searchText", getSearchText());
-    searchParams.set("device", getDevice());
-    searchParams.set("searchEngineId", getSearchEngineId());
-    searchParams.set("domainId", getDomainId());
-    setSearchParams(searchParams);
+    updatePage(getPage() - 1);
+    commit();
   };
 
   const handleAdded = async () => {
-    resetFilters();
+    resetFiltersFn();
     await refetch();
   };
 
   const handleFiltersChange = (filter: KeywordsFilter) => {
-    searchParams.set("searchText", filter.searchText);
-    searchParams.set("page", "1");
-    searchParams.set("device", filter.device);
-    searchParams.set("searchEngineId", filter.searchEngineId);
-    searchParams.set("domainId", filter.domainId);
-    setSearchParams(searchParams);
     setSearchText(filter.searchText);
+    updateSearchText(filter.searchText);
+    updatePage(1);
+    updateDevice(filter.device);
+    updateSearchEngineId(filter.searchEngineId);
+    updateDomainId(filter.domainId);
+    commit();
   };
 
   const handleDeleted = async () => {
@@ -130,14 +82,10 @@ function RtKeywordsPage() {
     await refetch();
   };
 
-  const resetFilters = () => {
+  const resetFiltersFn = () => {
     setSearchText("");
-    searchParams.set("page", "1");
-    searchParams.set("searchText", "");
-    searchParams.set("device", "");
-    searchParams.set("searchEngineId", "");
-    searchParams.set("domainId", "");
-    setSearchParams(searchParams);
+    resetFilters();
+    commit();
   };
 
   const isClearFiltersBtnVisible = () => {
@@ -172,7 +120,7 @@ function RtKeywordsPage() {
           {isClearFiltersBtnVisible() && (
             <div className={"mt-4"}>
               <LinkBtn
-                onClick={resetFilters}
+                onClick={resetFiltersFn}
                 icon={<XMarkIcon className={"size-5"} />}
               >
                 Clear filters

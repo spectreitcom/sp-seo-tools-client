@@ -16,7 +16,9 @@ import { getErrorMessage } from "../../utils/get-error-message.ts";
 import { RequestAxiosError } from "../../types";
 import Pagination from "../../components/pagination.tsx";
 import { domainNameValidator } from "../../utils/domain-name-validator.ts";
-import { useDomains } from "../../hooks";
+import { useDomains, useDomainsFilters } from "../../hooks";
+import LinkBtn from "../../components/link-btn.tsx";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const validationSchema = z.object({
   domain: z
@@ -32,24 +34,31 @@ const validationSchema = z.object({
 const PER_PAGE = 30;
 
 function RtDomainsPage() {
+  const {
+    updateSearchText,
+    getSearchText,
+    commit,
+    reset: resetFilters,
+    updatePage,
+    getPage,
+  } = useDomainsFilters();
+
   const [addDomainModalOpen, setAddDomainModalOpen] = useState(false);
   const { createDomainsQueryOptions, addDomainFn } = useDomains();
-  const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useDebounceValue("", 1000);
+  const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
 
   const {
     data: domains,
     refetch,
     isError,
-  } = useQuery(createDomainsQueryOptions(page, searchText));
+  } = useQuery(createDomainsQueryOptions(getPage(), searchText ?? ""));
 
   const { mutate, isPending } = useMutation({
     mutationFn: addDomainFn,
     onSuccess: async () => {
       toast.success("Domain added successfully");
       close();
-      setPage(1);
-      setSearchText("");
+      resetFiltersFn();
       await refetch();
     },
     onError: (error: RequestAxiosError) => {
@@ -76,24 +85,34 @@ function RtDomainsPage() {
   };
 
   const handleSearchTextChange = (searchText: string) => {
-    setSearchText(searchText);
-    setPage(1);
+    updateSearchText(searchText);
+    reset();
+    commit();
   };
 
   const handleDeleted = async () => {
-    setPage(1);
-    setSearchText("");
+    resetFilters();
     await refetch();
   };
 
   const handleNextPage = async () => {
-    setPage(page + 1);
-    await refetch();
+    updatePage(getPage() + 1);
+    commit();
   };
 
   const handlePrevPage = async () => {
-    setPage(page - 1);
-    await refetch();
+    updatePage(getPage() - 1);
+    commit();
+  };
+
+  const resetFiltersFn = () => {
+    setSearchText("");
+    resetFilters();
+    commit();
+  };
+
+  const isClearFiltersBtnVisible = () => {
+    return !!getSearchText();
   };
 
   useEffect(() => {
@@ -116,12 +135,24 @@ function RtDomainsPage() {
               />
             }
             onChange={(e) => handleSearchTextChange(e.target.value)}
+            value={getSearchText()}
           />
         </div>
         <Button size={"lg"} onClick={() => setAddDomainModalOpen(true)}>
           Add domain
         </Button>
       </div>
+
+      {isClearFiltersBtnVisible() && (
+        <div className={"mt-4"}>
+          <LinkBtn
+            onClick={resetFiltersFn}
+            icon={<XMarkIcon className={"size-5"} />}
+          >
+            Clear filters
+          </LinkBtn>
+        </div>
+      )}
 
       {domains?.userTotal ? (
         <>
@@ -132,7 +163,7 @@ function RtDomainsPage() {
           />
           <div className={"mt-4 flex justify-end"}>
             <Pagination
-              page={page}
+              page={getPage()}
               total={domains.total}
               perPage={PER_PAGE}
               onPrevPage={handlePrevPage}
