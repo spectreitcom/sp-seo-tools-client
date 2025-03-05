@@ -13,6 +13,8 @@ import { useSearchParams } from "react-router";
 import KeywordsFilters, {
   KeywordsFilter,
 } from "../../components/keywords-filters.tsx";
+import LinkBtn from "../../components/link-btn.tsx";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const PER_PAGE = 30;
 
@@ -135,6 +137,15 @@ function RtKeywordsPage() {
     searchParams.set("device", "");
     searchParams.set("searchEngineId", "");
     searchParams.set("domainId", "");
+    setSearchParams(searchParams);
+  };
+
+  const isClearFiltersBtnVisible = () => {
+    const searchText = getSearchText();
+    const device = getDevice();
+    const searchEngineId = getSearchEngineId();
+    const domainId = getDomainId();
+    return searchText || device || searchEngineId || domainId;
   };
 
   useEffect(() => {
@@ -158,6 +169,16 @@ function RtKeywordsPage() {
               domainId: getDomainId(),
             }}
           />
+          {isClearFiltersBtnVisible() && (
+            <div className={"mt-4"}>
+              <LinkBtn
+                onClick={resetFilters}
+                icon={<XMarkIcon className={"size-5"} />}
+              >
+                Clear filters
+              </LinkBtn>
+            </div>
+          )}
         </div>
         <Button size={"lg"} onClick={() => setAddKeywordModalOpen(true)}>
           Add keyword
