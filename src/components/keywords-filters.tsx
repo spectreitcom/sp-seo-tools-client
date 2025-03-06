@@ -1,8 +1,9 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import InputWithInlineAddon from "./input-with-inline-addon.tsx";
-import { useDomains, useRtDevices, useRtSearchEngines } from "../hooks";
+import { useRtDevices, useRtSearchEngines } from "../hooks";
 import { useQuery } from "@tanstack/react-query";
 import Select from "./select-new/select.tsx";
+import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
 
 export type KeywordsFilter = {
   searchText: string;
@@ -19,11 +20,9 @@ type Props = {
 function KeywordsFilters({ onChange, value }: Props) {
   const { createDevicesQueryOptions } = useRtDevices();
   const { createSearchEnginesQueryOptions } = useRtSearchEngines();
-  const { createDomainsQueryOptions } = useDomains();
 
   const { data: devices } = useQuery(createDevicesQueryOptions());
   const { data: searchEngines } = useQuery(createSearchEnginesQueryOptions());
-  const { data: domains } = useQuery(createDomainsQueryOptions());
 
   return (
     <div className={"flex items-center -mx-2"}>
@@ -50,6 +49,7 @@ function KeywordsFilters({ onChange, value }: Props) {
       <div className={"px-2 w-2/12"}>
         <Select
           value={value.searchEngineId}
+          placeholderText={"Search engine"}
           onChange={(option) => {
             onChange({
               searchText: value.searchText,
@@ -67,27 +67,23 @@ function KeywordsFilters({ onChange, value }: Props) {
         />
       </div>
       <div className={"px-2 w-2/12"}>
-        <Select
+        <DomainsAsyncSelect
+          placeholderText={"Domain"}
           value={value.domainId}
-          onChange={(option) => {
+          onChange={(domainId) => {
             onChange({
               searchText: value.searchText,
               device: value.device,
               searchEngineId: value.searchEngineId,
-              domainId: option.value.toString(),
+              domainId,
             });
           }}
-          options={
-            domains?.data?.map((domain) => ({
-              label: domain.domain,
-              value: domain.domainId,
-            })) ?? []
-          }
         />
       </div>
       <div className={"px-2 w-2/12"}>
         <Select
           value={value.device}
+          placeholderText={"Device"}
           onChange={(option) => {
             onChange({
               searchText: value.searchText,

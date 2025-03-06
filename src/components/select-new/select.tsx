@@ -22,6 +22,8 @@ type Props = {
   placeholderText?: string;
   disabled?: boolean;
   onSearch?: (searchText: string) => void;
+  onOpen?: () => void;
+  foundedOption?: Option | null;
 };
 
 function Select({
@@ -40,6 +42,8 @@ function Select({
   disabled,
   onSearch,
   error,
+  onOpen,
+  foundedOption,
 }: Props) {
   const [open, setOpen] = useState(false);
 
@@ -54,6 +58,10 @@ function Select({
   };
 
   useEffect(() => {
+    if (open) {
+      onOpen?.();
+    }
+
     searchInputRef.current?.focus();
 
     const handleClick = (e: MouseEvent) => {
@@ -79,7 +87,7 @@ function Select({
       <div className={clsx("relative w-full")}>
         <SelectHeader
           onClick={() => setOpen((prev) => !prev)}
-          option={findOption(value, options)}
+          option={foundedOption ? foundedOption : findOption(value, options)}
           clearable={clearable}
           onClear={() => {
             onClear?.();

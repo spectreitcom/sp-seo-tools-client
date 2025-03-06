@@ -54,6 +54,18 @@ export function useDomains() {
     return response.data;
   };
 
+  const retrieveDomainFn = async (domainId: string) => {
+    const response = await axios.get<Domain>(
+      `${import.meta.env.VITE_API_URL}/rank-tracker/domains/${domainId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
   const createDomainsQueryOptions = (
     page = 1,
     searchText = "",
@@ -67,9 +79,22 @@ export function useDomains() {
       enabled,
     });
 
+  const createDomainQueryOptions = (
+    domainId = "",
+    enabled = true,
+    refetchInterval: false | number = false,
+  ) =>
+    queryOptions({
+      queryFn: () => retrieveDomainFn(domainId),
+      queryKey: ["domain", domainId],
+      refetchInterval,
+      enabled,
+    });
+
   return {
     createDomainsQueryOptions,
     addDomainFn,
     removeDomainFn,
+    createDomainQueryOptions,
   };
 }

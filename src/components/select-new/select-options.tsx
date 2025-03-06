@@ -45,7 +45,12 @@ const SelectOptions = forwardRef<HTMLInputElement, Props>(
             <input
               ref={ref}
               type="text"
-              className={clsx("w-full", "p-2")}
+              className={clsx(
+                "w-full",
+                "p-2",
+                "text-base text-sm",
+                "outline-none",
+              )}
               placeholder={"Search..."}
               onChange={(e) => onSearch?.(e.target.value)}
             />

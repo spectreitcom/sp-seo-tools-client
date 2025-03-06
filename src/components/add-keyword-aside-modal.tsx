@@ -7,7 +7,6 @@ import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
 import {
-  useDomains,
   useKeywords,
   useRtDevices,
   useRtLocalizations,
@@ -16,6 +15,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./input.tsx";
 import Select from "./select-new/select.tsx";
+import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
 
 type Props = {
   open: boolean;
@@ -55,7 +55,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   const { createSearchEnginesQueryOptions } = useRtSearchEngines();
   const { createDevicesQueryOptions } = useRtDevices();
   const { createLocalizationsQueryOptions } = useRtLocalizations();
-  const { createDomainsQueryOptions } = useDomains();
 
   const { reset, handleSubmit, control } = useForm<
     z.infer<typeof validationSchema>
@@ -71,8 +70,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   });
 
   const searchEngineId = useWatch({ name: "searchEngineId", control });
-
-  const { data: domains } = useQuery(createDomainsQueryOptions(1, "", open));
 
   const { data: searchEngines } = useQuery(
     createSearchEnginesQueryOptions(open),
@@ -129,17 +126,11 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     >
       <Controller
         render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Select
+          <DomainsAsyncSelect
             label={"Domain"}
             value={value}
-            onChange={(option) => onChange(option.value)}
+            onChange={(domainId) => onChange(domainId)}
             error={error?.message}
-            options={
-              domains?.data.map((domain) => ({
-                label: domain.domain,
-                value: domain.domainId,
-              })) ?? []
-            }
           />
         )}
         name={"domainId"}
