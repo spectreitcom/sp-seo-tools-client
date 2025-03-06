@@ -1,6 +1,7 @@
 import { ComponentProps, ReactNode, useId } from "react";
 import clsx from "clsx";
 import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
+import Label from "./label.tsx";
 
 type Props = ComponentProps<"input"> & {
   label?: string;
@@ -27,14 +28,7 @@ function InputWithInlineAddon({
 
   return (
     <div>
-      {label && (
-        <label
-          htmlFor={id}
-          className="block text-sm/6 font-medium text-gray-900 mb-2"
-        >
-          {label}
-        </label>
-      )}
+      <Label text={label} />
       <div>
         <div className={classes}>
           {leadingAddon && (

@@ -5,6 +5,7 @@ import SelectOptions from "./select-options.tsx";
 import SelectOption from "./select-option.tsx";
 import { Option, SelectValue } from "./types.ts";
 import { findOption } from "./utils.ts";
+import Label from "../label.tsx";
 
 type Props = {
   error?: string;
@@ -87,11 +88,7 @@ function Select({
 
   return (
     <div ref={containerRef} className={className}>
-      {label && (
-        <label className="block text-sm/6 font-medium text-gray-900 mb-2">
-          {label}
-        </label>
-      )}
+      <Label text={label} />
       <div className={clsx("relative w-full")}>
         <SelectHeader
           ref={selectHeaderRef}
