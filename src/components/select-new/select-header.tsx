@@ -3,6 +3,7 @@ import SelectDropdownIcon from "./select-dropdown-icon.tsx";
 import { Option } from "./types.ts";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
+import { forwardRef } from "react";
 
 type Props = {
   onClick: () => void;
@@ -14,25 +15,22 @@ type Props = {
   error?: string;
 };
 
-function SelectHeader({
-  onClick,
-  option,
-  clearable,
-  onClear,
-  placeholderText,
-  disabled,
-  error,
-}: Props) {
+const SelectHeader = forwardRef<HTMLDivElement, Props>(function SelectHeader(
+  { onClick, option, clearable, onClear, placeholderText, disabled, error },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       onClick={onClick}
       className={clsx(
-        "min-h-10 rounded-md bg-white py-1.5 pr-3 pl-3 text-base outline-1 sm:text-sm/6 text-gray-900 outline-gray-300 text-left",
+        "h-10 rounded-md bg-white py-1.5 pr-3 pl-3 text-base outline-1 -outline-offset-1 sm:text-sm/6 text-gray-900 outline-gray-300 text-left",
         !disabled && "cursor-pointer",
         "flex justify-between items-center",
         "relative",
         disabled && "opacity-50 pointer-events-none",
         error && "text-red-900 outline-red-600",
+        "data-select-focus:outline-2 data-select-focus:-outline-2 data-select-focus:outline-indigo-600",
       )}
     >
       {!option && placeholderText && (
@@ -59,6 +57,6 @@ function SelectHeader({
       </div>
     </div>
   );
-}
+});
 
 export default SelectHeader;

@@ -51,6 +51,7 @@ function Select({
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const selectHeaderRef = useRef<HTMLDivElement | null>(null);
 
   const handleSelect = (option: Option) => {
     setOpen(false);
@@ -60,13 +61,20 @@ function Select({
   useEffect(() => {
     if (open) {
       onOpen?.();
+      selectHeaderRef.current?.setAttribute("data-select-focus", "");
     }
 
     searchInputRef.current?.focus();
 
     const handleClick = (e: MouseEvent) => {
-      if (open && !containerRef.current?.contains(e.target as Node)) {
+      const contain = containerRef.current?.contains(e.target as Node);
+
+      if (open && !contain) {
         setOpen(false);
+      }
+
+      if (!contain) {
+        selectHeaderRef.current?.removeAttribute("data-select-focus");
       }
     };
 
@@ -86,6 +94,7 @@ function Select({
       )}
       <div className={clsx("relative w-full")}>
         <SelectHeader
+          ref={selectHeaderRef}
           onClick={() => setOpen((prev) => !prev)}
           option={foundedOption ? foundedOption : findOption(value, options)}
           clearable={clearable}
