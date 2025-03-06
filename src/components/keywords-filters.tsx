@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import InputWithInlineAddon from "./input-with-inline-addon.tsx";
 import { useDomains, useRtDevices, useRtSearchEngines } from "../hooks";
 import { useQuery } from "@tanstack/react-query";
-import Select from "./select.tsx";
+import Select from "./select-new/select.tsx";
 
 export type KeywordsFilter = {
   searchText: string;
@@ -54,7 +54,7 @@ function KeywordsFilters({ onChange, value }: Props) {
             onChange({
               searchText: value.searchText,
               device: value.device,
-              searchEngineId: option.value,
+              searchEngineId: option.value.toString(),
               domainId: value.domainId,
             });
           }}
@@ -74,7 +74,7 @@ function KeywordsFilters({ onChange, value }: Props) {
               searchText: value.searchText,
               device: value.device,
               searchEngineId: value.searchEngineId,
-              domainId: option.value,
+              domainId: option.value.toString(),
             });
           }}
           options={
@@ -91,7 +91,7 @@ function KeywordsFilters({ onChange, value }: Props) {
           onChange={(option) => {
             onChange({
               searchText: value.searchText,
-              device: option.value,
+              device: option.value.toString(),
               searchEngineId: value.searchEngineId,
               domainId: value.domainId,
             });

@@ -15,7 +15,7 @@ import {
 } from "../hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./input.tsx";
-import Select from "./select.tsx";
+import Select from "./select-new/select.tsx";
 
 type Props = {
   open: boolean;
@@ -206,7 +206,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             options={devices ?? []}
             value={value}
             onChange={(option) => onChange(option.value)}
-            placeholder={"Some placeholder"}
             error={error?.message}
           />
         )}

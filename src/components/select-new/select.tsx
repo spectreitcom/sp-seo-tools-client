@@ -70,13 +70,13 @@ function Select({
   }, [open]);
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={className}>
       {label && (
         <label className="block text-sm/6 font-medium text-gray-900 mb-2">
           {label}
         </label>
       )}
-      <div className={clsx("relative w-full", className)}>
+      <div className={clsx("relative w-full")}>
         <SelectHeader
           onClick={() => setOpen((prev) => !prev)}
           option={findOption(value, options)}

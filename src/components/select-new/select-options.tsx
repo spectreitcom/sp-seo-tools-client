@@ -37,6 +37,7 @@ const SelectOptions = forwardRef<HTMLInputElement, Props>(
           "w-full",
           "shadow-md",
           "p-2",
+          "z-10",
         )}
       >
         {searchable && (

@@ -54,6 +54,20 @@ type Props<T> = {
   disabled?: boolean;
 };
 
+/**
+ * @deprecated
+ * @param value
+ * @param onChange
+ * @param label
+ * @param className
+ * @param options
+ * @param renderOptionAs
+ * @param placeholder
+ * @param error
+ * @param disabled
+ * @constructor
+ */
+
 function Select<T extends SelectOption>({
   value,
   onChange,
