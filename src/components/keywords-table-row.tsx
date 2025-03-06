@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
+import ReactCountryFlag from "react-country-flag";
 
 type Props = {
   keyword: Keyword;
@@ -42,6 +43,10 @@ function KeywordsTableRow({ keyword, onDeleted }: Props) {
         {keyword.lastIndexedPosition}
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
+        <ReactCountryFlag
+          countryCode={keyword.localizationCountryCode}
+          className={"mr-2"}
+        />
         {keyword.localizationCountryName}
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
