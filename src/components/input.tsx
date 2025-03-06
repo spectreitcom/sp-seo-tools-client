@@ -28,7 +28,13 @@ function Input({ disabled, className, label, error, ...rest }: Props) {
         </label>
       )}
       <div className="grid grid-cols-1">
-        <input id={id} className={classes} disabled={disabled} {...rest} />
+        <input
+          id={id}
+          className={classes}
+          disabled={disabled}
+          {...rest}
+          autoComplete={"off"}
+        />
         {error && (
           <ExclamationCircleIcon
             aria-hidden="true"
