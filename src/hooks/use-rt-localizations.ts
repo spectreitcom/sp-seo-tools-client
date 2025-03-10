@@ -11,9 +11,9 @@ export type RtLocalization = {
 export function useRtLocalizations() {
   const { getAccessToken } = useAuth();
 
-  const retrieveLocalizationsFn = async (searchEngineId: string) => {
+  const retrieveLocalizationsFn = async () => {
     const response = await axios.get<RtLocalization[]>(
-      `${import.meta.env.VITE_API_URL}/rank-tracker/localizations/${searchEngineId}`,
+      `${import.meta.env.VITE_API_URL}/rank-tracker/localizations`,
       {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
@@ -24,13 +24,12 @@ export function useRtLocalizations() {
   };
 
   const createLocalizationsQueryOptions = (
-    searchEngineId: string,
     enabled = true,
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
-      queryFn: () => retrieveLocalizationsFn(searchEngineId),
-      queryKey: ["rtLocalizations", searchEngineId],
+      queryFn: retrieveLocalizationsFn,
+      queryKey: ["rtLocalizations"],
       enabled,
       refetchInterval,
     });

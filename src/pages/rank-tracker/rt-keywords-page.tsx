@@ -25,12 +25,10 @@ function RtKeywordsPage() {
     commit,
     getSearchText,
     getDevice,
-    getSearchEngineId,
     getDomainId,
     updateDomainId,
     updateSearchText,
     updateDevice,
-    updateSearchEngineId,
   } = useKeywordsFilters();
 
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
@@ -47,7 +45,6 @@ function RtKeywordsPage() {
       getPage(),
       searchText ?? "",
       getDevice(),
-      getSearchEngineId(),
       getDomainId(),
     ),
   );
@@ -72,7 +69,6 @@ function RtKeywordsPage() {
     updateSearchText(filter.searchText);
     updatePage(1);
     updateDevice(filter.device);
-    updateSearchEngineId(filter.searchEngineId);
     updateDomainId(filter.domainId);
     commit();
   };
@@ -91,9 +87,8 @@ function RtKeywordsPage() {
   const isClearFiltersBtnVisible = () => {
     const searchText = getSearchText();
     const device = getDevice();
-    const searchEngineId = getSearchEngineId();
     const domainId = getDomainId();
-    return searchText || device || searchEngineId || domainId;
+    return searchText || device || domainId;
   };
 
   useEffect(() => {
@@ -113,7 +108,6 @@ function RtKeywordsPage() {
             value={{
               searchText: getSearchText(),
               device: getDevice(),
-              searchEngineId: getSearchEngineId(),
               domainId: getDomainId(),
             }}
           />

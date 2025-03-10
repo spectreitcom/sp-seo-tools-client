@@ -6,7 +6,6 @@ enum FilterKey {
   PAGE = "page",
   DOMAIN_ID = "domainId",
   DEVICE = "device",
-  SEARCH_ENGINE_ID = "searchEngineId",
 }
 
 export function useKeywordsFilters() {
@@ -14,7 +13,6 @@ export function useKeywordsFilters() {
     page: "1",
     searchText: "",
     device: "",
-    searchEngineId: "",
     domainId: "",
   });
 
@@ -58,20 +56,10 @@ export function useKeywordsFilters() {
     searchParams.set(FilterKey.DEVICE, device);
   };
 
-  const getSearchEngineId = () => {
-    const searchEngineId = searchParams.get(FilterKey.SEARCH_ENGINE_ID);
-    return getFilterValue(searchEngineId);
-  };
-
-  const updateSearchEngineId = (searchEngineId: string) => {
-    searchParams.set(FilterKey.SEARCH_ENGINE_ID, searchEngineId);
-  };
-
   const reset = () => {
     searchParams.set(FilterKey.SEARCH_TEXT, "");
     searchParams.set(FilterKey.PAGE, "1");
     searchParams.set(FilterKey.DEVICE, "");
-    searchParams.set(FilterKey.SEARCH_ENGINE_ID, "");
     searchParams.set(FilterKey.DOMAIN_ID, "");
   };
 
@@ -84,8 +72,6 @@ export function useKeywordsFilters() {
     reset,
     getDevice,
     updateDevice,
-    getSearchEngineId,
-    updateSearchEngineId,
     getDomainId,
     updateDomainId,
   };

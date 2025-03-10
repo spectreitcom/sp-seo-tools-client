@@ -8,7 +8,6 @@ export type Keyword = {
   keywordText: string;
   lastIndexedPosition: number;
   localizationCountryCode: string;
-  searchEngineName: string;
   device: string;
   domain: string;
   localizationCountryName: string;
@@ -18,7 +17,6 @@ export type Keyword = {
 export type CreateKeywordPayload = {
   domainId: string;
   text: string;
-  searchEngineId: string;
   device: string;
   localizationId: string;
 };
@@ -26,11 +24,10 @@ export type CreateKeywordPayload = {
 export function useKeywords() {
   const { getAccessToken } = useAuth();
 
-  const retrieveDomainsFn = async (
+  const retrieveKeywordsFn = async (
     page: number,
     searchText: string,
     device: string,
-    searchEngineId: string,
     domainId: string,
   ) => {
     const response = await axios.get<CollectionData<Keyword>>(
@@ -43,7 +40,6 @@ export function useKeywords() {
           page,
           searchText,
           device,
-          searchEngineId,
           domainId,
         },
       },
@@ -80,21 +76,12 @@ export function useKeywords() {
     page = 1,
     searchText = "",
     device = "",
-    searchEngineId = "",
     domainId = "",
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
-      queryFn: () =>
-        retrieveDomainsFn(page, searchText, device, searchEngineId, domainId),
-      queryKey: [
-        "keywords",
-        page,
-        searchText,
-        device,
-        searchEngineId,
-        domainId,
-      ],
+      queryFn: () => retrieveKeywordsFn(page, searchText, device, domainId),
+      queryKey: ["keywords", page, searchText, device, domainId],
       refetchInterval,
     });
 

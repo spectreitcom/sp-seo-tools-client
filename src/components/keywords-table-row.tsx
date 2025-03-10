@@ -50,9 +50,6 @@ function KeywordsTableRow({ keyword, onDeleted }: Props) {
         {keyword.localizationCountryName}
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
-        {keyword.searchEngineName}
-      </td>
-      <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
         {keyword.deviceName}
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">

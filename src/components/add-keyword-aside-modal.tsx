@@ -1,17 +1,12 @@
 import AsideModal from "./aside-modal.tsx";
 import Button from "./button.tsx";
 import { z } from "zod";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
-import {
-  useKeywords,
-  useRtDevices,
-  useRtLocalizations,
-  useRtSearchEngines,
-} from "../hooks";
+import { useKeywords, useRtDevices, useRtLocalizations } from "../hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./input.tsx";
 import Select from "./select-new/select.tsx";
@@ -33,12 +28,6 @@ const validationSchema = z.object({
   text: z.string().min(1, {
     message: "This field is required",
   }),
-  searchEngineId: z
-    .string()
-    .min(1, {
-      message: "This field is required",
-    })
-    .uuid(),
   device: z.string().min(1, {
     message: "This field is required",
   }),
@@ -52,7 +41,6 @@ const validationSchema = z.object({
 
 function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   const { addKeywordFn } = useKeywords();
-  const { createSearchEnginesQueryOptions } = useRtSearchEngines();
   const { createDevicesQueryOptions } = useRtDevices();
   const { createLocalizationsQueryOptions } = useRtLocalizations();
 
@@ -64,22 +52,13 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
       device: "",
       domainId: "",
       localizationId: "",
-      searchEngineId: "",
     },
     resolver: zodResolver(validationSchema),
   });
 
-  const searchEngineId = useWatch({ name: "searchEngineId", control });
-
-  const { data: searchEngines } = useQuery(
-    createSearchEnginesQueryOptions(open),
-  );
-
   const { data: devices } = useQuery(createDevicesQueryOptions(open));
 
-  const { data: localizations } = useQuery(
-    createLocalizationsQueryOptions(searchEngineId, !!(open && searchEngineId)),
-  );
+  const { data: localizations } = useQuery(createLocalizationsQueryOptions());
 
   const { mutate, isPending } = useMutation({
     mutationFn: addKeywordFn,
@@ -154,25 +133,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <Select
             className={"mt-4"}
-            label={"Search engine"}
-            value={value}
-            onChange={(option) => onChange(option.value)}
-            options={
-              searchEngines?.map((searchEngine) => ({
-                value: searchEngine.searchEngineId,
-                label: searchEngine.name,
-              })) ?? []
-            }
-            error={error?.message}
-          />
-        )}
-        name={"searchEngineId"}
-        control={control}
-      />
-      <Controller
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Select
-            className={"mt-4"}
             label={"Localization"}
             value={value}
             onChange={(option) => onChange(option.value)}
@@ -182,7 +142,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
                 value: localization.localizationId,
               })) ?? []
             }
-            disabled={!localizations?.length}
             error={error?.message}
           />
         )}

@@ -40,13 +40,6 @@ function KeywordsTable({ className, keywords, onDeleted, ...rest }: Props) {
               scope="col"
               className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold whitespace-nowrap text-gray-900 sm:pl-0"
             >
-              Search engine
-            </th>
-
-            <th
-              scope="col"
-              className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold whitespace-nowrap text-gray-900 sm:pl-0"
-            >
               Device
             </th>
 
