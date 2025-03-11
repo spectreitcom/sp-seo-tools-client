@@ -15,7 +15,7 @@ import KeywordsFilters, {
 import LinkBtn from "../../components/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const PER_PAGE = 30;
+const PER_PAGE = 15;
 
 function RtKeywordsPage() {
   const {
@@ -46,6 +46,7 @@ function RtKeywordsPage() {
       searchText ?? "",
       getDevice(),
       getDomainId(),
+      PER_PAGE,
     ),
   );
 
