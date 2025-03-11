@@ -23,7 +23,7 @@ function DomainsAsyncSelect({
   const { createDomainsQueryOptions, createDomainQueryOptions } = useDomains();
   const [searchText, setSearchText] = useDebounceValue("", 500);
   const { data, isLoading } = useQuery(
-    createDomainsQueryOptions(1, searchText ?? ""),
+    createDomainsQueryOptions(1, searchText ?? "", 15),
   );
 
   const { data: domain } = useQuery(

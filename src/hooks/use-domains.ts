@@ -12,7 +12,11 @@ export type Domain = {
 export function useDomains() {
   const { getAccessToken } = useAuth();
 
-  const retrieveDomainsFn = async (page: number, searchText: string) => {
+  const retrieveDomainsFn = async (
+    page: number,
+    searchText: string,
+    take: number,
+  ) => {
     const response = await axios.get<CollectionData<Domain>>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/domains`,
       {
@@ -22,6 +26,7 @@ export function useDomains() {
         params: {
           page,
           searchText,
+          take,
         },
       },
     );
@@ -69,12 +74,13 @@ export function useDomains() {
   const createDomainsQueryOptions = (
     page = 1,
     searchText = "",
+    take = 30,
     enabled = true,
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
-      queryFn: () => retrieveDomainsFn(page, searchText),
-      queryKey: ["domains", page, searchText],
+      queryFn: () => retrieveDomainsFn(page, searchText, take),
+      queryKey: ["domains", page, searchText, take],
       refetchInterval,
       enabled,
     });

@@ -31,7 +31,7 @@ const validationSchema = z.object({
     }),
 });
 
-const PER_PAGE = 30;
+const PER_PAGE = 15;
 
 function RtDomainsPage() {
   const {
@@ -51,7 +51,9 @@ function RtDomainsPage() {
     data: domains,
     refetch,
     isError,
-  } = useQuery(createDomainsQueryOptions(getPage(), searchText ?? ""));
+  } = useQuery(
+    createDomainsQueryOptions(getPage(), searchText ?? "", PER_PAGE),
+  );
 
   const { mutate, isPending } = useMutation({
     mutationFn: addDomainFn,
