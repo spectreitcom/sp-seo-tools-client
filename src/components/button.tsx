@@ -22,7 +22,7 @@ function Button({
   ...rest
 }: Props) {
   const cssClasses = clsx(
-    "rounded-sm font-semibold shadow-xs cursor-pointer flex items-center justify-center",
+    "rounded-sm font-semibold shadow-xs cursor-pointer flex items-center justify-center flex-nowrap",
     !soft &&
       color === "primary" &&
       "hover:bg-indigo-500 focus-visible:outline-indigo-600 bg-indigo-600 text-white",
@@ -51,7 +51,7 @@ function Button({
           <Spinner borderWidth={2} width={15} />
         </span>
       )}
-      <span>{children}</span>
+      {children}
     </button>
   );
 }
