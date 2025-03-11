@@ -14,6 +14,7 @@ import KeywordsFilters, {
 } from "../../components/keywords-filters.tsx";
 import LinkBtn from "../../components/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import AvailableKeywordsQuantity from "../../components/available-keywords-quantity.tsx";
 
 const PER_PAGE = 15;
 
@@ -33,7 +34,10 @@ function RtKeywordsPage() {
 
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
   const [addKeywordModalOpen, setAddKeywordModalOpen] = useState(false);
-  const { createKeywordsQueryOptions } = useKeywords();
+  const {
+    createKeywordsQueryOptions,
+    createAvailableKeywordsQuantityQueryOptions,
+  } = useKeywords();
 
   const {
     data: keywords,
@@ -50,6 +54,11 @@ function RtKeywordsPage() {
     ),
   );
 
+  const {
+    data: availableKeywordsQuantity,
+    refetch: refetchAvailableKeywordsQuantity,
+  } = useQuery(createAvailableKeywordsQuantityQueryOptions());
+
   const handleNextPage = async () => {
     updatePage(getPage() + 1);
     commit();
@@ -63,6 +72,7 @@ function RtKeywordsPage() {
   const handleAdded = async () => {
     resetFiltersFn();
     await refetch();
+    await refetchAvailableKeywordsQuantity();
   };
 
   const handleFiltersChange = (filter: KeywordsFilter) => {
@@ -77,6 +87,7 @@ function RtKeywordsPage() {
   const handleDeleted = async () => {
     resetFilters();
     await refetch();
+    await refetchAvailableKeywordsQuantity();
   };
 
   const resetFiltersFn = () => {
@@ -101,6 +112,10 @@ function RtKeywordsPage() {
   return (
     <div>
       <PageTitle title={"Keywords"} />
+
+      <div className={"mt-8"}>
+        <AvailableKeywordsQuantity data={availableKeywordsQuantity} />
+      </div>
 
       <div className={"mt-8 flex justify-between items-center"}>
         <div className={"grow"}>

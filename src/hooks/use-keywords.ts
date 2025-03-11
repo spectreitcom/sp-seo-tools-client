@@ -14,6 +14,12 @@ export type Keyword = {
   deviceName: string;
 };
 
+export type AvailableKeywordsQuantity = {
+  maxKeywordsQuantity: number;
+  usedKeywordsQuantity: number;
+  exceeded: boolean;
+};
+
 export type CreateKeywordPayload = {
   domainId: string;
   text: string;
@@ -74,6 +80,18 @@ export function useKeywords() {
     return response.data;
   };
 
+  const retrieveAvailableKeywordsQuantityFn = async () => {
+    const response = await axios.get<AvailableKeywordsQuantity>(
+      `${import.meta.env.VITE_API_URL}/rank-tracker/keywords/available-quantity`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
   const createKeywordsQueryOptions = (
     page = 1,
     searchText = "",
@@ -89,9 +107,21 @@ export function useKeywords() {
       refetchInterval,
     });
 
+  const createAvailableKeywordsQuantityQueryOptions = (
+    enabled = true,
+    refetchInterval: false | number = false,
+  ) =>
+    queryOptions({
+      queryFn: retrieveAvailableKeywordsQuantityFn,
+      queryKey: ["availableKeywordsQuantity"],
+      refetchInterval,
+      enabled,
+    });
+
   return {
     createKeywordsQueryOptions,
     addKeywordFn,
     deleteKeywordFn,
+    createAvailableKeywordsQuantityQueryOptions,
   };
 }

@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./input.tsx";
 import Select from "./select-new/select.tsx";
 import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
+import MessageBox from "./message-box.tsx";
 
 type Props = {
   open: boolean;
@@ -43,6 +44,11 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   const { addKeywordFn } = useKeywords();
   const { createDevicesQueryOptions } = useRtDevices();
   const { createLocalizationsQueryOptions } = useRtLocalizations();
+  const { createAvailableKeywordsQuantityQueryOptions } = useKeywords();
+
+  const { data: availableKeywordsQuantity } = useQuery(
+    createAvailableKeywordsQuantityQueryOptions(open),
+  );
 
   const { reset, handleSubmit, control } = useForm<
     z.infer<typeof validationSchema>
@@ -97,12 +103,24 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             className={"w-32"}
             loading={isPending}
             onClick={submit}
+            disabled={
+              availableKeywordsQuantity && availableKeywordsQuantity.exceeded
+            }
           >
             Save
           </Button>
         </div>
       }
     >
+      {availableKeywordsQuantity && availableKeywordsQuantity.exceeded && (
+        <div className={"mb-4"}>
+          <MessageBox
+            severity={"warning"}
+            text={"You exceeded the limit of available keywords to add"}
+          />
+        </div>
+      )}
+
       <Controller
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <DomainsAsyncSelect
