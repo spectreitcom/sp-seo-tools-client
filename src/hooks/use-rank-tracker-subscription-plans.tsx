@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useAuth } from "./use-auth.tsx";
 import { queryOptions } from "@tanstack/react-query";
+import axiosInstance from "../axios.ts";
 
 export type SubscriptionPlan = {
   subscriptionId: string;
@@ -14,7 +14,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   const { getAccessToken } = useAuth();
 
   const retrievePlansFn = async () => {
-    const response = await axios.get<SubscriptionPlan[]>(
+    const response = await axiosInstance.get<SubscriptionPlan[]>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/subscriptions`,
       {
         headers: {
@@ -26,7 +26,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   };
 
   const retrieveCurrenPlanFn = async () => {
-    const response = await axios.get<SubscriptionPlan>(
+    const response = await axiosInstance.get<SubscriptionPlan>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/current-plan`,
       {
         headers: {

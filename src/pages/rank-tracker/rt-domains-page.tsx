@@ -61,6 +61,7 @@ function RtDomainsPage() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: addDomainFn,
+    retry: 4,
     onSuccess: async () => {
       toast.success("Domain added successfully");
       close();

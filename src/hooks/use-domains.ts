@@ -1,7 +1,7 @@
 import { useAuth } from "./use-auth.tsx";
-import axios from "axios";
 import { CollectionData } from "../types";
 import { queryOptions } from "@tanstack/react-query";
+import axiosInstance from "../axios.ts";
 
 export type Domain = {
   domainId: string;
@@ -17,7 +17,7 @@ export function useDomains() {
     searchText: string,
     take: number,
   ) => {
-    const response = await axios.get<CollectionData<Domain>>(
+    const response = await axiosInstance.get<CollectionData<Domain>>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/domains`,
       {
         headers: {
@@ -35,7 +35,7 @@ export function useDomains() {
   };
 
   const addDomainFn = async (domain: string) => {
-    const response = await axios.post<{ domain: string }>(
+    const response = await axiosInstance.post<{ domain: string }>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/domains`,
       { domain },
       {
@@ -48,7 +48,7 @@ export function useDomains() {
   };
 
   const removeDomainFn = async (domainId: string) => {
-    const response = await axios.delete(
+    const response = await axiosInstance.delete(
       `${import.meta.env.VITE_API_URL}/rank-tracker/domains/${domainId}`,
       {
         headers: {
@@ -60,7 +60,7 @@ export function useDomains() {
   };
 
   const retrieveDomainFn = async (domainId: string) => {
-    const response = await axios.get<Domain>(
+    const response = await axiosInstance.get<Domain>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/domains/${domainId}`,
       {
         headers: {

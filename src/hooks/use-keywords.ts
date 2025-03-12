@@ -1,7 +1,7 @@
 import { useAuth } from "./use-auth.tsx";
-import axios from "axios";
 import { queryOptions } from "@tanstack/react-query";
 import { CollectionData } from "../types";
+import axiosInstance from "../axios.ts";
 
 export type Keyword = {
   keywordId: string;
@@ -37,7 +37,7 @@ export function useKeywords() {
     domainId: string,
     take: number,
   ) => {
-    const response = await axios.get<CollectionData<Keyword>>(
+    const response = await axiosInstance.get<CollectionData<Keyword>>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords`,
       {
         headers: {
@@ -56,7 +56,7 @@ export function useKeywords() {
   };
 
   const addKeywordFn = async (payload: CreateKeywordPayload) => {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords`,
       payload,
       {
@@ -69,7 +69,7 @@ export function useKeywords() {
   };
 
   const deleteKeywordFn = async (keywordId: string) => {
-    const response = await axios.delete(
+    const response = await axiosInstance.delete(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords/${keywordId}`,
       {
         headers: {
@@ -81,7 +81,7 @@ export function useKeywords() {
   };
 
   const retrieveAvailableKeywordsQuantityFn = async () => {
-    const response = await axios.get<AvailableKeywordsQuantity>(
+    const response = await axiosInstance.get<AvailableKeywordsQuantity>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords/available-quantity`,
       {
         headers: {

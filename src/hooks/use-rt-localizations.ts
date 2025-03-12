@@ -1,6 +1,6 @@
 import { useAuth } from "./use-auth.tsx";
-import axios from "axios";
 import { queryOptions } from "@tanstack/react-query";
+import axiosInstance from "../axios.ts";
 
 export type RtLocalization = {
   localizationId: string;
@@ -12,7 +12,7 @@ export function useRtLocalizations() {
   const { getAccessToken } = useAuth();
 
   const retrieveLocalizationsFn = async () => {
-    const response = await axios.get<RtLocalization[]>(
+    const response = await axiosInstance.get<RtLocalization[]>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/localizations`,
       {
         headers: {

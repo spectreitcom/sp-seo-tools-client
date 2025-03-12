@@ -1,5 +1,5 @@
 import { useAuth } from "./use-auth.tsx";
-import axios from "axios";
+import axiosInstance from "../axios.ts";
 
 export type CreateCheckoutSessionResponse = {
   sessionUrl: string;
@@ -13,7 +13,7 @@ export const useRankTrackerStripe = () => {
   const { getAccessToken } = useAuth();
 
   const createCheckoutSession = async (subscriptionId: string) => {
-    const response = await axios.post<CreateCheckoutSessionResponse>(
+    const response = await axiosInstance.post<CreateCheckoutSessionResponse>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/create-checkout-session`,
       {
         subscriptionId,
@@ -28,7 +28,7 @@ export const useRankTrackerStripe = () => {
   };
 
   const createSessionPortal = async () => {
-    const response = await axios.post<CreateSessionPortalResponse>(
+    const response = await axiosInstance.post<CreateSessionPortalResponse>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/create-session-portal`,
       {},
       {

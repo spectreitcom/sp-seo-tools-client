@@ -1,6 +1,6 @@
 import { useAuth } from "./use-auth.tsx";
-import axios from "axios";
 import { queryOptions } from "@tanstack/react-query";
+import axiosInstance from "../axios.ts";
 
 export type RtDevice = { label: string; value: string };
 
@@ -8,7 +8,7 @@ export function useRtDevices() {
   const { getAccessToken } = useAuth();
 
   const retrieveDevicesFn = async () => {
-    const response = await axios.get<RtDevice[]>(
+    const response = await axiosInstance.get<RtDevice[]>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/devices`,
       {
         headers: {

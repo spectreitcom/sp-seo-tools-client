@@ -81,6 +81,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: addKeywordFn,
+    retry: 4,
     onSuccess: () => {
       toast.success("Keyword added successfully");
       onAdded();
