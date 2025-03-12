@@ -9,3 +9,4 @@ export * from "./use-rt-devices.ts";
 export * from "./use-rt-localizations.ts";
 export * from "./use-domains-filters.ts";
 export * from "./use-keywords-filters.ts";
+export * from "./use-error-handler.ts";

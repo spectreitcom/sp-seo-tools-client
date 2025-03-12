@@ -8,13 +8,14 @@ import toast from "react-hot-toast";
 import AddKeywordAsideModal from "../../components/add-keyword-aside-modal.tsx";
 import NoKeywordsPlaceholder from "../../components/no-keywords-placeholder.tsx";
 import Button from "../../components/button.tsx";
-import { useKeywords, useKeywordsFilters } from "../../hooks";
+import { useErrorHandler, useKeywords, useKeywordsFilters } from "../../hooks";
 import KeywordsFilters, {
   KeywordsFilter,
 } from "../../components/keywords-filters.tsx";
 import LinkBtn from "../../components/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import AvailableKeywordsQuantity from "../../components/available-keywords-quantity.tsx";
+import { AxiosError } from "axios";
 
 const PER_PAGE = 15;
 
@@ -32,6 +33,8 @@ function RtKeywordsPage() {
     updateDevice,
   } = useKeywordsFilters();
 
+  const { handle401Error } = useErrorHandler();
+
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
   const [addKeywordModalOpen, setAddKeywordModalOpen] = useState(false);
   const {
@@ -44,6 +47,7 @@ function RtKeywordsPage() {
     isError,
     refetch,
     isLoading,
+    error: keywordsError,
   } = useQuery(
     createKeywordsQueryOptions(
       getPage(),
@@ -57,6 +61,7 @@ function RtKeywordsPage() {
   const {
     data: availableKeywordsQuantity,
     refetch: refetchAvailableKeywordsQuantity,
+    error: availableKeywordsQuantityError,
   } = useQuery(createAvailableKeywordsQuantityQueryOptions());
 
   const handleNextPage = async () => {
@@ -102,6 +107,17 @@ function RtKeywordsPage() {
     const domainId = getDomainId();
     return searchText || device || domainId;
   };
+
+  useEffect(() => {
+    if (keywordsError) {
+      handle401Error(keywordsError as AxiosError);
+      return;
+    }
+    if (availableKeywordsQuantityError) {
+      handle401Error(availableKeywordsQuantityError as AxiosError);
+      return;
+    }
+  }, [keywordsError, availableKeywordsQuantityError]);
 
   useEffect(() => {
     if (isError) {

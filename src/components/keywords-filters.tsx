@@ -1,9 +1,11 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import InputWithInlineAddon from "./input-with-inline-addon.tsx";
-import { useRtDevices } from "../hooks";
+import { useErrorHandler, useRtDevices } from "../hooks";
 import { useQuery } from "@tanstack/react-query";
 import Select from "./select-new/select.tsx";
 import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 export type KeywordsFilter = {
   searchText: string;
@@ -18,8 +20,17 @@ type Props = {
 
 function KeywordsFilters({ onChange, value }: Props) {
   const { createDevicesQueryOptions } = useRtDevices();
+  const { handle401Error } = useErrorHandler();
 
-  const { data: devices } = useQuery(createDevicesQueryOptions());
+  const { data: devices, error: devicesError } = useQuery(
+    createDevicesQueryOptions(),
+  );
+
+  useEffect(() => {
+    if (devicesError) {
+      handle401Error(devicesError as AxiosError);
+    }
+  }, [devicesError]);
 
   return (
     <div className={"flex items-center -mx-2"}>

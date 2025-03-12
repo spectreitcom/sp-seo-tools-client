@@ -16,9 +16,10 @@ import { getErrorMessage } from "../../utils/get-error-message.ts";
 import { RequestAxiosError } from "../../types";
 import Pagination from "../../components/pagination.tsx";
 import { domainNameValidator } from "../../utils/domain-name-validator.ts";
-import { useDomains, useDomainsFilters } from "../../hooks";
+import { useDomains, useDomainsFilters, useErrorHandler } from "../../hooks";
 import LinkBtn from "../../components/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { AxiosError } from "axios";
 
 const validationSchema = z.object({
   domain: z
@@ -43,6 +44,8 @@ function RtDomainsPage() {
     getPage,
   } = useDomainsFilters();
 
+  const { handle401Error } = useErrorHandler();
+
   const [addDomainModalOpen, setAddDomainModalOpen] = useState(false);
   const { createDomainsQueryOptions, addDomainFn } = useDomains();
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
@@ -51,6 +54,7 @@ function RtDomainsPage() {
     data: domains,
     refetch,
     isError,
+    error,
   } = useQuery(
     createDomainsQueryOptions(getPage(), searchText ?? "", PER_PAGE),
   );
@@ -64,6 +68,7 @@ function RtDomainsPage() {
       await refetch();
     },
     onError: (error: RequestAxiosError) => {
+      handle401Error(error);
       toast.error(getErrorMessage(error));
     },
   });
@@ -116,6 +121,12 @@ function RtDomainsPage() {
   const isClearFiltersBtnVisible = () => {
     return !!getSearchText();
   };
+
+  useEffect(() => {
+    if (error) {
+      handle401Error(error as AxiosError);
+    }
+  }, [error]);
 
   useEffect(() => {
     if (isError) {

@@ -1,13 +1,15 @@
 import Spinner from "../../components/loader/spinner.tsx";
-import { useRankTrackerSubscriptionPlans } from "../../hooks";
+import { useErrorHandler, useRankTrackerSubscriptionPlans } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 function RtSuccessPage() {
   const { createCurrentPlanQueryOptions } = useRankTrackerSubscriptionPlans();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { handle401Error } = useErrorHandler();
 
   const sessionId = searchParams.get("session_id");
 
@@ -15,7 +17,15 @@ function RtSuccessPage() {
     navigate("/rank-tracker");
   }
 
-  const { data: currentPlan } = useQuery(createCurrentPlanQueryOptions(3000));
+  const { data: currentPlan, error } = useQuery(
+    createCurrentPlanQueryOptions(3000),
+  );
+
+  useEffect(() => {
+    if (error) {
+      handle401Error(error as AxiosError);
+    }
+  }, [error]);
 
   useEffect(() => {
     if (currentPlan) {

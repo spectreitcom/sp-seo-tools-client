@@ -1,7 +1,9 @@
 import Button from "../button.tsx";
 import { useMutation } from "@tanstack/react-query";
-import { useRankTrackerStripe } from "../../hooks";
+import { useErrorHandler, useRankTrackerStripe } from "../../hooks";
 import toast from "react-hot-toast";
+import { RequestAxiosError } from "../../types";
+import { getErrorMessage } from "../../utils/get-error-message.ts";
 
 type Props = {
   subscriptionId: string;
@@ -19,13 +21,16 @@ function SubscriptionPlan({
   maxSearchedPages,
 }: Props) {
   const { createCheckoutSession } = useRankTrackerStripe();
+  const { handle401Error } = useErrorHandler();
+
   const { mutate, isPending } = useMutation({
     mutationFn: createCheckoutSession,
     onSuccess: (data) => {
       window.location.href = data.sessionUrl;
     },
-    onError: () => {
-      toast.error("Error during payment");
+    onError: (error: RequestAxiosError) => {
+      handle401Error(error);
+      toast.error(getErrorMessage(error));
     },
   });
 

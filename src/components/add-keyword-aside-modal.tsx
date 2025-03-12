@@ -6,12 +6,19 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
-import { useKeywords, useRtDevices, useRtLocalizations } from "../hooks";
+import {
+  useErrorHandler,
+  useKeywords,
+  useRtDevices,
+  useRtLocalizations,
+} from "../hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./input.tsx";
 import Select from "./select-new/select.tsx";
 import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
 import MessageBox from "./message-box.tsx";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 type Props = {
   open: boolean;
@@ -45,10 +52,12 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   const { createDevicesQueryOptions } = useRtDevices();
   const { createLocalizationsQueryOptions } = useRtLocalizations();
   const { createAvailableKeywordsQuantityQueryOptions } = useKeywords();
+  const { handle401Error } = useErrorHandler();
 
-  const { data: availableKeywordsQuantity } = useQuery(
-    createAvailableKeywordsQuantityQueryOptions(open),
-  );
+  const {
+    data: availableKeywordsQuantity,
+    error: availableKeywordsQuantityError,
+  } = useQuery(createAvailableKeywordsQuantityQueryOptions(open));
 
   const { reset, handleSubmit, control } = useForm<
     z.infer<typeof validationSchema>
@@ -62,9 +71,13 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     resolver: zodResolver(validationSchema),
   });
 
-  const { data: devices } = useQuery(createDevicesQueryOptions(open));
+  const { data: devices, error: devicesError } = useQuery(
+    createDevicesQueryOptions(open),
+  );
 
-  const { data: localizations } = useQuery(createLocalizationsQueryOptions());
+  const { data: localizations, error: localizationsError } = useQuery(
+    createLocalizationsQueryOptions(),
+  );
 
   const { mutate, isPending } = useMutation({
     mutationFn: addKeywordFn,
@@ -75,6 +88,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
       reset();
     },
     onError: (error: RequestAxiosError) => {
+      handle401Error(error);
       toast.error(getErrorMessage(error));
     },
   });
@@ -87,6 +101,21 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     reset();
     onClose();
   };
+
+  useEffect(() => {
+    if (availableKeywordsQuantityError) {
+      handle401Error(availableKeywordsQuantityError as AxiosError);
+      return;
+    }
+    if (devicesError) {
+      handle401Error(devicesError as AxiosError);
+      return;
+    }
+    if (localizationsError) {
+      handle401Error(localizationsError as AxiosError);
+      return;
+    }
+  }, [availableKeywordsQuantityError, devicesError, localizationsError]);
 
   return (
     <AsideModal

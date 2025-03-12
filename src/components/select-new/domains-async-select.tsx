@@ -1,7 +1,9 @@
 import Select from "./select.tsx";
-import { useDomains } from "../../hooks";
+import { useDomains, useErrorHandler } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounceValue } from "usehooks-ts";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 type Props = {
   value: string | null;
@@ -21,14 +23,29 @@ function DomainsAsyncSelect({
   placeholderText,
 }: Props) {
   const { createDomainsQueryOptions, createDomainQueryOptions } = useDomains();
-  const [searchText, setSearchText] = useDebounceValue("", 500);
-  const { data, isLoading } = useQuery(
-    createDomainsQueryOptions(1, searchText ?? "", 15),
-  );
+  const { handle401Error } = useErrorHandler();
 
-  const { data: domain } = useQuery(
+  const [searchText, setSearchText] = useDebounceValue("", 500);
+  const {
+    data,
+    isLoading,
+    error: domainsError,
+  } = useQuery(createDomainsQueryOptions(1, searchText ?? "", 15));
+
+  const { data: domain, error: domainError } = useQuery(
     createDomainQueryOptions(value ?? "", !!value),
   );
+
+  useEffect(() => {
+    if (error) {
+      handle401Error(domainsError as AxiosError);
+      return;
+    }
+    if (domainError) {
+      handle401Error(domainError as AxiosError);
+      return;
+    }
+  }, [domainsError, domainError]);
 
   return (
     <Select
