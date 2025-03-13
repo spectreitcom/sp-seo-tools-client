@@ -79,7 +79,7 @@ function SubscriptionPlans() {
     <div className={"bg-gray-100 rounded-md p-4 pt-8"}>
       <div className={"text-center"}>
         <h2 className={"text-2xl font-bold"}>
-          Choose your plan to unlock all features
+          Choose your plan to unlock all Rank Tracker features
         </h2>
       </div>
       <div className={"mt-4 flex flex-wrap"}>
