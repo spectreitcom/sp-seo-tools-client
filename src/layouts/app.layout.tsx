@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import Topbar from "../components/topbar/topbar.tsx";
-import Aside from "../components/aside/aside.tsx";
+import Aside from "../components/aside.tsx";
 
 function AppLayout() {
   return (

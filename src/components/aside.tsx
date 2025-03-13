@@ -9,12 +9,12 @@ import {
   HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { classNames } from "../../utils/class-names.ts";
-import { useAside } from "../../hooks";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useAside } from "../hooks";
+import clsx from "clsx";
 
 const navigation = [
-  { name: "Dashboard", to: "/", icon: HomeIcon, current: true },
+  { name: "Dashboard", to: "/", icon: HomeIcon, current: false },
   { name: "Rank Tracker", to: "/rank-tracker", icon: HomeIcon, current: false },
   {
     name: "Serp Analyzer",
@@ -70,26 +70,26 @@ function Aside() {
                     <ul role="list" className="-mx-2 space-y-1">
                       {navigation.map((item) => (
                         <li key={item.name}>
-                          <Link
+                          <NavLink
                             to={item.to}
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-50 text-indigo-600"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
+                            className={clsx(
+                              "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
                               "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                              // active
+                              "[.active]:bg-gray-50 [.active]:text-indigo-600",
                             )}
                           >
                             <item.icon
                               aria-hidden="true"
-                              className={classNames(
-                                item.current
-                                  ? "text-indigo-600"
-                                  : "text-gray-400 group-hover:text-indigo-600",
+                              className={clsx(
+                                "text-gray-400 group-hover:text-indigo-600",
                                 "size-6 shrink-0",
+                                // active
+                                "group-[.active]:text-indigo-600",
                               )}
                             />
                             {item.name}
-                          </Link>
+                          </NavLink>
                         </li>
                       ))}
                     </ul>
@@ -128,26 +128,26 @@ function Aside() {
                 <ul role="list" className="-mx-2 space-y-1">
                   {navigation.map((item) => (
                     <li key={item.name}>
-                      <Link
+                      <NavLink
                         to={item.to}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-50 text-indigo-600"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                        className={clsx(
+                          "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
+                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold peer",
+                          // active
+                          "[.active]:bg-gray-50 [.active]:text-indigo-600",
                         )}
                       >
                         <item.icon
                           aria-hidden="true"
-                          className={classNames(
-                            item.current
-                              ? "text-indigo-600"
-                              : "text-gray-400 group-hover:text-indigo-600",
+                          className={clsx(
+                            "text-gray-400 group-hover:text-indigo-600",
                             "size-6 shrink-0",
+                            // active
+                            "group-[.active]:text-indigo-600",
                           )}
                         />
                         {item.name}
-                      </Link>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
