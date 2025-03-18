@@ -8,6 +8,7 @@ import RtLayout from "./layouts/rt-layout.tsx";
 import RtSuccessPage from "./pages/rank-tracker/rt-success-page.tsx";
 import RtDomainsPage from "./pages/rank-tracker/rt-domains-page.tsx";
 import RtKeywordsPage from "./pages/rank-tracker/rt-keywords-page.tsx";
+import RtKeywordDetailsPage from "./pages/rank-tracker/rt-keyword-details-page.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: "keywords",
             element: <RtKeywordsPage />,
+          },
+          {
+            path: "keywords/:keywordId",
+            element: <RtKeywordDetailsPage />,
           },
         ],
       },

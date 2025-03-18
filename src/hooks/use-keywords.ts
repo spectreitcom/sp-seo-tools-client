@@ -92,6 +92,18 @@ export function useKeywords() {
     return response.data;
   };
 
+  const retrieveKeywordFn = async (keywordId: string) => {
+    const response = await axiosInstance.get<Keyword>(
+      `${import.meta.env.VITE_API_URL}/rank-tracker/keywords/${keywordId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
   const createKeywordsQueryOptions = (
     page = 1,
     searchText = "",
@@ -118,10 +130,23 @@ export function useKeywords() {
       enabled,
     });
 
+  const createKeywordQueryOptions = (
+    keywordId: string,
+    enabled = true,
+    refetchInterval: false | number = false,
+  ) =>
+    queryOptions({
+      queryFn: () => retrieveKeywordFn(keywordId),
+      queryKey: ["keyword", keywordId],
+      refetchInterval,
+      enabled,
+    });
+
   return {
     createKeywordsQueryOptions,
     addKeywordFn,
     deleteKeywordFn,
     createAvailableKeywordsQuantityQueryOptions,
+    createKeywordQueryOptions,
   };
 }

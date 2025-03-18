@@ -1,7 +1,7 @@
 import { ComponentProps, ReactNode } from "react";
 import { classNames } from "../utils/class-names.ts";
 
-type Props = ComponentProps<"button"> & {
+type Props = Omit<ComponentProps<"button">, "color"> & {
   size: "sm" | "md" | "lg";
   color: "primary" | "danger";
   icon: ReactNode;

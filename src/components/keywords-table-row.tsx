@@ -8,6 +8,7 @@ import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
 import ReactCountryFlag from "react-country-flag";
+import { Link } from "react-router";
 
 type Props = {
   keyword: Keyword;
@@ -37,7 +38,14 @@ function KeywordsTableRow({ keyword, onDeleted }: Props) {
   return (
     <tr>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
-        {keyword.keywordText}
+        <Link
+          to={`/rank-tracker/keywords/${keyword.keywordId}`}
+          className={
+            "cursor-pointer text-sm flex flex-nowrap items-center hover:text-indigo-500 focus-visible:outline-indigo-600 text-indigo-600 font-bold"
+          }
+        >
+          {keyword.keywordText}
+        </Link>
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
         {keyword.lastIndexedPosition}
