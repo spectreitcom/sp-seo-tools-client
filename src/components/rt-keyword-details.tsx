@@ -1,5 +1,6 @@
 import { Keyword } from "../hooks";
 import ReactCountryFlag from "react-country-flag";
+import KeywordPositionBadge from "./keyword-position-badge.tsx";
 
 type Props = {
   keyword: Keyword | undefined;
@@ -35,8 +36,8 @@ function RtKeywordDetails({ keyword, className }: Props) {
         </div>
         <div className={"w-1/2 lg:w-3/12 p-4"}>
           <div className={"bg-gray-100 rounded-md p-4"}>
-            <strong>Last indexed position:</strong>
-            {keyword.lastIndexedPosition}
+            <strong className={"mr-2"}>Last indexed position:</strong>
+            <KeywordPositionBadge position={keyword.lastIndexedPosition} />
           </div>
         </div>
       </div>

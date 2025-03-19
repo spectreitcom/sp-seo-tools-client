@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { getErrorMessage } from "../utils/get-error-message.ts";
 import ReactCountryFlag from "react-country-flag";
 import { Link } from "react-router";
+import KeywordPositionBadge from "./keyword-position-badge.tsx";
 
 type Props = {
   keyword: Keyword;
@@ -48,7 +49,7 @@ function KeywordsTableRow({ keyword, onDeleted }: Props) {
         </Link>
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
-        {keyword.lastIndexedPosition}
+        <KeywordPositionBadge position={keyword.lastIndexedPosition} />
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
         <ReactCountryFlag
