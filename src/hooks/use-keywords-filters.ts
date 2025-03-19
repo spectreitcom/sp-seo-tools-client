@@ -6,6 +6,7 @@ enum FilterKey {
   PAGE = "page",
   DOMAIN_ID = "domainId",
   DEVICE = "device",
+  LOCALIZATION_ID = "localizationId",
 }
 
 export function useKeywordsFilters() {
@@ -14,6 +15,7 @@ export function useKeywordsFilters() {
     searchText: "",
     device: "",
     domainId: "",
+    localizationId: "",
   });
 
   const getSearchText = () => {
@@ -56,11 +58,21 @@ export function useKeywordsFilters() {
     searchParams.set(FilterKey.DEVICE, device);
   };
 
+  const getLocalizationId = () => {
+    const localizationId = searchParams.get(FilterKey.LOCALIZATION_ID);
+    return getFilterValue(localizationId);
+  };
+
+  const updateLocalizationId = (localizationId: string) => {
+    searchParams.set(FilterKey.LOCALIZATION_ID, localizationId);
+  };
+
   const reset = () => {
     searchParams.set(FilterKey.SEARCH_TEXT, "");
     searchParams.set(FilterKey.PAGE, "1");
     searchParams.set(FilterKey.DEVICE, "");
     searchParams.set(FilterKey.DOMAIN_ID, "");
+    searchParams.set(FilterKey.LOCALIZATION_ID, "");
   };
 
   return {
@@ -74,5 +86,7 @@ export function useKeywordsFilters() {
     updateDevice,
     getDomainId,
     updateDomainId,
+    getLocalizationId,
+    updateLocalizationId,
   };
 }

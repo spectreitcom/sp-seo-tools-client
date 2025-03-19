@@ -31,6 +31,8 @@ function RtKeywordsPage() {
     updateDomainId,
     updateSearchText,
     updateDevice,
+    getLocalizationId,
+    updateLocalizationId,
   } = useKeywordsFilters();
 
   const { handle401Error } = useErrorHandler();
@@ -55,6 +57,7 @@ function RtKeywordsPage() {
       getDevice(),
       getDomainId(),
       PER_PAGE,
+      getLocalizationId(),
     ),
   );
 
@@ -86,6 +89,7 @@ function RtKeywordsPage() {
     updatePage(1);
     updateDevice(filter.device);
     updateDomainId(filter.domainId);
+    updateLocalizationId(filter.localizationId);
     commit();
   };
 
@@ -105,7 +109,8 @@ function RtKeywordsPage() {
     const searchText = getSearchText();
     const device = getDevice();
     const domainId = getDomainId();
-    return searchText || device || domainId;
+    const localizationId = getLocalizationId();
+    return searchText || device || domainId || localizationId;
   };
 
   useEffect(() => {
@@ -141,6 +146,7 @@ function RtKeywordsPage() {
               searchText: getSearchText(),
               device: getDevice(),
               domainId: getDomainId(),
+              localizationId: getLocalizationId(),
             }}
           />
           {isClearFiltersBtnVisible() && (

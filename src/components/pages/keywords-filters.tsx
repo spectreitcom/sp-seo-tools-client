@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useErrorHandler, useRtDevices } from "../../hooks";
+import { useErrorHandler, useRtDevices, useRtLocalizations } from "../../hooks";
 import InputWithInlineAddon from "../ui/input-with-inline-addon.tsx";
 import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
 import Select from "../ui/select-new/select.tsx";
@@ -11,6 +11,7 @@ export type KeywordsFilter = {
   searchText: string;
   device: string;
   domainId: string;
+  localizationId: string;
 };
 
 type Props = {
@@ -20,17 +21,25 @@ type Props = {
 
 function KeywordsFilters({ onChange, value }: Props) {
   const { createDevicesQueryOptions } = useRtDevices();
+  const { createLocalizationsQueryOptions } = useRtLocalizations();
   const { handle401Error } = useErrorHandler();
 
   const { data: devices, error: devicesError } = useQuery(
     createDevicesQueryOptions(),
   );
 
+  const { data: localizations, error: localizationsError } = useQuery(
+    createLocalizationsQueryOptions(),
+  );
+
   useEffect(() => {
     if (devicesError) {
       handle401Error(devicesError as AxiosError);
     }
-  }, [devicesError]);
+    if (localizationsError) {
+      handle401Error(localizationsError as AxiosError);
+    }
+  }, [devicesError, localizationsError]);
 
   return (
     <div className={"flex items-center -mx-2"}>
@@ -42,6 +51,7 @@ function KeywordsFilters({ onChange, value }: Props) {
               searchText: e.target.value,
               device: value.device,
               domainId: value.domainId,
+              localizationId: value.localizationId,
             })
           }
           value={value.searchText}
@@ -62,6 +72,7 @@ function KeywordsFilters({ onChange, value }: Props) {
               searchText: value.searchText,
               device: value.device,
               domainId,
+              localizationId: value.localizationId,
             });
           }}
         />
@@ -75,9 +86,30 @@ function KeywordsFilters({ onChange, value }: Props) {
               searchText: value.searchText,
               device: option.value.toString(),
               domainId: value.domainId,
+              localizationId: value.localizationId,
             });
           }}
           options={devices ?? []}
+        />
+      </div>
+      <div className={"px-2 w-2/12"}>
+        <Select
+          value={value.localizationId}
+          placeholderText={"Localization"}
+          onChange={(option) => {
+            onChange({
+              searchText: value.searchText,
+              device: value.device,
+              domainId: value.domainId,
+              localizationId: option.value.toString(),
+            });
+          }}
+          options={
+            localizations?.map((localization) => ({
+              label: localization.name,
+              value: localization.localizationId,
+            })) ?? []
+          }
         />
       </div>
     </div>

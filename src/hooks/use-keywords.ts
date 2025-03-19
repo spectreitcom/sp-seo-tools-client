@@ -36,6 +36,7 @@ export function useKeywords() {
     device: string,
     domainId: string,
     take: number,
+    localizationId: string,
   ) => {
     const response = await axiosInstance.get<CollectionData<Keyword>>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/keywords`,
@@ -49,6 +50,7 @@ export function useKeywords() {
           device,
           domainId,
           take,
+          localizationId,
         },
       },
     );
@@ -110,12 +112,28 @@ export function useKeywords() {
     device = "",
     domainId = "",
     take = 30,
+    localizationId = "",
     refetchInterval: false | number = false,
   ) =>
     queryOptions({
       queryFn: () =>
-        retrieveKeywordsFn(page, searchText, device, domainId, take),
-      queryKey: ["keywords", page, searchText, device, domainId, take],
+        retrieveKeywordsFn(
+          page,
+          searchText,
+          device,
+          domainId,
+          take,
+          localizationId,
+        ),
+      queryKey: [
+        "keywords",
+        page,
+        searchText,
+        device,
+        domainId,
+        take,
+        localizationId,
+      ],
       refetchInterval,
     });
 
