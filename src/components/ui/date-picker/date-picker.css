@@ -1,0 +1,8 @@
+/* Range mode */
+/* Selected state */
+.flatpickr-calendar.rangeMode .dayContainer > .flatpickr-day.selected,
+.flatpickr-calendar.rangeMode .dayContainer > .flatpickr-day.endRange,
+.flatpickr-calendar.rangeMode .dayContainer > .flatpickr-day.startRange {
+    background: oklch(0.511 0.262 276.966);
+    border-color: oklch(0.511 0.262 276.966);
+}

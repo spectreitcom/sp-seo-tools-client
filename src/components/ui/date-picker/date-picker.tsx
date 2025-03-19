@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
 import moment from "moment";
 import Label from "../label.tsx";
+import "./date-picker.css";
 
 type Props = {
   className?: string;
