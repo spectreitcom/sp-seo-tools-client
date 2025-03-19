@@ -1,5 +1,5 @@
 import { ComponentProps, ReactNode } from "react";
-import { classNames } from "../utils/class-names.ts";
+import clsx from "clsx";
 
 type Props = Omit<ComponentProps<"button">, "color"> & {
   size: "sm" | "md" | "lg";
@@ -15,7 +15,7 @@ function IconButton({
   icon,
   ...rest
 }: Props) {
-  const classes = classNames(
+  const classes = clsx(
     "rounded-full shadow-xs cursor-pointer",
     size === "sm" && "p-1",
     size === "md" && "p-1.5",

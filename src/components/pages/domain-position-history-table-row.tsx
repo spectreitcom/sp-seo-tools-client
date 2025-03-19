@@ -1,5 +1,5 @@
-import { DomainPositionHistory } from "../hooks/use-domain-history-position.ts";
 import KeywordPositionBadge from "./keyword-position-badge.tsx";
+import { DomainPositionHistory } from "../../hooks/use-domain-history-position.ts";
 
 type Props = {
   item: DomainPositionHistory;

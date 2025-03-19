@@ -1,6 +1,6 @@
-import { Keyword } from "../hooks";
 import ReactCountryFlag from "react-country-flag";
 import KeywordPositionBadge from "./keyword-position-badge.tsx";
+import { Keyword } from "../../hooks";
 
 type Props = {
   keyword: Keyword | undefined;

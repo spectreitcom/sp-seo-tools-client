@@ -1,11 +1,11 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import InputWithInlineAddon from "./input-with-inline-addon.tsx";
-import { useErrorHandler, useRtDevices } from "../hooks";
 import { useQuery } from "@tanstack/react-query";
-import Select from "./select-new/select.tsx";
-import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
+import { useErrorHandler, useRtDevices } from "../../hooks";
+import InputWithInlineAddon from "../ui/input-with-inline-addon.tsx";
+import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
+import Select from "../ui/select-new/select.tsx";
 
 export type KeywordsFilter = {
   searchText: string;

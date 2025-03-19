@@ -1,7 +1,7 @@
 import { AxisOptions, Chart } from "react-charts";
-import { DomainPositionHistory } from "../hooks/use-domain-history-position.ts";
 import clsx from "clsx";
 import { useMemo } from "react";
+import { DomainPositionHistory } from "../../hooks/use-domain-history-position.ts";
 
 type Props = {
   className?: string;

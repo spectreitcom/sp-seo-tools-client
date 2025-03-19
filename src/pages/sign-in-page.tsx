@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../hooks";
-import Loader from "../components/loader/loader.tsx";
 import { RequestAxiosError } from "../types";
 import { getErrorMessage } from "../utils/get-error-message.ts";
+import Loader from "../components/ui/loader/loader.tsx";
 
 export default function SignInPage() {
   const { googleLoginFn } = useAuth();

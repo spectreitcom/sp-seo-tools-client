@@ -1,20 +1,20 @@
-import PageTitle from "../../components/page-title.tsx";
+import PageTitle from "../../components/pages/page-title.tsx";
 import { useQuery } from "@tanstack/react-query";
-import KeywordsTable from "../../components/keywords-table.tsx";
-import Pagination from "../../components/pagination.tsx";
+import KeywordsTable from "../../components/pages/keywords-table.tsx";
+import Pagination from "../../components/ui/pagination.tsx";
 import { useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import toast from "react-hot-toast";
-import AddKeywordAsideModal from "../../components/add-keyword-aside-modal.tsx";
-import NoKeywordsPlaceholder from "../../components/no-keywords-placeholder.tsx";
-import Button from "../../components/button.tsx";
+import AddKeywordAsideModal from "../../components/pages/add-keyword-aside-modal.tsx";
+import NoKeywordsPlaceholder from "../../components/pages/no-keywords-placeholder.tsx";
+import Button from "../../components/ui/button.tsx";
 import { useErrorHandler, useKeywords, useKeywordsFilters } from "../../hooks";
 import KeywordsFilters, {
   KeywordsFilter,
-} from "../../components/keywords-filters.tsx";
-import LinkBtn from "../../components/link-btn.tsx";
+} from "../../components/pages/keywords-filters.tsx";
+import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import AvailableKeywordsQuantity from "../../components/available-keywords-quantity.tsx";
+import AvailableKeywordsQuantity from "../../components/pages/available-keywords-quantity.tsx";
 import { AxiosError } from "axios";
 
 const PER_PAGE = 15;

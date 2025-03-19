@@ -1,4 +1,4 @@
-import { AvailableKeywordsQuantity as AvailableKeywordsQuantityInterface } from "../hooks";
+import { AvailableKeywordsQuantity as AvailableKeywordsQuantityInterface } from "../../hooks";
 import { RectangleStackIcon } from "@heroicons/react/16/solid";
 
 type Props = {

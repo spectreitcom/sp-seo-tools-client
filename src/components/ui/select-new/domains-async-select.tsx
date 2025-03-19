@@ -1,9 +1,9 @@
 import Select from "./select.tsx";
-import { useDomains, useErrorHandler } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounceValue } from "usehooks-ts";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
+import { useDomains, useErrorHandler } from "../../../hooks";
 
 type Props = {
   value: string | null;

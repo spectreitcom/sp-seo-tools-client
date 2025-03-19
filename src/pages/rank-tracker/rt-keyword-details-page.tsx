@@ -1,4 +1,4 @@
-import PageTitle from "../../components/page-title.tsx";
+import PageTitle from "../../components/pages/page-title.tsx";
 import { useErrorHandler, useKeywords } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
@@ -6,17 +6,17 @@ import { useEffect } from "react";
 import { RequestAxiosError } from "../../types";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "../../utils/get-error-message.ts";
-import Spinner from "../../components/loader/spinner.tsx";
-import RtKeywordDetails from "../../components/rt-keyword-details.tsx";
+import RtKeywordDetails from "../../components/pages/rt-keyword-details.tsx";
 import { useDomainHistoryPosition } from "../../hooks/use-domain-history-position.ts";
-import DomainPositionHistoryTable from "../../components/domain-position-history-table.tsx";
-import Pagination from "../../components/pagination.tsx";
+import DomainPositionHistoryTable from "../../components/pages/domain-position-history-table.tsx";
+import Pagination from "../../components/ui/pagination.tsx";
 import { useKeywordDetailsFilters } from "../../hooks/use-keyword-details-filters.ts";
-import DomainPositionChart from "../../components/domain-position-chart.tsx";
-import DatePicker from "../../components/date-picker/date-picker.tsx";
+import DomainPositionChart from "../../components/pages/domain-position-chart.tsx";
 import moment from "moment";
-import LinkBtn from "../../components/link-btn.tsx";
+import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import DatePicker from "../../components/ui/date-picker/date-picker.tsx";
+import Spinner from "../../components/ui/loader/spinner.tsx";
 
 const PER_PAGE = 15;
 

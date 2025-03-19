@@ -10,8 +10,8 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
-import { useAside } from "../hooks";
 import clsx from "clsx";
+import { useAside } from "../../hooks";
 
 const navigation = [
   { name: "Dashboard", to: "/", icon: HomeIcon, current: false },

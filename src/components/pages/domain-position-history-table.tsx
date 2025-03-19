@@ -1,6 +1,6 @@
-import { DomainPositionHistory } from "../hooks/use-domain-history-position.ts";
 import { ComponentProps } from "react";
 import DomainPositionHistoryTableRow from "./domain-position-history-table-row.tsx";
+import { DomainPositionHistory } from "../../hooks/use-domain-history-position.ts";
 
 type Props = ComponentProps<"div"> & {
   data: DomainPositionHistory[];

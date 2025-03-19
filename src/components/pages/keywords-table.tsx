@@ -1,7 +1,7 @@
-import { Keyword } from "../hooks";
 import { ComponentProps } from "react";
 import clsx from "clsx";
 import KeywordsTableRow from "./keywords-table-row.tsx";
+import { Keyword } from "../../hooks";
 
 type Props = ComponentProps<"div"> & {
   keywords: Keyword[];

@@ -2,9 +2,9 @@ import "flatpickr/dist/flatpickr.min.css";
 import flatpickr from "flatpickr";
 import { useEffect, useId } from "react";
 import clsx from "clsx";
-import Label from "../label.tsx";
 import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
 import moment from "moment";
+import Label from "../label.tsx";
 
 type Props = {
   className?: string;

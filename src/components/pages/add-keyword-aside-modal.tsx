@@ -1,24 +1,24 @@
-import AsideModal from "./aside-modal.tsx";
-import Button from "./button.tsx";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { RequestAxiosError } from "../types";
 import toast from "react-hot-toast";
-import { getErrorMessage } from "../utils/get-error-message.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
 import {
   useErrorHandler,
   useKeywords,
   useRtDevices,
   useRtLocalizations,
-} from "../hooks";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "./input.tsx";
-import Select from "./select-new/select.tsx";
-import DomainsAsyncSelect from "./select-new/domains-async-select.tsx";
-import MessageBox from "./message-box.tsx";
-import { useEffect } from "react";
-import { AxiosError } from "axios";
+} from "../../hooks";
+import { RequestAxiosError } from "../../types";
+import { getErrorMessage } from "../../utils/get-error-message.ts";
+import AsideModal from "../ui/aside-modal.tsx";
+import Button from "../ui/button.tsx";
+import MessageBox from "../ui/message-box.tsx";
+import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
+import Input from "../ui/input.tsx";
+import Select from "../ui/select-new/select.tsx";
 
 type Props = {
   open: boolean;

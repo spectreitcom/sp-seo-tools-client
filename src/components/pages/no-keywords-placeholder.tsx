@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
-import Button from "./button.tsx";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
+import Button from "../ui/button.tsx";
 
 type Props = ComponentProps<"div"> & {
   onAction: () => void;

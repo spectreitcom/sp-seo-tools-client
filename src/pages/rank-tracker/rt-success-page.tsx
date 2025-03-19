@@ -1,9 +1,9 @@
-import Spinner from "../../components/loader/spinner.tsx";
 import { useErrorHandler, useRankTrackerSubscriptionPlans } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
+import Spinner from "../../components/ui/loader/spinner.tsx";
 
 function RtSuccessPage() {
   const { createCurrentPlanQueryOptions } = useRankTrackerSubscriptionPlans();

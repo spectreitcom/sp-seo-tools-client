@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { useAuth } from "../hooks";
 import { Navigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./loader/loader.tsx";
+import Loader from "./ui/loader/loader.tsx";
 
 type Props = {
   children: ReactNode;

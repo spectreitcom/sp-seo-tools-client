@@ -1,4 +1,4 @@
-import Badge from "./badge.tsx";
+import Badge from "../ui/badge.tsx";
 
 type Props = {
   position: number;

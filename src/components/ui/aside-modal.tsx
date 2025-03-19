@@ -1,6 +1,6 @@
-import { classNames } from "../utils/class-names.ts";
 import { ReactNode } from "react";
 import { Transition, TransitionChild } from "@headlessui/react";
+import clsx from "clsx";
 
 type Props = {
   contentClassName?: string;
@@ -19,7 +19,7 @@ function AsideModal({
   open,
   onClose,
 }: Props) {
-  const contentClasses = classNames(
+  const contentClasses = clsx(
     "absolute top-0 right-0 bottom-0 w-full lg:w-[33%] bg-white shadow flex flex-col justify-between",
     contentClassName,
   );

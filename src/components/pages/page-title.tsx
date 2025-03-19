@@ -1,6 +1,6 @@
-import Button from "./button.tsx";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router";
+import Button from "../ui/button.tsx";
 
 type Props = {
   title: string;
