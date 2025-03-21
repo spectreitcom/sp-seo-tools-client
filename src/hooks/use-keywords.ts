@@ -3,6 +3,8 @@ import { queryOptions } from "@tanstack/react-query";
 import { CollectionData } from "../types";
 import axiosInstance from "../axios.ts";
 
+export type KeywordGrowth = "UP" | "DOWN" | "NO_CHANGE";
+
 export type Keyword = {
   keywordId: string;
   keywordText: string;
@@ -12,6 +14,7 @@ export type Keyword = {
   domain: string;
   localizationCountryName: string;
   deviceName: string;
+  growth: KeywordGrowth;
 };
 
 export type AvailableKeywordsQuantity = {

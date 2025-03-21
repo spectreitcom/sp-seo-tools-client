@@ -10,6 +10,7 @@ import { RequestAxiosError } from "../../types";
 import { getErrorMessage } from "../../utils/get-error-message.ts";
 import IconButton from "../ui/icon-button.tsx";
 import Alert from "../ui/alert.tsx";
+import KeywordGrowthArrows from "./keyword-growth-arrows.tsx";
 
 type Props = {
   keyword: Keyword;
@@ -48,7 +49,8 @@ function KeywordsTableRow({ keyword, onDeleted }: Props) {
           {keyword.keywordText}
         </Link>
       </td>
-      <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
+      <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0 flex items-center">
+        <KeywordGrowthArrows growth={keyword.growth} />
         <KeywordPositionBadge position={keyword.lastIndexedPosition} />
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
