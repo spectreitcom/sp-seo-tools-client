@@ -132,7 +132,11 @@ function RtKeywordsPage() {
 
   return (
     <div>
-      <PageTitle title={"Keywords"} />
+      <PageTitle
+        title={"Keywords"}
+        returnPath={"/rank-tracker"}
+        returnText={"Back"}
+      />
 
       <div className={"mt-8"}>
         <AvailableKeywordsQuantity data={availableKeywordsQuantity} />

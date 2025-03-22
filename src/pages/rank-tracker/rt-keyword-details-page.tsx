@@ -122,7 +122,7 @@ function RtKeywordDetailsPage() {
       <PageTitle
         title={"Keyword details"}
         returnPath={"/rank-tracker/keywords"}
-        returnText={"Back to keywords"}
+        returnText={"Back"}
       />
       <RtKeywordDetails keyword={data} className={"mt-8"} />
       <div className={"mt-8 -mx-2"}>

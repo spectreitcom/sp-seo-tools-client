@@ -137,7 +137,11 @@ function RtDomainsPage() {
 
   return (
     <div>
-      <PageTitle title={"Domains"} description={"Here is your domains list"} />
+      <PageTitle
+        title={"Domains"}
+        returnPath={"/rank-tracker"}
+        returnText={"Back"}
+      />
       <div className={"mt-8 flex justify-between items-center"}>
         <div>
           <InputWithInlineAddon

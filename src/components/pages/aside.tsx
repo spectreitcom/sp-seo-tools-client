@@ -13,14 +13,20 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { useAside } from "../../hooks";
 import Logo from "./logo.tsx";
+import { BarsArrowUpIcon, ChartBarSquareIcon } from "@heroicons/react/16/solid";
 
 const navigation = [
   { name: "Dashboard", to: "/", icon: HomeIcon, current: false },
-  { name: "Rank Tracker", to: "/rank-tracker", icon: HomeIcon, current: false },
+  {
+    name: "Rank Tracker",
+    to: "/rank-tracker",
+    icon: BarsArrowUpIcon,
+    current: false,
+  },
   {
     name: "Serp Analyzer",
     to: "/serp-analyzer",
-    icon: HomeIcon,
+    icon: ChartBarSquareIcon,
     current: false,
   },
 ];
