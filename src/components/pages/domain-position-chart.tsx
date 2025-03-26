@@ -52,7 +52,6 @@ function DomainPositionChart({ className, data }: Props) {
         getValue: (datum) => datum.position,
         invert: true,
         min: 1,
-        max: 50,
       },
     ],
     [],
