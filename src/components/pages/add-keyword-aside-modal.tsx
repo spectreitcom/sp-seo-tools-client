@@ -19,6 +19,7 @@ import MessageBox from "../ui/message-box.tsx";
 import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
 import Input from "../ui/input.tsx";
 import Select from "../ui/select-new/select.tsx";
+import Spinner from "../ui/loader/spinner.tsx";
 
 type Props = {
   open: boolean;
@@ -57,6 +58,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
   const {
     data: availableKeywordsQuantity,
     error: availableKeywordsQuantityError,
+    isFetching: availableKeywordsQuantityIsFetching,
   } = useQuery(createAvailableKeywordsQuantityQueryOptions(open));
 
   const { reset, handleSubmit, control } = useForm<
@@ -71,13 +73,17 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     resolver: zodResolver(validationSchema),
   });
 
-  const { data: devices, error: devicesError } = useQuery(
-    createDevicesQueryOptions(open),
-  );
+  const {
+    data: devices,
+    error: devicesError,
+    isFetching: devicesIsFetching,
+  } = useQuery(createDevicesQueryOptions(open));
 
-  const { data: localizations, error: localizationsError } = useQuery(
-    createLocalizationsQueryOptions(),
-  );
+  const {
+    data: localizations,
+    error: localizationsError,
+    isFetching: localizationsIsFetching,
+  } = useQuery(createLocalizationsQueryOptions());
 
   const { mutate, isPending } = useMutation({
     mutationFn: addKeywordFn,
@@ -142,74 +148,84 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
         </div>
       }
     >
-      {availableKeywordsQuantity && availableKeywordsQuantity.exceeded && (
-        <div className={"mb-4"}>
-          <MessageBox
-            severity={"warning"}
-            text={"You exceeded the limit of available keywords to add"}
-          />
+      {availableKeywordsQuantityIsFetching ||
+      devicesIsFetching ||
+      localizationsIsFetching ? (
+        <div>
+          <Spinner />
         </div>
-      )}
+      ) : (
+        <>
+          {availableKeywordsQuantity && availableKeywordsQuantity.exceeded && (
+            <div className={"mb-4"}>
+              <MessageBox
+                severity={"warning"}
+                text={"You exceeded the limit of available keywords to add"}
+              />
+            </div>
+          )}
 
-      <Controller
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <DomainsAsyncSelect
-            label={"Domain"}
-            value={value}
-            onChange={(domainId) => onChange(domainId)}
-            error={error?.message}
+          <Controller
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <DomainsAsyncSelect
+                label={"Domain"}
+                value={value}
+                onChange={(domainId) => onChange(domainId)}
+                error={error?.message}
+              />
+            )}
+            name={"domainId"}
+            control={control}
           />
-        )}
-        name={"domainId"}
-        control={control}
-      />
-      <Controller
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <div className={"mt-4"}>
-            <Input
-              label={"Keyword"}
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              error={error?.message}
-            />
-          </div>
-        )}
-        name={"text"}
-        control={control}
-      />
-      <Controller
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Select
-            className={"mt-4"}
-            label={"Localization"}
-            value={value}
-            onChange={(option) => onChange(option.value)}
-            options={
-              localizations?.map((localization) => ({
-                label: localization.name,
-                value: localization.localizationId,
-              })) ?? []
-            }
-            error={error?.message}
+          <Controller
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <div className={"mt-4"}>
+                <Input
+                  label={"Keyword"}
+                  value={value}
+                  onChange={(e) => onChange(e.target.value)}
+                  error={error?.message}
+                />
+              </div>
+            )}
+            name={"text"}
+            control={control}
           />
-        )}
-        name={"localizationId"}
-        control={control}
-      />
-      <Controller
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Select
-            label={"Device"}
-            className={"mt-4"}
-            options={devices ?? []}
-            value={value}
-            onChange={(option) => onChange(option.value)}
-            error={error?.message}
+          <Controller
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <Select
+                className={"mt-4"}
+                label={"Localization"}
+                value={value}
+                onChange={(option) => onChange(option.value)}
+                options={
+                  localizations?.map((localization) => ({
+                    label: localization.name,
+                    value: localization.localizationId,
+                  })) ?? []
+                }
+                error={error?.message}
+              />
+            )}
+            name={"localizationId"}
+            control={control}
           />
-        )}
-        name={"device"}
-        control={control}
-      />
+          <Controller
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <Select
+                label={"Device"}
+                className={"mt-4"}
+                options={devices ?? []}
+                value={value}
+                onChange={(option) => onChange(option.value)}
+                error={error?.message}
+              />
+            )}
+            name={"device"}
+            control={control}
+          />
+        </>
+      )}
     </AsideModal>
   );
 }

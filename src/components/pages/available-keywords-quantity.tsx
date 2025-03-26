@@ -1,11 +1,13 @@
 import { AvailableKeywordsQuantity as AvailableKeywordsQuantityInterface } from "../../hooks";
 import { RectangleStackIcon } from "@heroicons/react/16/solid";
+import Spinner from "../ui/loader/spinner.tsx";
 
 type Props = {
   data?: AvailableKeywordsQuantityInterface;
+  loading?: boolean;
 };
 
-function AvailableKeywordsQuantity({ data }: Props) {
+function AvailableKeywordsQuantity({ data, loading }: Props) {
   if (!data) return null;
   return (
     <div className={"bg-gray-100 p-4 rounded-md inline-flex items-center"}>
@@ -13,6 +15,11 @@ function AvailableKeywordsQuantity({ data }: Props) {
       <span>
         Used keywords {data.usedKeywordsQuantity} / {data.maxKeywordsQuantity}
       </span>
+      {loading && (
+        <span className={"ml-2"}>
+          <Spinner width={20} borderWidth={3} />
+        </span>
+      )}
     </div>
   );
 }
