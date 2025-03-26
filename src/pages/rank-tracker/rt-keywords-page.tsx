@@ -16,6 +16,7 @@ import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import AvailableKeywordsQuantity from "../../components/pages/available-keywords-quantity.tsx";
 import { AxiosError } from "axios";
+import Spinner from "../../components/ui/loader/spinner.tsx";
 
 const PER_PAGE = 15;
 
@@ -47,8 +48,8 @@ function RtKeywordsPage() {
   const {
     data: keywords,
     isError,
-    refetch,
-    isLoading,
+    refetch: refetchKeywords,
+    isFetching: keywordIsFetching,
     error: keywordsError,
   } = useQuery(
     createKeywordsQueryOptions(
@@ -65,6 +66,7 @@ function RtKeywordsPage() {
     data: availableKeywordsQuantity,
     refetch: refetchAvailableKeywordsQuantity,
     error: availableKeywordsQuantityError,
+    isFetching: availableKeywordsQuantityIsFetching,
   } = useQuery(createAvailableKeywordsQuantityQueryOptions());
 
   const handleNextPage = async () => {
@@ -79,7 +81,7 @@ function RtKeywordsPage() {
 
   const handleAdded = async () => {
     resetFiltersFn();
-    await refetch();
+    await refetchKeywords();
     await refetchAvailableKeywordsQuantity();
   };
 
@@ -95,7 +97,7 @@ function RtKeywordsPage() {
 
   const handleDeleted = async () => {
     resetFilters();
-    await refetch();
+    await refetchKeywords();
     await refetchAvailableKeywordsQuantity();
   };
 
@@ -139,7 +141,10 @@ function RtKeywordsPage() {
       />
 
       <div className={"mt-8"}>
-        <AvailableKeywordsQuantity data={availableKeywordsQuantity} />
+        <AvailableKeywordsQuantity
+          data={availableKeywordsQuantity}
+          loading={availableKeywordsQuantityIsFetching}
+        />
       </div>
 
       <div className={"mt-8 flex justify-between items-center"}>
@@ -169,32 +174,40 @@ function RtKeywordsPage() {
         </Button>
       </div>
 
-      {keywords?.userTotal ? (
-        <>
-          <KeywordsTable
-            keywords={keywords.data}
-            className={"mt-4"}
-            onDeleted={handleDeleted}
-          />
-          <div className={"mt-4 flex justify-end"}>
-            <Pagination
-              page={getPage()}
-              total={keywords.total}
-              perPage={PER_PAGE}
-              onPrevPage={handlePrevPage}
-              onNextPage={handleNextPage}
-            />
-          </div>
-        </>
+      {keywordIsFetching ? (
+        <div className={"mt-4"}>
+          <Spinner />
+        </div>
       ) : (
-        ""
-      )}
+        <>
+          {keywords?.userTotal ? (
+            <>
+              <KeywordsTable
+                keywords={keywords.data}
+                className={"mt-4"}
+                onDeleted={handleDeleted}
+              />
+              <div className={"mt-4 flex justify-end"}>
+                <Pagination
+                  page={getPage()}
+                  total={keywords.total}
+                  perPage={PER_PAGE}
+                  onPrevPage={handlePrevPage}
+                  onNextPage={handleNextPage}
+                />
+              </div>
+            </>
+          ) : (
+            ""
+          )}
 
-      {!keywords?.userTotal && !isLoading && (
-        <NoKeywordsPlaceholder
-          onAction={() => setAddKeywordModalOpen(true)}
-          className={"mt-8"}
-        />
+          {!keywords?.userTotal && (
+            <NoKeywordsPlaceholder
+              onAction={() => setAddKeywordModalOpen(true)}
+              className={"mt-8"}
+            />
+          )}
+        </>
       )}
 
       <AddKeywordAsideModal
