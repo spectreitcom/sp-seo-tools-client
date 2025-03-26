@@ -11,7 +11,7 @@ function KeywordPositionBadge({ position }: Props) {
   if (position > 10 && position <= 50) {
     return <Badge text={position} color={"warning"} />;
   }
-  if (position === 0) {
+  if (position === null) {
     return <Badge text={"Position not found"} color={"danger"} />;
   }
 }

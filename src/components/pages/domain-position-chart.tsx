@@ -50,6 +50,9 @@ function DomainPositionChart({ className, data }: Props) {
     (): AxisOptions<ChartItem>[] => [
       {
         getValue: (datum) => datum.position,
+        invert: true,
+        min: 1,
+        max: 50,
       },
     ],
     [],
@@ -65,7 +68,6 @@ function DomainPositionChart({ className, data }: Props) {
               data: chartItems,
             },
           ],
-          // data: data2,
           primaryAxis,
           secondaryAxes,
         }}
