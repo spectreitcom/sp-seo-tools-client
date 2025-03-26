@@ -20,6 +20,7 @@ import { useDomains, useDomainsFilters, useErrorHandler } from "../../hooks";
 import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
+import Spinner from "../../components/ui/loader/spinner.tsx";
 
 const validationSchema = z.object({
   domain: z
@@ -52,9 +53,10 @@ function RtDomainsPage() {
 
   const {
     data: domains,
-    refetch,
+    refetch: refetchDomains,
     isError,
     error,
+    isFetching: domainsIsFetching,
   } = useQuery(
     createDomainsQueryOptions(getPage(), searchText ?? "", PER_PAGE),
   );
@@ -66,7 +68,7 @@ function RtDomainsPage() {
       toast.success("Domain added successfully");
       close();
       resetFiltersFn();
-      await refetch();
+      await refetchDomains();
     },
     onError: (error: RequestAxiosError) => {
       handle401Error(error);
@@ -100,7 +102,7 @@ function RtDomainsPage() {
 
   const handleDeleted = async () => {
     resetFilters();
-    await refetch();
+    await refetchDomains();
   };
 
   const handleNextPage = async () => {
@@ -160,7 +162,6 @@ function RtDomainsPage() {
           Add domain
         </Button>
       </div>
-
       {isClearFiltersBtnVisible() && (
         <div className={"mt-4"}>
           <LinkBtn
@@ -171,35 +172,40 @@ function RtDomainsPage() {
           </LinkBtn>
         </div>
       )}
-
-      {domains?.userTotal ? (
-        <>
-          <DomainsTable
-            className={"mt-4"}
-            domains={domains?.data ?? []}
-            onDeleted={handleDeleted}
-          />
-          <div className={"mt-4 flex justify-end"}>
-            <Pagination
-              page={getPage()}
-              total={domains.total}
-              perPage={PER_PAGE}
-              onPrevPage={handlePrevPage}
-              onNextPage={handleNextPage}
-            />
-          </div>
-        </>
+      {domainsIsFetching ? (
+        <div className={"mt-4"}>
+          <Spinner />
+        </div>
       ) : (
-        ""
+        <>
+          {domains?.userTotal ? (
+            <>
+              <DomainsTable
+                className={"mt-4"}
+                domains={domains?.data ?? []}
+                onDeleted={handleDeleted}
+              />
+              <div className={"mt-4 flex justify-end"}>
+                <Pagination
+                  page={getPage()}
+                  total={domains.total}
+                  perPage={PER_PAGE}
+                  onPrevPage={handlePrevPage}
+                  onNextPage={handleNextPage}
+                />
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+          {domains?.userTotal === 0 && (
+            <NoDomainsPlaceholder
+              className={"mt-8"}
+              onAction={() => setAddDomainModalOpen(true)}
+            />
+          )}
+        </>
       )}
-
-      {domains?.userTotal === 0 && (
-        <NoDomainsPlaceholder
-          className={"mt-8"}
-          onAction={() => setAddDomainModalOpen(true)}
-        />
-      )}
-
       <AsideModal
         title={"Add a new domain"}
         open={addDomainModalOpen}
