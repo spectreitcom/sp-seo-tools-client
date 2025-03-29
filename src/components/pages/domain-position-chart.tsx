@@ -25,8 +25,11 @@ function DomainPositionChart({ className, data }: Props) {
       });
     }
 
+    const shouldCreateEmptyPoint =
+      !_data.length || !_data.filter((item) => item.position !== null).length;
+
     // Note! This fallback data is required. Without it the application is crashing
-    if (!_data.length) {
+    if (shouldCreateEmptyPoint) {
       _data = [
         {
           domainPositionId: "",
