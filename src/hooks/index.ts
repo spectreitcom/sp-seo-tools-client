@@ -10,3 +10,7 @@ export * from "./use-domains-filters.ts";
 export * from "./use-keywords-filters.ts";
 export * from "./use-error-handler.ts";
 export * from "./use-rt-testing-mode.ts";
+export * from "./use-error-handler.ts";
+export * from "./use-sa-testing-mode.ts";
+export * from "./use-domain-history-position.ts";
+export * from "./use-sa-subscriptions.tsx";

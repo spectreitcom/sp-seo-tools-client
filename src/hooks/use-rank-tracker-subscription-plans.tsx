@@ -2,7 +2,7 @@ import { useAuth } from "./use-auth.tsx";
 import { queryOptions } from "@tanstack/react-query";
 import axiosInstance from "../axios.ts";
 
-export type SubscriptionPlan = {
+export type RtSubscriptionPlan = {
   subscriptionId: string;
   name: string;
   amount: number;
@@ -14,7 +14,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   const { getAccessToken } = useAuth();
 
   const retrievePlansFn = async () => {
-    const response = await axiosInstance.get<SubscriptionPlan[]>(
+    const response = await axiosInstance.get<RtSubscriptionPlan[]>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/subscriptions`,
       {
         headers: {
@@ -26,7 +26,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   };
 
   const retrieveCurrenPlanFn = async () => {
-    const response = await axiosInstance.get<SubscriptionPlan>(
+    const response = await axiosInstance.get<RtSubscriptionPlan>(
       `${import.meta.env.VITE_API_URL}/rank-tracker-subscription/current-plan`,
       {
         headers: {
@@ -41,7 +41,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   const createSubscriptionPlansQueryOptions = () =>
     queryOptions({
       queryFn: retrievePlansFn,
-      queryKey: ["subscriptionPlans"],
+      queryKey: ["rtSubscriptionPlans"],
     });
 
   const createCurrentPlanQueryOptions = (
@@ -49,7 +49,7 @@ export const useRankTrackerSubscriptionPlans = () => {
   ) =>
     queryOptions({
       queryFn: retrieveCurrenPlanFn,
-      queryKey: ["currentPlan"],
+      queryKey: ["rtCurrentPlan"],
       refetchInterval,
     });
 

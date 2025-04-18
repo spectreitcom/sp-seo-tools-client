@@ -1,8 +1,7 @@
 import Button from "../ui/button.tsx";
 import TestModeCounter from "./test-mode-counter.tsx";
-import { useSaTestingMode } from "../../hooks/use-sa-testing-mode.ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useErrorHandler } from "../../hooks";
+import { useErrorHandler, useSaTestingMode } from "../../hooks";
 import Spinner from "../ui/loader/spinner.tsx";
 import { RequestAxiosError } from "../../types";
 import toast from "react-hot-toast";
@@ -31,10 +30,12 @@ function SaTestingModeBanner() {
 
   if (isLoading)
     return (
-      <div className={"rounded-md bg-gray-100 p-4 mb-4"}>
+      <div className={"rounded-md bg-gray-100 p-4"}>
         <Spinner width={30} borderWidth={4} />
       </div>
     );
+
+  if (!data?.canActivate && !data?.isActive) return null;
 
   return (
     <div
