@@ -13,7 +13,7 @@ type Props = Readonly<{
   maxSearchedPages: number;
 }>;
 
-function SubscriptionPlan({
+function RtSubscriptionPlan({
   subscriptionId,
   maxKeywordsQty,
   price,
@@ -56,4 +56,4 @@ function SubscriptionPlan({
   );
 }
 
-export default SubscriptionPlan;
+export default RtSubscriptionPlan;
