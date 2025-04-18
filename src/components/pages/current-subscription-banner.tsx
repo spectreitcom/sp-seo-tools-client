@@ -15,9 +15,7 @@ function CurrentSubscriptionBanner({
 }: Props) {
   return (
     <div
-      className={
-        "mt-8 flex justify-between items-center bg-gray-100 p-4 rounded-md"
-      }
+      className={"flex justify-between items-center bg-gray-100 p-4 rounded-md"}
     >
       <div>
         <h3 className={"text-lg font-semibold"}>
