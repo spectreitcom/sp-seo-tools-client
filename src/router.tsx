@@ -9,6 +9,7 @@ import RtSuccessPage from "./pages/rank-tracker/rt-success-page.tsx";
 import RtDomainsPage from "./pages/rank-tracker/rt-domains-page.tsx";
 import RtKeywordsPage from "./pages/rank-tracker/rt-keywords-page.tsx";
 import RtKeywordDetailsPage from "./pages/rank-tracker/rt-keyword-details-page.tsx";
+import SaHomePage from "./pages/serp-analyzer/sa-home-page.tsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,16 @@ const router = createBrowserRouter([
           {
             path: "keywords/:keywordId",
             element: <RtKeywordDetailsPage />,
+          },
+        ],
+      },
+      {
+        path: "serp-analyzer",
+        element: <RtLayout />,
+        children: [
+          {
+            path: "",
+            element: <SaHomePage />,
           },
         ],
       },
