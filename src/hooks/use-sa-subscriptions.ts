@@ -1,4 +1,4 @@
-import { useAuth } from "./use-auth.tsx";
+import { useAuth } from "./use-auth.ts";
 import axiosInstance from "../axios.ts";
 import { queryOptions } from "@tanstack/react-query";
 
