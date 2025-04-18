@@ -39,7 +39,9 @@ function SaTestingModeBanner() {
 
   return (
     <div
-      className={"flex justify-between items-center bg-gray-100 p-4 rounded-md"}
+      className={
+        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8"
+      }
     >
       {data?.canActivate && (
         <>
