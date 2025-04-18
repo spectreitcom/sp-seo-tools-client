@@ -1,4 +1,4 @@
-import SubscriptionPlan from "./subscription-plan.tsx";
+import RtSubscriptionPlan from "./rt-subscription-plan.tsx";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ import { getErrorMessage } from "../../../utils/get-error-message.ts";
 import Spinner from "../../ui/loader/spinner.tsx";
 import Button from "../../ui/button.tsx";
 
-function SubscriptionPlans() {
+function RtSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =
     useRankTrackerSubscriptionPlans();
 
@@ -83,7 +83,7 @@ function SubscriptionPlans() {
       </div>
       <div className={"mt-4 flex flex-wrap"}>
         {plans?.map((plan) => (
-          <SubscriptionPlan
+          <RtSubscriptionPlan
             key={plan.subscriptionId}
             subscriptionId={plan.subscriptionId}
             maxKeywordsQty={plan.maxKeywordsQty}
@@ -97,4 +97,4 @@ function SubscriptionPlans() {
   );
 }
 
-export default SubscriptionPlans;
+export default RtSubscriptionPlans;
