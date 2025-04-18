@@ -1,15 +1,47 @@
 import SubscriptionPlan from "../subscription-plan.tsx";
-import { useErrorHandler, useSaSubscriptions } from "../../../hooks";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useErrorHandler,
+  useSaStripe,
+  useSaSubscriptions,
+} from "../../../hooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Spinner from "../../ui/loader/spinner.tsx";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
 import CurrentSubscriptionBanner from "../current-subscription-banner.tsx";
+import { RequestAxiosError } from "../../../types";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../../../utils/get-error-message.ts";
 
 function SaSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =
     useSaSubscriptions();
   const { handle401Error } = useErrorHandler();
+  const { createCheckoutSession, createSessionPortal } = useSaStripe();
+
+  const { mutate: createCheckout, isPending: createCheckoutIsPending } =
+    useMutation({
+      mutationFn: createCheckoutSession,
+      onSuccess: (data) => {
+        window.location.href = data.sessionUrl;
+      },
+      onError: (error: RequestAxiosError) => {
+        handle401Error(error);
+        toast.error(getErrorMessage(error));
+      },
+    });
+
+  const { mutate: createSession, isPending: createSessionIsPending } =
+    useMutation({
+      mutationFn: createSessionPortal,
+      onSuccess: (data) => {
+        window.location.href = data.url;
+      },
+      onError: (error: RequestAxiosError) => {
+        handle401Error(error);
+        toast.error(getErrorMessage(error));
+      },
+    });
 
   const {
     data: plans,
@@ -45,14 +77,14 @@ function SaSubscriptionPlans() {
       <CurrentSubscriptionBanner
         planName={currentPlan.name}
         price={currentPlan.amount}
-        onManageSubscription={() => {}}
-        isLoading={false}
+        onManageSubscription={() => createSession()}
+        isLoading={createSessionIsPending}
       />
     );
   }
 
   return (
-    <div className={"mt-8"}>
+    <div>
       <h2 className={"text-2xl font-semibold"}>
         Choose a plan to unlock all features
       </h2>
@@ -63,7 +95,8 @@ function SaSubscriptionPlans() {
             key={plan.subscriptionId}
             title={plan.name}
             price={plan.amount}
-            onChoosePlan={() => {}}
+            onChoosePlan={() => createCheckout(plan.subscriptionId)}
+            isLoading={createCheckoutIsPending}
             features={[
               `Search results: top ${plan.searchedPages * 10}`,
               `Analysis per month: ${plan.analysisPerMonth}`,
