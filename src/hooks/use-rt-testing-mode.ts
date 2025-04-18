@@ -6,17 +6,17 @@ type ExpiresAt = {
   value: number;
 };
 
-export type UserTestingModeInfoResponse = {
+export type RtUserTestingModeInfoResponse = {
   isActive: boolean;
   canActivate: boolean;
   expiresAt: ExpiresAt | null;
 };
 
-export function useTestingMode() {
+export function useRtTestingMode() {
   const { getAccessToken } = useAuth();
 
   const retrieveUserTestingModeInfoFn = async () => {
-    const response = await axiosInstance.get<UserTestingModeInfoResponse>(
+    const response = await axiosInstance.get<RtUserTestingModeInfoResponse>(
       `${import.meta.env.VITE_API_URL}/rank-tracker/testing-mode/user-info`,
       {
         headers: {
