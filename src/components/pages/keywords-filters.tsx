@@ -14,10 +14,10 @@ export type KeywordsFilter = {
   localizationId: string;
 };
 
-type Props = {
+type Props = Readonly<{
   onChange: (v: KeywordsFilter) => void;
   value: KeywordsFilter;
-};
+}>;
 
 function KeywordsFilters({ onChange, value }: Props) {
   const { createDevicesQueryOptions } = useRtDevices();

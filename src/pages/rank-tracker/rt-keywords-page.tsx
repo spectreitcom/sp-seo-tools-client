@@ -122,7 +122,6 @@ function RtKeywordsPage() {
     }
     if (availableKeywordsQuantityError) {
       handle401Error(availableKeywordsQuantityError as AxiosError);
-      return;
     }
   }, [keywordsError, availableKeywordsQuantityError]);
 

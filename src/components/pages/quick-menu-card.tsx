@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 
-type Props = {
+type Props = Readonly<{
   path: string;
   heading: string;
   description: string;
-};
+}>;
+
 function QuickMenuCard({ path, heading, description }: Props) {
   return (
     <Link to={path} className={"w-full lg:w-3/12"}>

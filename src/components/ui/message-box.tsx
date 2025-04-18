@@ -8,13 +8,13 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ReactNode } from "react";
 import clsx from "clsx";
 
-type Props = {
+type Props = Readonly<{
   children?: ReactNode[];
   severity: "info" | "warning" | "error" | "success";
   text?: string;
   showCloseBtn?: boolean;
   onClose?: () => void;
-};
+}>;
 
 function MessageBox({
   children,
@@ -82,11 +82,7 @@ function MessageBox({
           )}
         </div>
         <div className="ml-3">
-          {children && children.length ? (
-            children
-          ) : (
-            <p className={textClasses}>{text}</p>
-          )}
+          {children?.length ? children : <p className={textClasses}>{text}</p>}
         </div>
         {showCloseBtn && (
           <div className="ml-auto pl-3">

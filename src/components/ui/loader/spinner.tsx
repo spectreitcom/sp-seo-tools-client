@@ -1,9 +1,9 @@
 import "./spinner.css";
 
-type Props = {
+type Props = Readonly<{
   width?: number;
   borderWidth?: number;
-};
+}>;
 
 function Spinner({ width = 50, borderWidth = 8 }: Props) {
   return (

@@ -8,9 +8,9 @@ import Spinner from "../ui/loader/spinner.tsx";
 import Button from "../ui/button.tsx";
 import TestModeCounter from "./test-mode-counter.tsx";
 
-type Props = {
+type Props = Readonly<{
   className?: string;
-};
+}>;
 
 function RtTestingModeBanner({ className }: Props) {
   const { createUserTestingModeQueryOptions, activateFn } = useRtTestingMode();

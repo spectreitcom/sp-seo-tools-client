@@ -2,10 +2,10 @@ import { AvailableKeywordsQuantity as AvailableKeywordsQuantityInterface } from 
 import { RectangleStackIcon } from "@heroicons/react/16/solid";
 import Spinner from "../ui/loader/spinner.tsx";
 
-type Props = {
+type Props = Readonly<{
   data?: AvailableKeywordsQuantityInterface;
   loading?: boolean;
-};
+}>;
 
 function AvailableKeywordsQuantity({ data, loading }: Props) {
   if (!data) return null;

@@ -1,6 +1,6 @@
-type Props = {
+type Props = Readonly<{
   noOptionsText?: string;
-};
+}>;
 
 function SelectNoOptionsPlaceholder({
   noOptionsText = "No options to display",

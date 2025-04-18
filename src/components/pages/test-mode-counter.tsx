@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import moment from "moment";
 
-type Props = {
+type Props = Readonly<{
   expiresAt: number | undefined | null;
   label?: string;
-};
+}>;
 
 function TestModeCounter({ expiresAt, label }: Props) {
   const counterRef = useRef<HTMLSpanElement>(null);

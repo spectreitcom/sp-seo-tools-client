@@ -1,14 +1,12 @@
 import { ReactNode } from "react";
 import clsx from "clsx";
 import { CheckIcon } from "@heroicons/react/16/solid";
-import { Option } from "./types.ts";
 
-type Props = {
+type Props = Readonly<{
   children: ReactNode;
   selected?: boolean;
-  option: Option;
   onSelect: () => void;
-};
+}>;
 
 function SelectOption({ children, selected, onSelect }: Props) {
   return (
