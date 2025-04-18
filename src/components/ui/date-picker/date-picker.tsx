@@ -7,7 +7,7 @@ import moment from "moment";
 import Label from "../label.tsx";
 import "./date-picker.css";
 
-type Props = {
+type Props = Readonly<{
   className?: string;
   error?: string;
   label?: string;
@@ -19,7 +19,7 @@ type Props = {
   values?: string[];
   minDate?: string;
   maxDate?: string;
-};
+}>;
 
 function DatePicker({
   className,

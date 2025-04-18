@@ -1,9 +1,9 @@
 import Spinner from "./spinner.tsx";
 
-type Props = {
+type Props = Readonly<{
   active: boolean;
   text?: string;
-};
+}>;
 
 function Loader({ active, text }: Props) {
   if (!active) return null;

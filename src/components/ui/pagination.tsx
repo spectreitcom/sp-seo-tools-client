@@ -1,12 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 
-type Props = {
+type Props = Readonly<{
   total: number;
   page: number;
   perPage: number;
   onNextPage: () => void;
   onPrevPage: () => void;
-};
+}>;
 
 function Pagination({ total, perPage, page, onNextPage, onPrevPage }: Props) {
   const pagesCount = Math.ceil(total / perPage);

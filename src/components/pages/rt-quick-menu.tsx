@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import QuickMenuCard from "./quick-menu-card.tsx";
 
-type Props = {
+type Props = Readonly<{
   className?: string;
-};
+}>;
 
 function RtQuickMenu({ className }: Props) {
   return (

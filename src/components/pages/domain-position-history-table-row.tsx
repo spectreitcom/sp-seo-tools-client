@@ -1,9 +1,9 @@
 import KeywordPositionBadge from "./keyword-position-badge.tsx";
 import { DomainPositionHistory } from "../../hooks/use-domain-history-position.ts";
 
-type Props = {
+type Props = Readonly<{
   item: DomainPositionHistory;
-};
+}>;
 
 function DomainPositionHistoryTableRow({ item }: Props) {
   return (

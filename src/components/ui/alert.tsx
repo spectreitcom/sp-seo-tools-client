@@ -7,7 +7,7 @@ import {
 import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 import Button from "./button.tsx";
 
-type Props = {
+type Props = Readonly<{
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -16,7 +16,7 @@ type Props = {
   loading?: boolean;
   title?: string;
   description?: string;
-};
+}>;
 
 function Alert({
   open,

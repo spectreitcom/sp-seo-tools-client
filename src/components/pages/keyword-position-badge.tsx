@@ -1,8 +1,8 @@
 import Badge from "../ui/badge.tsx";
 
-type Props = {
+type Props = Readonly<{
   position: number;
-};
+}>;
 
 function KeywordPositionBadge({ position }: Props) {
   if (position > 0 && position <= 10) {

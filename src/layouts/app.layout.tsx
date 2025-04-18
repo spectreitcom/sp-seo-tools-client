@@ -4,19 +4,17 @@ import Topbar from "../components/pages/topbar/topbar.tsx";
 
 function AppLayout() {
   return (
-    <>
-      <div>
-        <Aside />
-        <div className="lg:pl-72">
-          <Topbar />
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
-              <Outlet />
-            </div>
-          </main>
-        </div>
+    <div>
+      <Aside />
+      <div className="lg:pl-72">
+        <Topbar />
+        <main className="py-10">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <Outlet />
+          </div>
+        </main>
       </div>
-    </>
+    </div>
   );
 }
 

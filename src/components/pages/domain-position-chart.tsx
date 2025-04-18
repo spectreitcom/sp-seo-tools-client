@@ -3,10 +3,10 @@ import clsx from "clsx";
 import { useMemo } from "react";
 import { DomainPositionHistory } from "../../hooks/use-domain-history-position.ts";
 
-type Props = {
+type Props = Readonly<{
   className?: string;
   data: DomainPositionHistory[];
-};
+}>;
 
 type ChartItem = {
   domainPositionId: string;
