@@ -7,7 +7,7 @@ import { Option, SelectValue } from "./types.ts";
 import { findOption } from "./utils.ts";
 import Label from "../label.tsx";
 
-type Props = {
+type Props = Readonly<{
   error?: string;
   className?: string;
   loading?: boolean;
@@ -25,7 +25,7 @@ type Props = {
   onSearch?: (searchText: string) => void;
   onOpen?: () => void;
   foundedOption?: Option | null;
-};
+}>;
 
 function Select({
   className,
@@ -93,7 +93,7 @@ function Select({
         <SelectHeader
           ref={selectHeaderRef}
           onClick={() => setOpen((prev) => !prev)}
-          option={foundedOption ? foundedOption : findOption(value, options)}
+          option={foundedOption ?? findOption(value, options)}
           clearable={clearable}
           onClear={() => {
             onClear?.();
@@ -115,7 +115,6 @@ function Select({
           {cachedOptions.map((option) => (
             <SelectOption
               key={option.value}
-              option={option}
               selected={option.value === value}
               onSelect={() => handleSelect(option)}
             >

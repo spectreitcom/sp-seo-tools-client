@@ -5,7 +5,7 @@ import Label from "./label.tsx";
 
 type Props = ComponentProps<"input"> & {
   label?: string;
-  error?: string | null | undefined;
+  error?: string | null;
 };
 
 function Input({ disabled, className, label, error, ...rest }: Props) {

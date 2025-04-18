@@ -21,11 +21,11 @@ import Input from "../ui/input.tsx";
 import Select from "../ui/select-new/select.tsx";
 import Spinner from "../ui/loader/spinner.tsx";
 
-type Props = {
+type Props = Readonly<{
   open: boolean;
   onClose: () => void;
   onAdded: () => void;
-};
+}>;
 
 const validationSchema = z.object({
   domainId: z
@@ -120,7 +120,6 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     }
     if (localizationsError) {
       handle401Error(localizationsError as AxiosError);
-      return;
     }
   }, [availableKeywordsQuantityError, devicesError, localizationsError]);
 
@@ -139,9 +138,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
             className={"w-32"}
             loading={isPending}
             onClick={submit}
-            disabled={
-              availableKeywordsQuantity && availableKeywordsQuantity.exceeded
-            }
+            disabled={availableKeywordsQuantity?.exceeded}
           >
             Save
           </Button>
@@ -156,7 +153,7 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
         </div>
       ) : (
         <>
-          {availableKeywordsQuantity && availableKeywordsQuantity.exceeded && (
+          {availableKeywordsQuantity?.exceeded && (
             <div className={"mb-4"}>
               <MessageBox
                 severity={"warning"}

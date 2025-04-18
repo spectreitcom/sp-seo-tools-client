@@ -51,7 +51,6 @@ function SubscriptionPlans() {
     }
     if (currentPlanError) {
       handle401Error(currentPlanError as AxiosError);
-      return;
     }
   }, [plansError, currentPlanError]);
 

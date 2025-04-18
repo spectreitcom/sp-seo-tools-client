@@ -45,7 +45,7 @@ function Button({
   );
 
   return (
-    <button className={cssClasses} disabled={disabled || loading} {...rest}>
+    <button className={cssClasses} disabled={disabled ?? loading} {...rest}>
       {loading && (
         <span className={"mr-2"}>
           <Spinner borderWidth={2} width={15} />

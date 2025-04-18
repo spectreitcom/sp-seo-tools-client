@@ -5,7 +5,7 @@ import Label from "./label.tsx";
 
 type Props = ComponentProps<"input"> & {
   label?: string;
-  error?: string | null | undefined;
+  error?: string | null;
   leadingAddon?: string | ReactNode;
   trailingAddon?: string | ReactNode;
 };

@@ -12,10 +12,10 @@ import IconButton from "../ui/icon-button.tsx";
 import Alert from "../ui/alert.tsx";
 import KeywordGrowthArrows from "./keyword-growth-arrows.tsx";
 
-type Props = {
+type Props = Readonly<{
   keyword: Keyword;
   onDeleted: () => void;
-};
+}>;
 
 function KeywordsTableRow({ keyword, onDeleted }: Props) {
   const [showAlert, setShowAlert] = useState(false);

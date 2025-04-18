@@ -1,9 +1,9 @@
 import { KeywordGrowth } from "../../hooks";
 import { ArrowLongDownIcon, ArrowLongUpIcon } from "@heroicons/react/16/solid";
 
-export type Props = {
+export type Props = Readonly<{
   growth: KeywordGrowth;
-};
+}>;
 
 function KeywordGrowthArrows({ growth }: Props) {
   return (

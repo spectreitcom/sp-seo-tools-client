@@ -3,10 +3,10 @@ import KeywordPositionBadge from "./keyword-position-badge.tsx";
 import { Keyword } from "../../hooks";
 import KeywordGrowthArrows from "./keyword-growth-arrows.tsx";
 
-type Props = {
+type Props = Readonly<{
   keyword: Keyword | undefined;
   className?: string;
-};
+}>;
 
 function RtKeywordDetails({ keyword, className }: Props) {
   if (!keyword) return null;

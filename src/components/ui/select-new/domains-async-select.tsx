@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import { AxiosError } from "axios";
 import { useDomains, useErrorHandler } from "../../../hooks";
 
-type Props = {
+type Props = Readonly<{
   value: string | null;
   onChange: (value: string) => void;
   className?: string;
   error?: string;
   label?: string;
   placeholderText?: string;
-};
+}>;
 
 function DomainsAsyncSelect({
   value,
@@ -43,7 +43,6 @@ function DomainsAsyncSelect({
     }
     if (domainError) {
       handle401Error(domainError as AxiosError);
-      return;
     }
   }, [domainsError, domainError]);
 

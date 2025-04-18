@@ -8,10 +8,10 @@ import { getErrorMessage } from "../../utils/get-error-message.ts";
 import IconButton from "../ui/icon-button.tsx";
 import Alert from "../ui/alert.tsx";
 
-type Props = {
+type Props = Readonly<{
   domain: Domain;
   onDeleted: () => void;
-};
+}>;
 
 function DomainsTableRow({ domain, onDeleted }: Props) {
   const [showAlert, setShowAlert] = useState(false);

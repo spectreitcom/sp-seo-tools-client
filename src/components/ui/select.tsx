@@ -14,7 +14,7 @@ export type SelectOption = {
   label: string | number;
 };
 
-function Placeholder({ text }: { text?: string }) {
+function Placeholder({ text }: Readonly<{ text?: string }>) {
   return <span>{text}</span>;
 }
 
@@ -42,7 +42,7 @@ function DropdownIcon() {
   );
 }
 
-type Props<T> = {
+type Props<T> = Readonly<{
   value: T | null | undefined | string;
   onChange: (value: T) => void;
   label?: string;
@@ -52,7 +52,7 @@ type Props<T> = {
   placeholder?: string;
   error?: string;
   disabled?: boolean;
-};
+}>;
 
 /**
  * @deprecated

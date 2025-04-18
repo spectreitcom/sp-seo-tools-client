@@ -2,12 +2,12 @@ import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router";
 import Button from "../ui/button.tsx";
 
-type Props = {
+type Props = Readonly<{
   title: string;
   description?: string;
   returnPath?: string;
   returnText?: string;
-};
+}>;
 
 function PageTitle({
   title,

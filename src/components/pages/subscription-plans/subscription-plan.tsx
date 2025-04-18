@@ -5,13 +5,13 @@ import { RequestAxiosError } from "../../../types";
 import { getErrorMessage } from "../../../utils/get-error-message.ts";
 import Button from "../../ui/button.tsx";
 
-type Props = {
+type Props = Readonly<{
   subscriptionId: string;
   price: number;
   name: string;
   maxKeywordsQty: number;
   maxSearchedPages: number;
-};
+}>;
 
 function SubscriptionPlan({
   subscriptionId,

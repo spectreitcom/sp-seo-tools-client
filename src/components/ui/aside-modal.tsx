@@ -2,14 +2,14 @@ import { ReactNode } from "react";
 import { Transition, TransitionChild } from "@headlessui/react";
 import clsx from "clsx";
 
-type Props = {
+type Props = Readonly<{
   contentClassName?: string;
   open: boolean;
   title?: string;
   footerAddon?: ReactNode;
   children?: ReactNode;
   onClose: () => void;
-};
+}>;
 
 function AsideModal({
   contentClassName,
