@@ -13,6 +13,17 @@ export type Analysis = {
   phrase: string;
 };
 
+export type AnalysisUsage = {
+  monthlyLimit: number;
+  usedQuota: number;
+};
+
+export type CreateAnalysisPayload = {
+  keyword: string;
+  localizationId: string;
+  device: string;
+};
+
 export function useAnalysis() {
   const { getAccessToken } = useAuth();
 
@@ -41,6 +52,42 @@ export function useAnalysis() {
     return response.data;
   };
 
+  const retrieveUsageFn = async () => {
+    const response = await axiosInstance.get<AnalysisUsage>(
+      `${import.meta.env.VITE_API_URL}/serp-analyzer/analysis/usage`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
+  const createAnalysisFn = async (payload: CreateAnalysisPayload) => {
+    const response = await axiosInstance.post(
+      `${import.meta.env.VITE_API_URL}/serp-analyzer/analysis`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
+  const createUsageQueryOptions = (
+    enabled = true,
+    refetchInterval: false | number = false,
+  ) =>
+    queryOptions({
+      queryFn: retrieveUsageFn,
+      queryKey: ["analysisUsage"],
+      refetchInterval,
+      enabled,
+    });
+
   const createAnalysisQueryOptions = (
     page = 1,
     searchText = "",
@@ -58,5 +105,7 @@ export function useAnalysis() {
 
   return {
     createAnalysisQueryOptions,
+    createUsageQueryOptions,
+    createAnalysisFn,
   };
 }
