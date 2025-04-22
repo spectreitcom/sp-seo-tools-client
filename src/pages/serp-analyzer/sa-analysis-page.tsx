@@ -8,13 +8,14 @@ import { useDebounceValue } from "usehooks-ts";
 import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/loader/spinner.tsx";
 import NoAnalysisPlaceholder from "../../components/pages/no-analysis-placeholder.tsx";
 import Pagination from "../../components/ui/pagination.tsx";
 import AnalysisTable from "../../components/pages/analysis-table.tsx";
+import AddAnalysisAsideModal from "../../components/add-analysis-aside-modal.tsx";
 
 const PER_PAGE = 15;
 
@@ -36,12 +37,14 @@ function SaAnalysisPage() {
   const { handle401Error } = useErrorHandler();
 
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
+  const [showCreateAnalysisModal, setShowCreateAnalysisModal] = useState(false);
 
   const {
     data: analysis,
     error: analysisError,
     isFetching: analysisIsFetching,
     isError,
+    refetch: refetchAnalysis,
   } = useQuery(
     createAnalysisQueryOptions(
       getPage(),
@@ -125,7 +128,7 @@ function SaAnalysisPage() {
             </div>
           )}
         </div>
-        <Button size={"lg"} onClick={() => {}}>
+        <Button size={"lg"} onClick={() => setShowCreateAnalysisModal(true)}>
           Add analysis
         </Button>
       </div>
@@ -158,10 +161,19 @@ function SaAnalysisPage() {
             )}
           </>
           {!analysis?.userTotal && (
-            <NoAnalysisPlaceholder className={"mt-8"} onAction={() => {}} />
+            <NoAnalysisPlaceholder
+              className={"mt-8"}
+              onAction={() => setShowCreateAnalysisModal(true)}
+            />
           )}
         </>
       )}
+
+      <AddAnalysisAsideModal
+        open={showCreateAnalysisModal}
+        onClose={() => setShowCreateAnalysisModal(false)}
+        onAdded={async () => await refetchAnalysis()}
+      />
     </div>
   );
 }
