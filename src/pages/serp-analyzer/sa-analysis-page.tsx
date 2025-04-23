@@ -16,6 +16,7 @@ import NoAnalysisPlaceholder from "../../components/pages/no-analysis-placeholde
 import Pagination from "../../components/ui/pagination.tsx";
 import AnalysisTable from "../../components/pages/analysis-table.tsx";
 import AddAnalysisAsideModal from "../../components/add-analysis-aside-modal.tsx";
+import AnalysisMonthlyUsage from "../../components/pages/analysis-monthly-usage.tsx";
 
 const PER_PAGE = 15;
 
@@ -33,7 +34,7 @@ function SaAnalysisPage() {
     getLocalizationId,
   } = useAnalysisFilters();
 
-  const { createAnalysisQueryOptions } = useAnalysis();
+  const { createAnalysisQueryOptions, createUsageQueryOptions } = useAnalysis();
   const { handle401Error } = useErrorHandler();
 
   const [searchText, setSearchText] = useDebounceValue(getSearchText(), 1000);
@@ -54,6 +55,13 @@ function SaAnalysisPage() {
       getLocalizationId(),
     ),
   );
+
+  const {
+    data: usage,
+    isFetching: usageIsFetching,
+    error: usageError,
+    refetch: refetchUsage,
+  } = useQuery(createUsageQueryOptions());
 
   const handleFiltersChange = (filter: AnalysisFilter) => {
     setSearchText(filter.searchText);
@@ -90,8 +98,12 @@ function SaAnalysisPage() {
   useEffect(() => {
     if (analysisError) {
       handle401Error(analysisError as AxiosError);
+      return;
     }
-  }, [analysisError]);
+    if (usageError) {
+      handle401Error(usageError as AxiosError);
+    }
+  }, [analysisError, usageError]);
 
   useEffect(() => {
     if (isError) {
@@ -106,6 +118,10 @@ function SaAnalysisPage() {
         returnPath={"/serp-analyzer"}
         returnText={"Back"}
       />
+
+      <div className={"mt-8"}>
+        <AnalysisMonthlyUsage data={usage} loading={usageIsFetching} />
+      </div>
 
       <div className={"mt-8 flex justify-between items-center"}>
         <div className={"grow"}>
@@ -172,7 +188,10 @@ function SaAnalysisPage() {
       <AddAnalysisAsideModal
         open={showCreateAnalysisModal}
         onClose={() => setShowCreateAnalysisModal(false)}
-        onAdded={async () => await refetchAnalysis()}
+        onAdded={async () => {
+          await refetchAnalysis();
+          await refetchUsage();
+        }}
       />
     </div>
   );
