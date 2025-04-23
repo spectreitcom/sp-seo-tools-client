@@ -12,13 +12,17 @@ function RtQuickMenu({ className }: Props) {
       <div className={"flex gap-4 mt-4"}>
         <QuickMenuCard
           path={"/rank-tracker/domains"}
-          heading={"Add new domain"}
-          description={"Add domains which you can use to add a new keywords"}
+          heading={"Domains"}
+          description={
+            "Add or browse domains which you can use to add a new keywords"
+          }
         />
         <QuickMenuCard
           path={"/rank-tracker/keywords"}
-          heading={"Add new keyword"}
-          description={"You can add keywords which can be tracked for a domain"}
+          heading={"Keywords"}
+          description={
+            "You can add and browse keywords which can be tracked for a domain"
+          }
         />
       </div>
     </div>
