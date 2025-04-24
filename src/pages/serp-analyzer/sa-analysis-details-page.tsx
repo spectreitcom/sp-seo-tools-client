@@ -12,6 +12,7 @@ import AnalysisChart from "../../components/pages/analysis-chart.tsx";
 import ReactCountryFlag from "react-country-flag";
 import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import AddCompetitorForm from "../../components/pages/add-competitor-form.tsx";
 
 function SaAnalysisDetailsPage() {
   const { analysisId } = useParams<{ analysisId: string }>();
@@ -63,6 +64,10 @@ function SaAnalysisDetailsPage() {
           <strong className={"mr-2"}>Device:</strong>
           {data?.deviceName}
         </div>
+      </div>
+
+      <div className={"mt-4"}>
+        <AddCompetitorForm analysisId={analysisId ?? ""} />
       </div>
 
       {!!selectedFactors.length && (

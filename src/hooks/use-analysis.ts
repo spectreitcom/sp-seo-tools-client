@@ -46,6 +46,11 @@ export type AnalysisDetails = {
   factorsCollection: FactorsCollection;
 };
 
+export type AddCompetitorPayload = {
+  analysisId: string;
+  url: string;
+};
+
 export function useAnalysis() {
   const { getAccessToken } = useAuth();
 
@@ -111,6 +116,19 @@ export function useAnalysis() {
     return response.data;
   };
 
+  const addCompetitorFn = async (payload: AddCompetitorPayload) => {
+    const response = await axiosInstance.post<void>(
+      `${import.meta.env.VITE_API_URL}/serp-analyzer/analysis/${payload.analysisId}/add-competitor`,
+      { url: payload.url },
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
   const createUsageQueryOptions = (
     enabled = true,
     refetchInterval: false | number = false,
@@ -154,5 +172,6 @@ export function useAnalysis() {
     createUsageQueryOptions,
     createAnalysisFn,
     createAnalysisDetailsQueryOptions,
+    addCompetitorFn,
   };
 }
