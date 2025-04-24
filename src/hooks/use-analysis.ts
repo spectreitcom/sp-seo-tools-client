@@ -24,6 +24,28 @@ export type CreateAnalysisPayload = {
   device: string;
 };
 
+export type PageData = {
+  pageId: string;
+  url: string;
+  position: number;
+  factors: Record<string, number>;
+};
+
+export type FactorsCollection = {
+  label: string;
+  factors: { label: string; key: string }[];
+}[];
+
+export type AnalysisDetails = {
+  analysisId: string;
+  phrase: string;
+  localizationName: string;
+  localizationCountryCode: string;
+  deviceName: string;
+  pages: PageData[];
+  factorsCollection: FactorsCollection;
+};
+
 export function useAnalysis() {
   const { getAccessToken } = useAuth();
 
@@ -55,6 +77,18 @@ export function useAnalysis() {
   const retrieveUsageFn = async () => {
     const response = await axiosInstance.get<AnalysisUsage>(
       `${import.meta.env.VITE_API_URL}/serp-analyzer/analysis/usage`,
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+    return response.data;
+  };
+
+  const retrieveAnalysisDetailsFn = async (analysisId: string) => {
+    const response = await axiosInstance.get<AnalysisDetails>(
+      `${import.meta.env.VITE_API_URL}/serp-analyzer/analysis/${analysisId}`,
       {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
@@ -103,9 +137,22 @@ export function useAnalysis() {
       refetchInterval,
     });
 
+  const createAnalysisDetailsQueryOptions = (
+    analysisId: string,
+    enabled = true,
+    refetchInterval: false | number = false,
+  ) =>
+    queryOptions({
+      queryFn: () => retrieveAnalysisDetailsFn(analysisId),
+      queryKey: ["analysisDetails", analysisId],
+      enabled,
+      refetchInterval,
+    });
+
   return {
     createAnalysisQueryOptions,
     createUsageQueryOptions,
     createAnalysisFn,
+    createAnalysisDetailsQueryOptions,
   };
 }
