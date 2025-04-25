@@ -29,6 +29,7 @@ export type PageData = {
   url: string;
   position: number;
   factors: Record<string, number>;
+  hasError: boolean;
 };
 
 export type FactorsCollection = {
