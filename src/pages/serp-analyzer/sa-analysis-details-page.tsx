@@ -113,6 +113,7 @@ function SaAnalysisDetailsPage() {
                 pageId: page.pageId,
                 position: page.position,
                 url: page.url,
+                hasError: page.hasError,
               })) ?? []
             }
           />
