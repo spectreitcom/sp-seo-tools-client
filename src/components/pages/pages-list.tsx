@@ -1,6 +1,7 @@
 import { PageData } from "../../hooks";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 import Badge from "../ui/badge.tsx";
+import clsx from "clsx";
 
 type Props = Readonly<{
   data: Omit<PageData, "factors">[];
@@ -20,11 +21,26 @@ function PagesList({ data }: Props) {
           {item.position === 0 && (
             <Badge color={"info"} text={"Your site"} className={"mr-2"} />
           )}
-          <div
-            className={"flex items-center text-indigo-600 hover:font-semibold"}
-          >
-            <span className={"mr-2"}>{item.url}</span>
-            <ArrowTopRightOnSquareIcon className={"size-5"} />
+          {item.hasError && (
+            <Badge color={"danger"} text={"Error"} className={"mr-2"} />
+          )}
+          <div className={"flex items-center"}>
+            <span
+              className={clsx(
+                "mr-2  hover:font-semibold",
+                !item.hasError && "text-indigo-600",
+                item.hasError && "text-red-600",
+              )}
+            >
+              {item.url}
+            </span>
+            <ArrowTopRightOnSquareIcon
+              className={clsx(
+                "size-5",
+                !item.hasError && "text-indigo-600",
+                item.hasError && "text-red-600",
+              )}
+            />
           </div>
         </a>
       ))}
