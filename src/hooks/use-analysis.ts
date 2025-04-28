@@ -11,6 +11,7 @@ export type Analysis = {
   localizationName: string;
   localizationCountryCode: string;
   phrase: string;
+  hasError: boolean;
 };
 
 export type AnalysisUsage = {
