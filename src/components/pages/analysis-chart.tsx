@@ -10,17 +10,17 @@ type Props = Readonly<{
 
 type ChartItem = {
   position: number;
-  value: number;
+  value: number | undefined;
   factor: { label: string; key: string };
   url: string;
 };
 
 function AnalysisChart({ data, factor }: Props) {
+  const _data = data.filter((item) => item.position !== 0);
+  const _competitorsData = data.filter((item) => item.position === 0);
+
   const charts = useMemo((): { label: string; data: ChartItem[] }[] => {
     const _charts: { label: string; data: ChartItem[] }[] = [];
-
-    const _data = data.filter((item) => item.position !== 0);
-    const _competitorsData = data.filter((item) => item.position === 0);
 
     const chart: { label: string; data: ChartItem[] } = {
       label: factor.label,
@@ -30,7 +30,7 @@ function AnalysisChart({ data, factor }: Props) {
     for (const item of _data) {
       chart.data.push({
         position: item.position,
-        value: item.factors[factor.key] ?? 0,
+        value: item.hasError ? undefined : (item.factors[factor.key] ?? 0),
         factor,
         url: item.url,
       });
@@ -51,15 +51,15 @@ function AnalysisChart({ data, factor }: Props) {
     }
 
     return _charts;
-  }, [data]);
+  }, [_data, _competitorsData]);
 
   const primaryAxis = useMemo(
     (): AxisOptions<ChartItem> => ({
       getValue: (datum) => datum.position,
       formatters: {
         tooltip: (x: number) => {
-          const item = data[x];
-          if (item) return item.url;
+          const item = _data[x - 1];
+          if (item) return `${x} - ${item.url}`;
           return "";
         },
       },
