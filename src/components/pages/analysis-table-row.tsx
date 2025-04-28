@@ -27,7 +27,7 @@ function AnalysisTableRow({ analysis }: Props) {
   const { data: analysisProgress, error } = useQuery(
     createAnalysisProgressQueryOptions(
       analysis.analysisId,
-      !isCompleted(),
+      !isCompleted() && !analysis.hasError,
       3 * 1000,
     ),
   );
@@ -48,7 +48,7 @@ function AnalysisTableRow({ analysis }: Props) {
   return (
     <tr>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0 flex items-center">
-        {!isCompleted() && (
+        {!isCompleted() && !analysis.hasError && (
           <span className={"mr-2"}>
             <Spinner width={20} borderWidth={3} />
           </span>
@@ -65,7 +65,8 @@ function AnalysisTableRow({ analysis }: Props) {
       </td>
       <td className="py-2 pr-3 pl-4 text-sm whitespace-nowrap text-gray-500 sm:pl-0">
         {isCompleted() && <Badge text={"Completed"} color={"success"} />}
-        {!isCompleted() && (
+        {analysis.hasError && <Badge text={"Error"} color={"danger"} />}
+        {!isCompleted() && !analysis.hasError && (
           <ProgressBar completed={progress} className={"w-48"} />
         )}
       </td>
