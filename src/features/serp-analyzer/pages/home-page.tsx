@@ -1,7 +1,7 @@
-import SaTestingModeBanner from "../components/sa-testing-mode-banner.tsx";
-import SaSubscriptionPlans from "../components/sa-subscription-plans.tsx";
-import SaQuickMenu from "../components/sa-quick-menu.tsx";
 import { ErrorBoundary } from "../../shared";
+import SaTestingModeBanner from "../components/testing-mode-banner.tsx";
+import SaSubscriptionPlans from "../components/subscription-plans.tsx";
+import SaQuickMenu from "../components/quick-menu.tsx";
 
 function SaHomePage() {
   return (

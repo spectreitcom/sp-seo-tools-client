@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useRankTrackerSubscriptionPlans } from "../hooks/use-rank-tracker-subscription-plans.ts";
-import { useErrorHandler } from "../../shared";
 import Spinner from "../../shared/components/loader/spinner.tsx";
+import { useErrorHandler } from "../../shared";
+import { useSaSubscriptions } from "../hooks/use-subscriptions.ts";
 
-function RtSuccessPage() {
-  const { createCurrentPlanQueryOptions } = useRankTrackerSubscriptionPlans();
+function SaSuccessPage() {
+  const { createCurrentPlanQueryOptions } = useSaSubscriptions();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { handle401Error } = useErrorHandler();
@@ -15,7 +15,7 @@ function RtSuccessPage() {
   const sessionId = searchParams.get("session_id");
 
   if (!sessionId) {
-    navigate("/rank-tracker");
+    navigate("/serp-analyzer");
   }
 
   const { data: currentPlan, error } = useQuery(
@@ -30,7 +30,7 @@ function RtSuccessPage() {
 
   useEffect(() => {
     if (currentPlan) {
-      navigate("/rank-tracker");
+      navigate("/serp-analyzer");
     }
   }, [currentPlan, navigate]);
 
@@ -49,4 +49,4 @@ function RtSuccessPage() {
   );
 }
 
-export default RtSuccessPage;
+export default SaSuccessPage;

@@ -1,22 +1,17 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import clsx from "clsx";
-import toast from "react-hot-toast";
 import {
   getErrorMessage,
   RequestAxiosError,
   useErrorHandler,
 } from "../../shared";
-import { useRtTestingMode } from "../hooks/use-rt-testing-mode.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import Button from "../../shared/components/button.tsx";
 import TestModeCounter from "../../shared/components/test-mode-counter.tsx";
+import { useSaTestingMode } from "../hooks/use-testing-mode.ts";
 
-type Props = Readonly<{
-  className?: string;
-}>;
-
-function RtTestingModeBanner({ className }: Props) {
-  const { createUserTestingModeQueryOptions, activateFn } = useRtTestingMode();
+function SaTestingModeBanner() {
+  const { createUserTestingModeQueryOptions, activateFn } = useSaTestingMode();
   const { handle401Error } = useErrorHandler();
 
   const { data, isLoading, refetch } = useQuery(
@@ -43,14 +38,13 @@ function RtTestingModeBanner({ className }: Props) {
       </div>
     );
 
-  if (data && !data.canActivate && !data.isActive) return null;
+  if (!data?.canActivate && !data?.isActive) return null;
 
   return (
     <div
-      className={clsx(
-        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8",
-        className,
-      )}
+      className={
+        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8"
+      }
     >
       {data?.canActivate && (
         <>
@@ -73,4 +67,4 @@ function RtTestingModeBanner({ className }: Props) {
   );
 }
 
-export default RtTestingModeBanner;
+export default SaTestingModeBanner;

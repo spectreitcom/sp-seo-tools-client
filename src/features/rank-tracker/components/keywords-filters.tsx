@@ -2,12 +2,12 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useRtDevices } from "../hooks/use-rt-devices.ts";
-import { useRtLocalizations } from "../hooks/use-rt-localizations.ts";
 import { useErrorHandler } from "../../shared";
 import InputWithInlineAddon from "../../shared/components/input-with-inline-addon.tsx";
 import DomainsAsyncSelect from "./domains-async-select.tsx";
 import Select from "../../shared/components/select/select.tsx";
+import { useRtDevices } from "../hooks/use-devices.ts";
+import { useRtLocalizations } from "../hooks/use-localizations.ts";
 
 export type KeywordsFilter = {
   searchText: string;

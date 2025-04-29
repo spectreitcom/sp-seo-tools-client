@@ -6,8 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
 import { useKeywords } from "../hooks/use-keywords.ts";
-import { useRtDevices } from "../hooks/use-rt-devices.ts";
-import { useRtLocalizations } from "../hooks/use-rt-localizations.ts";
 import {
   getErrorMessage,
   RequestAxiosError,
@@ -20,6 +18,8 @@ import MessageBox from "../../shared/components/message-box.tsx";
 import DomainsAsyncSelect from "./domains-async-select.tsx";
 import Input from "../../shared/components/input.tsx";
 import Select from "../../shared/components/select/select.tsx";
+import { useRtDevices } from "../hooks/use-devices.ts";
+import { useRtLocalizations } from "../hooks/use-localizations.ts";
 
 type Props = Readonly<{
   open: boolean;

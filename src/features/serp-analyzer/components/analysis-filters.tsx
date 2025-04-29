@@ -2,11 +2,11 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useSaDevices } from "../hooks/use-sa-devices.ts";
-import { useSaLocalizations } from "../hooks/use-sa-localizations.ts";
 import { useErrorHandler } from "../../shared";
 import InputWithInlineAddon from "../../shared/components/input-with-inline-addon.tsx";
 import Select from "../../shared/components/select/select.tsx";
+import { useSaDevices } from "../hooks/use-devices.ts";
+import { useSaLocalizations } from "../hooks/use-localizations.ts";
 
 export type AnalysisFilter = {
   searchText: string;

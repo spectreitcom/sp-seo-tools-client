@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import PageTitle from "../../shared/components/page-title.tsx";
-import RtKeywordDetails from "../components/rt-keyword-details.tsx";
+import KeywordDetails from "../components/keyword-details.tsx";
 import DatePicker from "../../shared/components/date-picker/date-picker.tsx";
 import LinkBtn from "../../shared/components/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -30,7 +30,7 @@ const minDateMoment = maxDateMoment.clone().subtract(6, "months");
 const minDate = minDateMoment.format("YYYY-MM-DD");
 const maxDate = maxDateMoment.format("YYYY-MM-DD");
 
-function RtKeywordDetailsPage() {
+function KeywordDetailsPage() {
   const { createKeywordQueryOptions } = useKeywords();
   const { keywordId } = useParams<{ keywordId: string }>();
   const { handle401Error } = useErrorHandler();
@@ -129,7 +129,7 @@ function RtKeywordDetailsPage() {
         returnText={"Back"}
       />
       <ErrorBoundary>
-        <RtKeywordDetails keyword={data} className={"mt-8"} />
+        <KeywordDetails keyword={data} className={"mt-8"} />
       </ErrorBoundary>
       <div className={"mt-8 -mx-2"}>
         <div className={"px-2 w-2/12"}>
@@ -180,4 +180,4 @@ function RtKeywordDetailsPage() {
   );
 }
 
-export default RtKeywordDetailsPage;
+export default KeywordDetailsPage;

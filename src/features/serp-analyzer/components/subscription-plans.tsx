@@ -2,45 +2,22 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useRankTrackerSubscriptionPlans } from "../hooks/use-rank-tracker-subscription-plans.ts";
-import { useRankTrackerStripe } from "../hooks/use-rank-tracker-stripe.ts";
 import {
   getErrorMessage,
   RequestAxiosError,
   useErrorHandler,
 } from "../../shared";
 import Spinner from "../../shared/components/loader/spinner.tsx";
-import Button from "../../shared/components/button.tsx";
+import CurrentSubscriptionBanner from "../../shared/components/current-subscription-banner.tsx";
 import SubscriptionPlan from "../../shared/components/subscription-plan.tsx";
+import { useSaSubscriptions } from "../hooks/use-subscriptions.ts";
+import { useSaStripe } from "../hooks/use-stripe.ts";
 
-function RtSubscriptionPlans() {
+function SaSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =
-    useRankTrackerSubscriptionPlans();
-  const { createSessionPortal, createCheckoutSession } = useRankTrackerStripe();
+    useSaSubscriptions();
   const { handle401Error } = useErrorHandler();
-
-  const {
-    data: plans,
-    isLoading: plansIsLoading,
-    error: plansError,
-  } = useQuery(createSubscriptionPlansQueryOptions());
-
-  const {
-    data: currentPlan,
-    isLoading: currentPlanIsLoading,
-    error: currentPlanError,
-  } = useQuery(createCurrentPlanQueryOptions());
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: createSessionPortal,
-    onSuccess: (data) => {
-      window.location.href = data.url;
-    },
-    onError: (error: RequestAxiosError) => {
-      handle401Error(error);
-      toast.error(getErrorMessage(error));
-    },
-  });
+  const { createCheckoutSession, createSessionPortal } = useSaStripe();
 
   const { mutate: createCheckout, isPending: createCheckoutIsPending } =
     useMutation({
@@ -54,6 +31,30 @@ function RtSubscriptionPlans() {
       },
     });
 
+  const { mutate: createSession, isPending: createSessionIsPending } =
+    useMutation({
+      mutationFn: createSessionPortal,
+      onSuccess: (data) => {
+        window.location.href = data.url;
+      },
+      onError: (error: RequestAxiosError) => {
+        handle401Error(error);
+        toast.error(getErrorMessage(error));
+      },
+    });
+
+  const {
+    data: plans,
+    isLoading: plansIsLoading,
+    error: plansError,
+  } = useQuery(createSubscriptionPlansQueryOptions());
+
+  const {
+    data: currentPlan,
+    isLoading: currentPlanIsLoading,
+    error: currentPlanError,
+  } = useQuery(createCurrentPlanQueryOptions());
+
   useEffect(() => {
     if (plansError) {
       handle401Error(plansError as AxiosError);
@@ -66,41 +67,41 @@ function RtSubscriptionPlans() {
 
   if (plansIsLoading || currentPlanIsLoading)
     return (
-      <div className={"bg-gray-100 rounded-md p-4 pt-4"}>
+      <div className={"rounded-md pt-4"}>
         <Spinner width={30} borderWidth={4} />
       </div>
     );
 
   if (currentPlan) {
     return (
-      <div className={"bg-gray-100 rounded-md p-4 flex items-center"}>
-        <p className={"mr-4"}>
-          Current plan: <strong>Pro</strong>
-        </p>
-        <Button size={"sm"} onClick={() => mutate()} loading={isPending}>
-          Manage subscription
-        </Button>
-      </div>
+      <CurrentSubscriptionBanner
+        planName={currentPlan.name}
+        price={currentPlan.amount}
+        onManageSubscription={() => createSession()}
+        isLoading={createSessionIsPending}
+      />
     );
   }
 
   return (
     <div>
       <h2 className={"text-2xl font-semibold"}>
-        Choose your plan to unlock all Rank Tracker features
+        Choose a plan to unlock all features
       </h2>
-      <div className={"mt-8 flex gap-x-16"}>
+
+      <div className={"flex gap-x-16 mt-8"}>
         {plans?.map((plan) => (
           <SubscriptionPlan
             key={plan.subscriptionId}
             title={plan.name}
             price={plan.amount}
-            isLoading={createCheckoutIsPending}
             onChoosePlan={() => createCheckout(plan.subscriptionId)}
+            isLoading={createCheckoutIsPending}
             features={[
-              `Max Keywords: ${plan.maxKeywordsQty}`,
-              `Max Searched Pages: ${plan.maxSearchedPages}`,
-              "Domains: unlimited",
+              `Search results: top ${plan.searchedPages * 10}`,
+              `Analysis per month: ${plan.analysisPerMonth}`,
+              "All localizations",
+              "All devices",
             ]}
           />
         ))}
@@ -109,4 +110,4 @@ function RtSubscriptionPlans() {
   );
 }
 
-export default RtSubscriptionPlans;
+export default SaSubscriptionPlans;

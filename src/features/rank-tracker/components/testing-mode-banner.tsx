@@ -1,17 +1,22 @@
-import { useSaTestingMode } from "../hooks/use-sa-testing-mode.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
+import toast from "react-hot-toast";
 import {
   getErrorMessage,
   RequestAxiosError,
   useErrorHandler,
 } from "../../shared";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import Button from "../../shared/components/button.tsx";
 import TestModeCounter from "../../shared/components/test-mode-counter.tsx";
+import { useRtTestingMode } from "../hooks/use-testing-mode.ts";
 
-function SaTestingModeBanner() {
-  const { createUserTestingModeQueryOptions, activateFn } = useSaTestingMode();
+type Props = Readonly<{
+  className?: string;
+}>;
+
+function TestingModeBanner({ className }: Props) {
+  const { createUserTestingModeQueryOptions, activateFn } = useRtTestingMode();
   const { handle401Error } = useErrorHandler();
 
   const { data, isLoading, refetch } = useQuery(
@@ -38,13 +43,14 @@ function SaTestingModeBanner() {
       </div>
     );
 
-  if (!data?.canActivate && !data?.isActive) return null;
+  if (data && !data.canActivate && !data.isActive) return null;
 
   return (
     <div
-      className={
-        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8"
-      }
+      className={clsx(
+        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8",
+        className,
+      )}
     >
       {data?.canActivate && (
         <>
@@ -67,4 +73,4 @@ function SaTestingModeBanner() {
   );
 }
 
-export default SaTestingModeBanner;
+export default TestingModeBanner;

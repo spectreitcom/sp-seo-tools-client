@@ -1,5 +1,3 @@
-import { useSaDevices } from "../hooks/use-sa-devices.ts";
-import { useSaLocalizations } from "../hooks/use-sa-localizations.ts";
 import { z } from "zod";
 import { useAnalysis } from "../hooks/use-analysis.ts";
 import {
@@ -19,6 +17,8 @@ import Spinner from "../../shared/components/loader/spinner.tsx";
 import MessageBox from "../../shared/components/message-box.tsx";
 import Input from "../../shared/components/input.tsx";
 import Select from "../../shared/components/select/select.tsx";
+import { useSaDevices } from "../hooks/use-devices.ts";
+import { useSaLocalizations } from "../hooks/use-localizations.ts";
 
 type Props = Readonly<{
   open: boolean;
