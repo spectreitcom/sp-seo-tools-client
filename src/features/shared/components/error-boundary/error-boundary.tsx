@@ -18,7 +18,7 @@ type Props = Readonly<{
   /**
    * Optional callback function that will be called when an error is caught
    * Useful for logging errors to an external service
-   * 
+   *
    * @param {Error} error - The error that was thrown
    * @param {ErrorInfo} errorInfo - Additional information about the error
    */
@@ -43,18 +43,18 @@ interface State {
 /**
  * A component that catches JavaScript errors anywhere in its child component tree,
  * logs those errors, and displays a fallback UI instead of the component tree that crashed.
- * 
+ *
  * This component implements the Error Boundary pattern introduced in React 16.
  * It uses the componentDidCatch lifecycle method to catch errors during rendering,
  * in lifecycle methods, and in constructors of the whole tree below it.
- * 
+ *
  * @component
  * @example
  * // Basic usage
  * <ErrorBoundary>
  *   <MyComponent />
  * </ErrorBoundary>
- * 
+ *
  * @example
  * // With custom fallback UI
  * <ErrorBoundary
@@ -62,7 +62,7 @@ interface State {
  * >
  *   <MyComponent />
  * </ErrorBoundary>
- * 
+ *
  * @example
  * // With error handling callback
  * <ErrorBoundary
@@ -78,7 +78,7 @@ class ErrorBoundary extends Component<Props, State> {
   /**
    * Constructor for the ErrorBoundary component
    * Initializes the state with hasError set to false and error set to null
-   * 
+   *
    * @param {Props} props - The component props
    */
   constructor(props: Props) {
@@ -89,7 +89,7 @@ class ErrorBoundary extends Component<Props, State> {
   /**
    * Static lifecycle method called when an error is thrown in a descendant component
    * This method is used to update the state so that the next render will show the fallback UI
-   * 
+   *
    * @param {Error} error - The error that was thrown
    * @returns {State} The updated state object with hasError set to true and the error
    */
@@ -101,7 +101,7 @@ class ErrorBoundary extends Component<Props, State> {
   /**
    * Lifecycle method called after an error has been thrown by a descendant component
    * This method is used for side effects like logging the error
-   * 
+   *
    * @param {Error} error - The error that was thrown
    * @param {ErrorInfo} errorInfo - Object containing the component stack trace
    */
@@ -117,20 +117,20 @@ class ErrorBoundary extends Component<Props, State> {
 
   /**
    * Renders either the children or the fallback UI depending on whether an error has occurred
-   * 
+   *
    * @returns {ReactNode} The rendered component
    */
   render(): ReactNode {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        this.props.fallback || (
+        this.props.fallback ?? (
           <div className="p-4 border border-red-300 bg-red-50 rounded-md">
             <h2 className="text-lg font-semibold text-red-800">
               Something went wrong
             </h2>
             <p className="text-red-600 mt-2">
-              {this.state.error?.message || "An unexpected error occurred"}
+              {this.state.error?.message ?? "An unexpected error occurred"}
             </p>
             <button
               className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
