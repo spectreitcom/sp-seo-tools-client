@@ -1,34 +1,42 @@
 import { createBrowserRouter } from "react-router";
 import { Suspense, lazy } from "react";
-import AppLayout from "./layouts/app.layout.tsx";
-import { ProtectedRoute } from "./components/protected-route.tsx";
-import Spinner from "./components/ui/loader/spinner.tsx";
+import AppLayout from "./features/shared/components/app.layout.tsx";
+import { ProtectedRoute } from "./features/auth";
+import Spinner from "./features/shared/components/loader/spinner.tsx";
 
-const DashboardPage = lazy(() => import("./pages/dashboard-page.tsx"));
-const SignInPage = lazy(() => import("./pages/sign-in-page.tsx"));
-const RtHomePage = lazy(() => import("./pages/rank-tracker/rt-home-page.tsx"));
-const RtLayout = lazy(() => import("./layouts/rt-layout.tsx"));
+const DashboardPage = lazy(
+  () => import("./features/dashboard/pages/dashboard-page.tsx"),
+);
+const SignInPage = lazy(() => import("./features/auth/pages/sign-in-page.tsx"));
+const RtHomePage = lazy(
+  () => import("./features/rank-tracker/pages/rt-home-page.tsx"),
+);
+const RtLayout = lazy(
+  () => import("./features/shared/components/simple-layout.tsx"),
+);
 const RtSuccessPage = lazy(
-  () => import("./pages/rank-tracker/rt-success-page.tsx"),
+  () => import("./features/rank-tracker/pages/rt-success-page.tsx"),
 );
 const RtDomainsPage = lazy(
-  () => import("./pages/rank-tracker/rt-domains-page.tsx"),
+  () => import("./features/rank-tracker/pages/rt-domains-page.tsx"),
 );
 const RtKeywordsPage = lazy(
-  () => import("./pages/rank-tracker/rt-keywords-page.tsx"),
+  () => import("./features/rank-tracker/pages/rt-keywords-page.tsx"),
 );
 const RtKeywordDetailsPage = lazy(
-  () => import("./pages/rank-tracker/rt-keyword-details-page.tsx"),
+  () => import("./features/rank-tracker/pages/rt-keyword-details-page.tsx"),
 );
-const SaHomePage = lazy(() => import("./pages/serp-analyzer/sa-home-page.tsx"));
+const SaHomePage = lazy(
+  () => import("./features/serp-analyzer/pages/sa-home-page.tsx"),
+);
 const SaSuccessPage = lazy(
-  () => import("./pages/serp-analyzer/sa-success-page.tsx"),
+  () => import("./features/serp-analyzer/pages/sa-success-page.tsx"),
 );
 const SaAnalysisPage = lazy(
-  () => import("./pages/serp-analyzer/sa-analysis-page.tsx"),
+  () => import("./features/serp-analyzer/pages/sa-analysis-page.tsx"),
 );
 const SaAnalysisDetailsPage = lazy(
-  () => import("./pages/serp-analyzer/sa-analysis-details-page.tsx"),
+  () => import("./features/serp-analyzer/pages/sa-analysis-details-page.tsx"),
 );
 
 const router = createBrowserRouter([

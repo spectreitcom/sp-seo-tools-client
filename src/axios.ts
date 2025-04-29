@@ -3,7 +3,7 @@ import {
   getRefreshToken,
   setAccessToken,
   setRefreshToken,
-} from "./utils/local-storage.ts";
+} from "./features/shared";
 
 const axiosInstance = axios.create();
 
