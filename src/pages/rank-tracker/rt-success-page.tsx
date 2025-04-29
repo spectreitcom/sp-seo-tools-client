@@ -25,13 +25,13 @@ function RtSuccessPage() {
     if (error) {
       handle401Error(error as AxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   useEffect(() => {
     if (currentPlan) {
       navigate("/rank-tracker");
     }
-  }, [currentPlan]);
+  }, [currentPlan, navigate]);
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import InputWithInlineAddon from "../ui/input-with-inline-addon.tsx";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import Select from "../ui/select-new/select.tsx";
+import Select from "../ui/select/select.tsx";
 import { useErrorHandler, useSaDevices, useSaLocalizations } from "../../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -37,7 +37,7 @@ function AnalysisFilters({ value, onChange }: Props) {
     if (localizationsError) {
       handle401Error(localizationsError as AxiosError);
     }
-  }, [devicesError, localizationsError]);
+  }, [devicesError, localizationsError, handle401Error]);
 
   return (
     <div className={"flex items-center -mx-2"}>

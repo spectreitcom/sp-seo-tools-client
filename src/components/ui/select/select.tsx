@@ -84,7 +84,7 @@ function Select({
     return () => {
       document.removeEventListener("click", handleClick, false);
     };
-  }, [open]);
+  }, [open, onOpen]);
 
   return (
     <div ref={containerRef} className={className}>

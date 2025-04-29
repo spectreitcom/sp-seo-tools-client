@@ -129,7 +129,7 @@ function RtDomainsPage() {
     if (error) {
       handle401Error(error as AxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   useEffect(() => {
     if (isError) {

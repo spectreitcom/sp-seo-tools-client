@@ -16,9 +16,9 @@ import { getErrorMessage } from "../../utils/get-error-message.ts";
 import AsideModal from "../ui/aside-modal.tsx";
 import Button from "../ui/button.tsx";
 import MessageBox from "../ui/message-box.tsx";
-import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
+import DomainsAsyncSelect from "../ui/select/domains-async-select.tsx";
 import Input from "../ui/input.tsx";
-import Select from "../ui/select-new/select.tsx";
+import Select from "../ui/select/select.tsx";
 import Spinner from "../ui/loader/spinner.tsx";
 
 type Props = Readonly<{
@@ -121,7 +121,12 @@ function AddKeywordAsideModal({ open, onClose, onAdded }: Props) {
     if (localizationsError) {
       handle401Error(localizationsError as AxiosError);
     }
-  }, [availableKeywordsQuantityError, devicesError, localizationsError]);
+  }, [
+    availableKeywordsQuantityError,
+    devicesError,
+    localizationsError,
+    handle401Error,
+  ]);
 
   return (
     <AsideModal

@@ -31,7 +31,7 @@ function SaAnalysisDetailsPage() {
     if (error) {
       handle401Error(error as AxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   if (isFetching) {
     return (

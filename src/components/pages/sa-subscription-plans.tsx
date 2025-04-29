@@ -59,7 +59,7 @@ function SaSubscriptionPlans() {
     if (currentPlanError) {
       handle401Error(currentPlanError as AxiosError);
     }
-  }, [plansError, currentPlanError]);
+  }, [plansError, currentPlanError, handle401Error]);
 
   if (plansIsLoading || currentPlanIsLoading)
     return (

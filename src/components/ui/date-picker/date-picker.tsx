@@ -1,6 +1,6 @@
 import "flatpickr/dist/flatpickr.min.css";
 import flatpickr from "flatpickr";
-import { useEffect, useId } from "react";
+import { useCallback, useEffect, useId } from "react";
 import clsx from "clsx";
 import { ExclamationCircleIcon } from "@heroicons/react/16/solid";
 import moment from "moment";
@@ -36,9 +36,9 @@ function DatePicker({
 }: Props) {
   const inputId = useId();
 
-  const getInputId = () => {
+  const getInputId = useCallback(() => {
     return inputId.split(":")[1];
-  };
+  }, [inputId]);
 
   const inputClasses = clsx(
     "h-10 col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-10 pl-3 text-base outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:pr-9 sm:text-sm/6 text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600",
@@ -80,7 +80,15 @@ function DatePicker({
         flatpickrInstance.destroy();
       }
     };
-  }, [values]);
+  }, [
+    values,
+    defaultEmittedDateFormat,
+    getInputId,
+    maxDate,
+    minDate,
+    mode,
+    onChange,
+  ]);
 
   return (
     <div className={className}>

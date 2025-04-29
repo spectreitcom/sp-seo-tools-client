@@ -44,7 +44,7 @@ function DomainsAsyncSelect({
     if (domainError) {
       handle401Error(domainError as AxiosError);
     }
-  }, [domainsError, domainError]);
+  }, [domainsError, domainError, handle401Error, error]);
 
   return (
     <Select

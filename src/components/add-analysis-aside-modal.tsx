@@ -15,7 +15,7 @@ import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "./ui/input.tsx";
-import Select from "./ui/select-new/select.tsx";
+import Select from "./ui/select/select.tsx";
 import toast from "react-hot-toast";
 import { RequestAxiosError } from "../types";
 import { getErrorMessage } from "../utils/get-error-message.ts";
@@ -116,7 +116,7 @@ function AddAnalysisAsideModal({ onClose, onAdded, open }: Props) {
     if (usageError) {
       handle401Error(usageError as AxiosError);
     }
-  }, [devicesError, localizationsError, usageError]);
+  }, [devicesError, localizationsError, usageError, handle401Error]);
 
   return (
     <AsideModal

@@ -123,7 +123,7 @@ function RtKeywordsPage() {
     if (availableKeywordsQuantityError) {
       handle401Error(availableKeywordsQuantityError as AxiosError);
     }
-  }, [keywordsError, availableKeywordsQuantityError]);
+  }, [keywordsError, availableKeywordsQuantityError, handle401Error]);
 
   useEffect(() => {
     if (isError) {

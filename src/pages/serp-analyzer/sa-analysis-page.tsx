@@ -103,7 +103,7 @@ function SaAnalysisPage() {
     if (usageError) {
       handle401Error(usageError as AxiosError);
     }
-  }, [analysisError, usageError]);
+  }, [analysisError, usageError, handle401Error]);
 
   useEffect(() => {
     if (isError) {

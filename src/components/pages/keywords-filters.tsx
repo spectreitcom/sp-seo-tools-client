@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { AxiosError } from "axios";
 import { useErrorHandler, useRtDevices, useRtLocalizations } from "../../hooks";
 import InputWithInlineAddon from "../ui/input-with-inline-addon.tsx";
-import DomainsAsyncSelect from "../ui/select-new/domains-async-select.tsx";
-import Select from "../ui/select-new/select.tsx";
+import DomainsAsyncSelect from "../ui/select/domains-async-select.tsx";
+import Select from "../ui/select/select.tsx";
 
 export type KeywordsFilter = {
   searchText: string;
@@ -39,7 +39,7 @@ function KeywordsFilters({ onChange, value }: Props) {
     if (localizationsError) {
       handle401Error(localizationsError as AxiosError);
     }
-  }, [devicesError, localizationsError]);
+  }, [devicesError, localizationsError, handle401Error]);
 
   return (
     <div className={"flex items-center -mx-2"}>

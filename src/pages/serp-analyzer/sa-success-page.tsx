@@ -25,13 +25,13 @@ function SaSuccessPage() {
     if (error) {
       handle401Error(error as AxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   useEffect(() => {
     if (currentPlan) {
       navigate("/serp-analyzer");
     }
-  }, [currentPlan]);
+  }, [currentPlan, navigate]);
 
   return (
     <div>

@@ -37,13 +37,13 @@ function AnalysisTableRow({ analysis }: Props) {
     if (analysisProgress?.progress === 100 && analysis.progress !== 100) {
       toast.success("Analysis finished");
     }
-  }, [analysisProgress]);
+  }, [analysisProgress, analysis]);
 
   useEffect(() => {
     if (error) {
       handle401Error(error as AxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   return (
     <tr>

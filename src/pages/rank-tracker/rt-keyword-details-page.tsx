@@ -108,7 +108,7 @@ function RtKeywordDetailsPage() {
       toast.error(getErrorMessage(error as RequestAxiosError));
       handle401Error(error as RequestAxiosError);
     }
-  }, [error]);
+  }, [error, handle401Error]);
 
   if (isLoading || isLoading2 || isLoading3)
     return (
