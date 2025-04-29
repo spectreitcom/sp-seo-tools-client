@@ -27,7 +27,7 @@ function PageFactors({ data, onChange, selected }: Props) {
             <div className={"bg-gray-100 p-2 font-semibold"}>{item.label}</div>
             <ul className={"mt-2 mb-2"}>
               {item.factors.map((factor) => (
-                <li key={factor.key}>
+                <li key={factor.key} className={"mb-2"}>
                   <Checkbox
                     label={factor.label}
                     checked={selectedKeys.includes(factor.key)}
