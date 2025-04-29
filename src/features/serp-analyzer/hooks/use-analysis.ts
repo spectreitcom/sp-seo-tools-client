@@ -1,5 +1,4 @@
 import axiosInstance from "../../../axios";
-import { CollectionData } from "../../../types";
 import {
   AddCompetitorPayload,
   Analysis,
@@ -9,6 +8,7 @@ import {
 } from "../types";
 import { queryOptions } from "@tanstack/react-query";
 import { useAuth } from "../../auth";
+import { CollectionData } from "../../shared";
 
 export function useAnalysis() {
   const { getAccessToken } = useAuth();

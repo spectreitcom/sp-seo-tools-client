@@ -1,12 +1,12 @@
 import { useAuth } from "../../auth";
 import axiosInstance from "../../../axios.ts";
-import { CollectionData } from "../../../types";
 import {
   AvailableKeywordsQuantity,
   CreateKeywordPayload,
   Keyword,
 } from "../types";
 import { queryOptions } from "@tanstack/react-query";
+import { CollectionData } from "../../shared";
 
 export function useKeywords() {
   const { getAccessToken } = useAuth();

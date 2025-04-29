@@ -4,8 +4,11 @@ import { useEffect } from "react";
 import { AxiosError } from "axios";
 import { useRankTrackerSubscriptionPlans } from "../hooks/use-rank-tracker-subscription-plans.ts";
 import { useRankTrackerStripe } from "../hooks/use-rank-tracker-stripe.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
-import { RequestAxiosError } from "../../../types";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import Button from "../../shared/components/button.tsx";
 import SubscriptionPlan from "../../shared/components/subscription-plan.tsx";

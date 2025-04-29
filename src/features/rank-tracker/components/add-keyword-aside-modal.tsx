@@ -8,8 +8,11 @@ import { AxiosError } from "axios";
 import { useKeywords } from "../hooks/use-keywords.ts";
 import { useRtDevices } from "../hooks/use-rt-devices.ts";
 import { useRtLocalizations } from "../hooks/use-rt-localizations.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
-import { RequestAxiosError } from "../../../types";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import AsideModal from "../../shared/components/aside-modal.tsx";
 import Button from "../../shared/components/button.tsx";
 import Spinner from "../../shared/components/loader/spinner.tsx";

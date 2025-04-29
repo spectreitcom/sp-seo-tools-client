@@ -1,8 +1,8 @@
 import axiosInstance from "../../../axios.ts";
 import { useAuth } from "../../auth";
-import { CollectionData } from "../../../types";
 import { Domain } from "../types";
 import { queryOptions } from "@tanstack/react-query";
+import { CollectionData } from "../../shared";
 
 export function useDomains() {
   const { getAccessToken } = useAuth();

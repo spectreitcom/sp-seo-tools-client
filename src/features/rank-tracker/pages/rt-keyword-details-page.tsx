@@ -1,12 +1,16 @@
 import { useParams } from "react-router";
 import { useKeywords } from "../hooks/use-keywords.ts";
-import { ErrorBoundary, getErrorMessage, useErrorHandler } from "../../shared";
+import {
+  ErrorBoundary,
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import { useKeywordDetailsFilters } from "../hooks/use-keyword-details-filters.ts";
 import { useDomainHistoryPosition } from "../hooks/use-domain-history-position.ts";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { RequestAxiosError } from "../../../types";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import PageTitle from "../../shared/components/page-title.tsx";
 import RtKeywordDetails from "../components/rt-keyword-details.tsx";

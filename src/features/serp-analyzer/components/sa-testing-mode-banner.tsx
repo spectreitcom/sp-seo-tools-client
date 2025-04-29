@@ -1,8 +1,11 @@
 import { useSaTestingMode } from "../hooks/use-sa-testing-mode.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { RequestAxiosError } from "../../../types";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import Button from "../../shared/components/button.tsx";
 import TestModeCounter from "../../shared/components/test-mode-counter.tsx";

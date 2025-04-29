@@ -1,8 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import toast from "react-hot-toast";
-import { getErrorMessage, useErrorHandler } from "../../shared";
-import { RequestAxiosError } from "../../../types";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import { useRtTestingMode } from "../hooks/use-rt-testing-mode.ts";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import Button from "../../shared/components/button.tsx";

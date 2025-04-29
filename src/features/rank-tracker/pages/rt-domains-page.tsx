@@ -2,6 +2,7 @@ import {
   domainNameValidator,
   ErrorBoundary,
   getErrorMessage,
+  RequestAxiosError,
   useErrorHandler,
 } from "../../shared";
 import { z } from "zod";
@@ -11,7 +12,6 @@ import { useDomains } from "../hooks/use-domains.ts";
 import { useDebounceValue } from "usehooks-ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { RequestAxiosError } from "../../../types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";

@@ -1,10 +1,13 @@
 import { useAnalysis } from "../hooks/use-analysis.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import { z } from "zod";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { RequestAxiosError } from "../../../types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../../shared/components/input.tsx";

@@ -3,9 +3,12 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
 import { useSaSubscriptions } from "../hooks/use-sa-subscriptions.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
+import {
+  getErrorMessage,
+  RequestAxiosError,
+  useErrorHandler,
+} from "../../shared";
 import { useSaStripe } from "../hooks/use-sa-stripe.ts";
-import { RequestAxiosError } from "../../../types";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import CurrentSubscriptionBanner from "../../shared/components/current-subscription-banner.tsx";
 import SubscriptionPlan from "../../shared/components/subscription-plan.tsx";

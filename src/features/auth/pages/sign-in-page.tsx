@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../hooks/use-auth.ts";
-import { RequestAxiosError } from "../../../types";
-import { getErrorMessage } from "../../shared";
+import { getErrorMessage, RequestAxiosError } from "../../shared";
 import Loader from "../../shared/components/loader/loader.tsx";
 
 export default function SignInPage() {

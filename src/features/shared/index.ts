@@ -34,3 +34,5 @@ export * from "./components/error-boundary";
 
 export * from "./hooks/use-aside.ts";
 export * from "./hooks/use-error-handler.ts";
+
+export * from "./types";

@@ -1,8 +1,8 @@
 import axiosInstance from "../../../axios.ts";
 import { DomainPositionHistory } from "../types";
-import { CollectionData } from "../../../types";
 import { useAuth } from "../../auth";
 import { queryOptions } from "@tanstack/react-query";
+import { CollectionData } from "../../shared";
 
 export function useDomainHistoryPosition() {
   const { getAccessToken } = useAuth();
