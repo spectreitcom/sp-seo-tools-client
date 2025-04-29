@@ -2,7 +2,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
-import { useAside, useAuth } from "../../../hooks";
+import { useAside, useAuth } from "../../hooks";
 
 function Topbar() {
   const { toggleAsideMenu } = useAside();

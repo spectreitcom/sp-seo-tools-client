@@ -1,18 +1,35 @@
 import { createBrowserRouter } from "react-router";
-import DashboardPage from "./pages/dashboard-page.tsx";
-import SignInPage from "./pages/sign-in-page.tsx";
+import { Suspense, lazy } from "react";
 import AppLayout from "./layouts/app.layout.tsx";
 import { ProtectedRoute } from "./components/protected-route.tsx";
-import RtHomePage from "./pages/rank-tracker/rt-home-page.tsx";
-import RtLayout from "./layouts/rt-layout.tsx";
-import RtSuccessPage from "./pages/rank-tracker/rt-success-page.tsx";
-import RtDomainsPage from "./pages/rank-tracker/rt-domains-page.tsx";
-import RtKeywordsPage from "./pages/rank-tracker/rt-keywords-page.tsx";
-import RtKeywordDetailsPage from "./pages/rank-tracker/rt-keyword-details-page.tsx";
-import SaHomePage from "./pages/serp-analyzer/sa-home-page.tsx";
-import SaSuccessPage from "./pages/serp-analyzer/sa-success-page.tsx";
-import SaAnalysisPage from "./pages/serp-analyzer/sa-analysis-page.tsx";
-import SaAnalysisDetailsPage from "./pages/serp-analyzer/sa-analysis-details-page.tsx";
+import Spinner from "./components/ui/loader/spinner.tsx";
+
+const DashboardPage = lazy(() => import("./pages/dashboard-page.tsx"));
+const SignInPage = lazy(() => import("./pages/sign-in-page.tsx"));
+const RtHomePage = lazy(() => import("./pages/rank-tracker/rt-home-page.tsx"));
+const RtLayout = lazy(() => import("./layouts/rt-layout.tsx"));
+const RtSuccessPage = lazy(
+  () => import("./pages/rank-tracker/rt-success-page.tsx"),
+);
+const RtDomainsPage = lazy(
+  () => import("./pages/rank-tracker/rt-domains-page.tsx"),
+);
+const RtKeywordsPage = lazy(
+  () => import("./pages/rank-tracker/rt-keywords-page.tsx"),
+);
+const RtKeywordDetailsPage = lazy(
+  () => import("./pages/rank-tracker/rt-keyword-details-page.tsx"),
+);
+const SaHomePage = lazy(() => import("./pages/serp-analyzer/sa-home-page.tsx"));
+const SaSuccessPage = lazy(
+  () => import("./pages/serp-analyzer/sa-success-page.tsx"),
+);
+const SaAnalysisPage = lazy(
+  () => import("./pages/serp-analyzer/sa-analysis-page.tsx"),
+);
+const SaAnalysisDetailsPage = lazy(
+  () => import("./pages/serp-analyzer/sa-analysis-details-page.tsx"),
+);
 
 const router = createBrowserRouter([
   {
@@ -25,54 +42,102 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <DashboardPage />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <DashboardPage />
+          </Suspense>
+        ),
         index: true,
       },
       {
         path: "rank-tracker",
-        element: <RtLayout />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <RtLayout />
+          </Suspense>
+        ),
         children: [
           {
             path: "",
-            element: <RtHomePage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <RtHomePage />
+              </Suspense>
+            ),
           },
           {
             path: "success",
-            element: <RtSuccessPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <RtSuccessPage />
+              </Suspense>
+            ),
           },
           {
             path: "domains",
-            element: <RtDomainsPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <RtDomainsPage />
+              </Suspense>
+            ),
           },
           {
             path: "keywords",
-            element: <RtKeywordsPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <RtKeywordsPage />
+              </Suspense>
+            ),
           },
           {
             path: "keywords/:keywordId",
-            element: <RtKeywordDetailsPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <RtKeywordDetailsPage />
+              </Suspense>
+            ),
           },
         ],
       },
       {
         path: "serp-analyzer",
-        element: <RtLayout />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <RtLayout />
+          </Suspense>
+        ),
         children: [
           {
             path: "",
-            element: <SaHomePage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <SaHomePage />
+              </Suspense>
+            ),
           },
           {
             path: "success",
-            element: <SaSuccessPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <SaSuccessPage />
+              </Suspense>
+            ),
           },
           {
             path: "analysis",
-            element: <SaAnalysisPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <SaAnalysisPage />
+              </Suspense>
+            ),
           },
           {
             path: "analysis/:analysisId",
-            element: <SaAnalysisDetailsPage />,
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <SaAnalysisDetailsPage />
+              </Suspense>
+            ),
           },
         ],
       },
@@ -80,7 +145,11 @@ const router = createBrowserRouter([
   },
   {
     path: "sign-in",
-    element: <SignInPage />,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <SignInPage />
+      </Suspense>
+    ),
   },
 ]);
 
