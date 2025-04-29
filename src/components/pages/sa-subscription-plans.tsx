@@ -1,17 +1,13 @@
-import SubscriptionPlan from "../subscription-plan.tsx";
-import {
-  useErrorHandler,
-  useSaSubscriptions,
-  useSaStripe,
-} from "../../../hooks";
+import { useErrorHandler, useSaStripe, useSaSubscriptions } from "../../hooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import Spinner from "../../ui/loader/spinner.tsx";
+import { RequestAxiosError } from "../../types";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../../utils/get-error-message.ts";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import CurrentSubscriptionBanner from "../current-subscription-banner.tsx";
-import { RequestAxiosError } from "../../../types";
-import toast from "react-hot-toast";
-import { getErrorMessage } from "../../../utils/get-error-message.ts";
+import Spinner from "../ui/loader/spinner.tsx";
+import CurrentSubscriptionBanner from "./current-subscription-banner.tsx";
+import SubscriptionPlan from "./subscription-plan.tsx";
 
 function SaSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =

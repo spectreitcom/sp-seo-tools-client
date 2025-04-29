@@ -43,23 +43,29 @@ function RtTestingModeBanner({ className }: Props) {
   if (data && !data.canActivate && !data.isActive) return null;
 
   return (
-    <div className={clsx("rounded-md bg-gray-100 p-4", className)}>
+    <div
+      className={clsx(
+        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8",
+        className,
+      )}
+    >
       {data?.canActivate && (
-        <div className={"flex items-center"}>
-          <span className={"mr-4"}>
-            You can test this tool by activating testing mode
-          </span>
-          <Button size={"sm"} onClick={() => mutate()} loading={isPending}>
-            Activate
-          </Button>
-        </div>
+        <>
+          <div>
+            <h3 className={"text-lg font-semibold"}>Testing Mode</h3>
+            <p>You can test this tool by activating testing mode</p>
+          </div>
+          <div>
+            <Button size={"lg"} loading={isPending} onClick={() => mutate()}>
+              Activate
+            </Button>
+          </div>
+        </>
       )}
-      {data?.isActive && (
-        <TestModeCounter
-          label={"Test mode ends in"}
-          expiresAt={data.expiresAt?.value}
-        />
-      )}
+      <TestModeCounter
+        label={"Test mode ends in"}
+        expiresAt={data?.expiresAt?.value}
+      />
     </div>
   );
 }

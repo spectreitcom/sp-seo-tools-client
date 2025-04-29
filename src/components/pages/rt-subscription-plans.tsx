@@ -1,24 +1,22 @@
-import RtSubscriptionPlan from "./rt-subscription-plan.tsx";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
-import { AxiosError } from "axios";
 import {
   useErrorHandler,
   useRankTrackerStripe,
   useRankTrackerSubscriptionPlans,
-} from "../../../hooks";
-import { RequestAxiosError } from "../../../types";
-import { getErrorMessage } from "../../../utils/get-error-message.ts";
-import Spinner from "../../ui/loader/spinner.tsx";
-import Button from "../../ui/button.tsx";
+} from "../../hooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { RequestAxiosError } from "../../types";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../../utils/get-error-message.ts";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
+import Spinner from "../ui/loader/spinner.tsx";
+import Button from "../ui/button.tsx";
+import SubscriptionPlan from "./subscription-plan.tsx";
 
 function RtSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =
     useRankTrackerSubscriptionPlans();
-
-  const { createSessionPortal } = useRankTrackerStripe();
-
+  const { createSessionPortal, createCheckoutSession } = useRankTrackerStripe();
   const { handle401Error } = useErrorHandler();
 
   const {
@@ -43,6 +41,18 @@ function RtSubscriptionPlans() {
       toast.error(getErrorMessage(error));
     },
   });
+
+  const { mutate: createCheckout, isPending: createCheckoutIsPending } =
+    useMutation({
+      mutationFn: createCheckoutSession,
+      onSuccess: (data) => {
+        window.location.href = data.sessionUrl;
+      },
+      onError: (error: RequestAxiosError) => {
+        handle401Error(error);
+        toast.error(getErrorMessage(error));
+      },
+    });
 
   useEffect(() => {
     if (plansError) {
@@ -75,21 +85,23 @@ function RtSubscriptionPlans() {
   }
 
   return (
-    <div className={"bg-gray-100 rounded-md p-4 pt-8"}>
-      <div className={"text-center"}>
-        <h2 className={"text-2xl font-bold"}>
-          Choose your plan to unlock all Rank Tracker features
-        </h2>
-      </div>
-      <div className={"mt-4 flex flex-wrap"}>
+    <div>
+      <h2 className={"text-2xl font-semibold"}>
+        Choose your plan to unlock all Rank Tracker features
+      </h2>
+      <div className={"mt-8 flex gap-x-16"}>
         {plans?.map((plan) => (
-          <RtSubscriptionPlan
+          <SubscriptionPlan
             key={plan.subscriptionId}
-            subscriptionId={plan.subscriptionId}
-            maxKeywordsQty={plan.maxKeywordsQty}
-            name={plan.name}
+            title={plan.name}
             price={plan.amount}
-            maxSearchedPages={plan.maxSearchedPages}
+            isLoading={createCheckoutIsPending}
+            onChoosePlan={() => createCheckout(plan.subscriptionId)}
+            features={[
+              `Max Keywords: ${plan.maxKeywordsQty}`,
+              `Max Searched Pages: ${plan.maxSearchedPages}`,
+              "Domains: unlimited",
+            ]}
           />
         ))}
       </div>
