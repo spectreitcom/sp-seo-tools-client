@@ -17,7 +17,7 @@ import AsideModal from "../../shared/components/aside-modal.tsx";
 import Button from "../../shared/components/button.tsx";
 import Spinner from "../../shared/components/loader/spinner.tsx";
 import MessageBox from "../../shared/components/message-box.tsx";
-import DomainsAsyncSelect from "../../shared/components/select/domains-async-select.tsx";
+import DomainsAsyncSelect from "./domains-async-select.tsx";
 import Input from "../../shared/components/input.tsx";
 import Select from "../../shared/components/select/select.tsx";
 

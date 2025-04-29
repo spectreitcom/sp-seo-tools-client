@@ -6,7 +6,7 @@ import { useRtDevices } from "../hooks/use-rt-devices.ts";
 import { useRtLocalizations } from "../hooks/use-rt-localizations.ts";
 import { useErrorHandler } from "../../shared";
 import InputWithInlineAddon from "../../shared/components/input-with-inline-addon.tsx";
-import DomainsAsyncSelect from "../../shared/components/select/domains-async-select.tsx";
+import DomainsAsyncSelect from "./domains-async-select.tsx";
 import Select from "../../shared/components/select/select.tsx";
 
 export type KeywordsFilter = {

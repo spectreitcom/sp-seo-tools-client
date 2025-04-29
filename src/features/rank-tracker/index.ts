@@ -33,5 +33,6 @@ export * from "./components/rt-keyword-details.tsx";
 export * from "./components/rt-quick-menu.tsx";
 export * from "./components/rt-subscription-plans.tsx";
 export * from "./components/rt-testing-mode-banner.tsx";
+export * from "./components/domains-async-select.tsx";
 
 export * from "./types";

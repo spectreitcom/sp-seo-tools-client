@@ -1,10 +1,10 @@
-import Select from "./select.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounceValue } from "usehooks-ts";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useDomains } from "../../../rank-tracker";
-import { useErrorHandler } from "../../hooks/use-error-handler.ts";
+import { useDomains } from "../hooks/use-domains.ts";
+import { useErrorHandler } from "../../shared";
+import Select from "../../shared/components/select/select.tsx";
 
 type Props = Readonly<{
   value: string | null;
