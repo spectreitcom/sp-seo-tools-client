@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import toast from "react-hot-toast";
 import AddKeywordAsideModal from "../../components/pages/add-keyword-aside-modal.tsx";
-import NoKeywordsPlaceholder from "../../components/pages/no-keywords-placeholder.tsx";
 import Button from "../../components/ui/button.tsx";
 import { useErrorHandler, useKeywords, useKeywordsFilters } from "../../hooks";
 import KeywordsFilters, {
@@ -17,6 +16,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import AvailableKeywordsQuantity from "../../components/pages/available-keywords-quantity.tsx";
 import { AxiosError } from "axios";
 import Spinner from "../../components/ui/loader/spinner.tsx";
+import EmptyTablePlaceholder from "../../components/pages/empty-table-placeholder.tsx";
 
 const PER_PAGE = 15;
 
@@ -201,9 +201,12 @@ function RtKeywordsPage() {
           )}
 
           {!keywords?.userTotal && (
-            <NoKeywordsPlaceholder
-              onAction={() => setAddKeywordModalOpen(true)}
+            <EmptyTablePlaceholder
               className={"mt-8"}
+              onAction={() => setAddKeywordModalOpen(true)}
+              heading={"No keywords"}
+              description={"Get started by creating a new keyword."}
+              actionText={"Add keyword"}
             />
           )}
         </>

@@ -5,9 +5,19 @@ import Button from "../ui/button.tsx";
 
 type Props = ComponentProps<"div"> & {
   onAction: () => void;
+  heading: string;
+  description: string;
+  actionText: string;
 };
 
-function NoKeywordsPlaceholder({ className, onAction, ...rest }: Props) {
+function EmptyTablePlaceholder({
+  className,
+  onAction,
+  actionText,
+  heading,
+  description,
+  ...rest
+}: Props) {
   const containerClasses = clsx(
     "text-center py-16 rounded-md bg-gray-100    ",
     className,
@@ -30,18 +40,16 @@ function NoKeywordsPlaceholder({ className, onAction, ...rest }: Props) {
           strokeLinejoin="round"
         />
       </svg>
-      <h3 className="mt-2 text-sm font-semibold text-gray-900">No keywords</h3>
-      <p className="mt-1 text-sm text-gray-500">
-        Get started by creating a new keyword.
-      </p>
+      <h3 className="mt-2 text-sm font-semibold text-gray-900">{heading}</h3>
+      <p className="mt-1 text-sm text-gray-500">{description}</p>
       <div className="mt-6 flex justify-center">
         <Button size={"xl"} onClick={onAction}>
           <PlusIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5" />
-          Add keyword
+          {actionText}
         </Button>
       </div>
     </div>
   );
 }
 
-export default NoKeywordsPlaceholder;
+export default EmptyTablePlaceholder;

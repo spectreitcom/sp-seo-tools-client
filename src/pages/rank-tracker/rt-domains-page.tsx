@@ -1,6 +1,5 @@
 import PageTitle from "../../components/pages/page-title.tsx";
 import DomainsTable from "../../components/pages/domains-table.tsx";
-import NoDomainsPlaceholder from "../../components/pages/no-domains-placeholder.tsx";
 import AsideModal from "../../components/ui/aside-modal.tsx";
 import Button from "../../components/ui/button.tsx";
 import { useEffect, useState } from "react";
@@ -21,6 +20,7 @@ import LinkBtn from "../../components/ui/link-btn.tsx";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { AxiosError } from "axios";
 import Spinner from "../../components/ui/loader/spinner.tsx";
+import EmptyTablePlaceholder from "../../components/pages/empty-table-placeholder.tsx";
 
 const validationSchema = z.object({
   domain: z
@@ -199,9 +199,12 @@ function RtDomainsPage() {
             ""
           )}
           {domains?.userTotal === 0 && (
-            <NoDomainsPlaceholder
+            <EmptyTablePlaceholder
               className={"mt-8"}
               onAction={() => setAddDomainModalOpen(true)}
+              heading={"No domains"}
+              description={"Get started by creating a new domain."}
+              actionText={"New domain"}
             />
           )}
         </>

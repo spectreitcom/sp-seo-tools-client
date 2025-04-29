@@ -12,11 +12,11 @@ import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/loader/spinner.tsx";
-import NoAnalysisPlaceholder from "../../components/pages/no-analysis-placeholder.tsx";
 import Pagination from "../../components/ui/pagination.tsx";
 import AnalysisTable from "../../components/pages/analysis-table.tsx";
 import AddAnalysisAsideModal from "../../components/add-analysis-aside-modal.tsx";
 import AnalysisMonthlyUsage from "../../components/pages/analysis-monthly-usage.tsx";
+import EmptyTablePlaceholder from "../../components/pages/empty-table-placeholder.tsx";
 
 const PER_PAGE = 15;
 
@@ -177,9 +177,12 @@ function SaAnalysisPage() {
             )}
           </>
           {!analysis?.userTotal && (
-            <NoAnalysisPlaceholder
+            <EmptyTablePlaceholder
               className={"mt-8"}
               onAction={() => setShowCreateAnalysisModal(true)}
+              heading={"No analysis"}
+              description={"Get started by creating a new analysis."}
+              actionText={"Create analysis"}
             />
           )}
         </>
