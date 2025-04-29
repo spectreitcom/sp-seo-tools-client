@@ -8,10 +8,10 @@ import {
   useErrorHandler,
 } from "../../shared";
 import Spinner from "../../shared/components/loader/spinner.tsx";
-import Button from "../../shared/components/button.tsx";
 import SubscriptionPlan from "../../shared/components/subscription-plan.tsx";
 import { useRankTrackerSubscriptionPlans } from "../hooks/use-subscription-plans.ts";
 import { useRankTrackerStripe } from "../hooks/use-stripe.ts";
+import CurrentSubscriptionBanner from "../../shared/components/current-subscription-banner.tsx";
 
 function RtSubscriptionPlans() {
   const { createSubscriptionPlansQueryOptions, createCurrentPlanQueryOptions } =
@@ -73,14 +73,12 @@ function RtSubscriptionPlans() {
 
   if (currentPlan) {
     return (
-      <div className={"bg-gray-100 rounded-md p-4 flex items-center"}>
-        <p className={"mr-4"}>
-          Current plan: <strong>Pro</strong>
-        </p>
-        <Button size={"sm"} onClick={() => mutate()} loading={isPending}>
-          Manage subscription
-        </Button>
-      </div>
+      <CurrentSubscriptionBanner
+        planName={currentPlan.name}
+        onManageSubscription={() => mutate()}
+        price={currentPlan.amount}
+        isLoading={isPending}
+      />
     );
   }
 
