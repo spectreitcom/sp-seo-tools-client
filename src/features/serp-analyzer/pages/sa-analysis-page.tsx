@@ -18,7 +18,7 @@ import AnalysisTable from "../components/analysis-table.tsx";
 import Pagination from "../../shared/components/pagination.tsx";
 import EmptyTablePlaceholder from "../../shared/components/empty-table-placeholder.tsx";
 import AddAnalysisAsideModal from "../components/add-analysis-aside-modal.tsx";
-import { useErrorHandler } from "../../shared";
+import { ErrorBoundary, useErrorHandler } from "../../shared";
 
 const PER_PAGE = 15;
 
@@ -156,7 +156,7 @@ function SaAnalysisPage() {
           <Spinner />
         </div>
       ) : (
-        <>
+        <ErrorBoundary>
           <>
             {analysis?.userTotal ? (
               <>
@@ -187,7 +187,7 @@ function SaAnalysisPage() {
               actionText={"Create analysis"}
             />
           )}
-        </>
+        </ErrorBoundary>
       )}
 
       <AddAnalysisAsideModal

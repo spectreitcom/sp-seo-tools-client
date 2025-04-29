@@ -30,6 +30,7 @@ export * from "./components/current-subscription-banner.tsx";
 export * from "./components/page-title.tsx";
 export * from "./components/test-mode-counter.tsx";
 export * from "./components/app.layout.tsx";
+export * from "./components/error-boundary";
 
 export * from "./hooks/use-aside.ts";
 export * from "./hooks/use-error-handler.ts";

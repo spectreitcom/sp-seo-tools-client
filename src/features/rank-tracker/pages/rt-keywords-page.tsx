@@ -1,5 +1,5 @@
 import { useKeywordsFilters } from "../hooks/use-keywords-filters.ts";
-import { useErrorHandler } from "../../shared";
+import { ErrorBoundary, useErrorHandler } from "../../shared";
 import { useDebounceValue } from "usehooks-ts";
 import { useEffect, useState } from "react";
 import { useKeywords } from "../hooks/use-keywords.ts";
@@ -182,7 +182,7 @@ function RtKeywordsPage() {
       ) : (
         <>
           {keywords?.userTotal ? (
-            <>
+            <ErrorBoundary>
               <KeywordsTable
                 keywords={keywords.data}
                 className={"mt-4"}
@@ -197,7 +197,7 @@ function RtKeywordsPage() {
                   onNextPage={handleNextPage}
                 />
               </div>
-            </>
+            </ErrorBoundary>
           ) : (
             ""
           )}

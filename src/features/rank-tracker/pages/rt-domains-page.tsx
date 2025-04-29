@@ -1,5 +1,6 @@
 import {
   domainNameValidator,
+  ErrorBoundary,
   getErrorMessage,
   useErrorHandler,
 } from "../../shared";
@@ -183,7 +184,7 @@ function RtDomainsPage() {
       ) : (
         <>
           {domains?.userTotal ? (
-            <>
+            <ErrorBoundary>
               <DomainsTable
                 className={"mt-4"}
                 domains={domains?.data ?? []}
@@ -198,7 +199,7 @@ function RtDomainsPage() {
                   onNextPage={handleNextPage}
                 />
               </div>
-            </>
+            </ErrorBoundary>
           ) : (
             ""
           )}

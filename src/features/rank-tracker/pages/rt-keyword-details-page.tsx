@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useKeywords } from "../hooks/use-keywords.ts";
-import { getErrorMessage, useErrorHandler } from "../../shared";
+import { ErrorBoundary, getErrorMessage, useErrorHandler } from "../../shared";
 import { useKeywordDetailsFilters } from "../hooks/use-keyword-details-filters.ts";
 import { useDomainHistoryPosition } from "../hooks/use-domain-history-position.ts";
 import { useQuery } from "@tanstack/react-query";
@@ -124,7 +124,9 @@ function RtKeywordDetailsPage() {
         returnPath={"/rank-tracker/keywords"}
         returnText={"Back"}
       />
-      <RtKeywordDetails keyword={data} className={"mt-8"} />
+      <ErrorBoundary>
+        <RtKeywordDetails keyword={data} className={"mt-8"} />
+      </ErrorBoundary>
       <div className={"mt-8 -mx-2"}>
         <div className={"px-2 w-2/12"}>
           <DatePicker
@@ -147,10 +149,12 @@ function RtKeywordDetailsPage() {
           </LinkBtn>
         </div>
       )}
-      <DomainPositionChart className={"mt-8"} data={chartData?.data ?? []} />
+      <ErrorBoundary>
+        <DomainPositionChart className={"mt-8"} data={chartData?.data ?? []} />
+      </ErrorBoundary>
       <h3 className={"mt-8 font-semibold text-xl"}>History</h3>
       {domainPositionData?.userTotal ? (
-        <>
+        <ErrorBoundary>
           <DomainPositionHistoryTable
             data={domainPositionData?.data ?? []}
             className={"mt-4"}
@@ -164,7 +168,7 @@ function RtKeywordDetailsPage() {
               onNextPage={handleNextPage}
             />
           </div>
-        </>
+        </ErrorBoundary>
       ) : (
         ""
       )}

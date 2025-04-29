@@ -13,7 +13,7 @@ import PageFactors from "../components/page-factors.tsx";
 import MessageBox from "../../shared/components/message-box.tsx";
 import AnalysisChart from "../components/analysis-chart.tsx";
 import PagesList from "../components/pages-list.tsx";
-import { useErrorHandler } from "../../shared";
+import { ErrorBoundary, useErrorHandler } from "../../shared";
 
 function SaAnalysisDetailsPage() {
   const { analysisId } = useParams<{ analysisId: string }>();
@@ -86,11 +86,13 @@ function SaAnalysisDetailsPage() {
         <div
           className={"w-4/12 max-h-[800px] overflow-auto mr-4 sticky top-20"}
         >
-          <PageFactors
-            data={data?.factorsCollection ?? []}
-            onChange={(factors) => setSelectedFactors(factors)}
-            selected={selectedFactors}
-          />
+          <ErrorBoundary>
+            <PageFactors
+              data={data?.factorsCollection ?? []}
+              onChange={(factors) => setSelectedFactors(factors)}
+              selected={selectedFactors}
+            />
+          </ErrorBoundary>
         </div>
         <div className={"w-8/12"}>
           {!selectedFactors.length && (
@@ -101,23 +103,23 @@ function SaAnalysisDetailsPage() {
           )}
 
           {selectedFactors.map((selectedFactor) => (
-            <AnalysisChart
-              key={selectedFactor.key}
-              data={data?.pages ?? []}
-              factor={selectedFactor}
-            />
+            <ErrorBoundary key={selectedFactor.key}>
+              <AnalysisChart data={data?.pages ?? []} factor={selectedFactor} />
+            </ErrorBoundary>
           ))}
 
-          <PagesList
-            data={
-              data?.pages.map((page) => ({
-                pageId: page.pageId,
-                position: page.position,
-                url: page.url,
-                hasError: page.hasError,
-              })) ?? []
-            }
-          />
+          <ErrorBoundary>
+            <PagesList
+              data={
+                data?.pages.map((page) => ({
+                  pageId: page.pageId,
+                  position: page.position,
+                  url: page.url,
+                  hasError: page.hasError,
+                })) ?? []
+              }
+            />
+          </ErrorBoundary>
         </div>
       </div>
     </div>
