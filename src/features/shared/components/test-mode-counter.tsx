@@ -35,12 +35,9 @@ function TestModeCounter({ expiresAt, label }: Props) {
 
   if (!expiresAt) return null;
   return (
-    <div className="flex items-center space-x-2 bg-gray-100 p-4 rounded-lg shadow-sm">
-      {label && <span className="text-gray-700 font-medium">{label}</span>}
-      <span
-        className="ml-2 font-semibold text-indigo-600 text-lg"
-        ref={counterRef}
-      />
+    <div>
+      {label}
+      <span className={"ml-2 font-semibold text-indigo-600"} ref={counterRef} />
     </div>
   );
 }
