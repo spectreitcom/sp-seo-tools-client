@@ -38,7 +38,7 @@ function TestingModeBanner({ className }: Props) {
 
   if (isLoading)
     return (
-      <div className={"rounded-md bg-gray-100 p-4"}>
+      <div className="rounded-md bg-gray-50 p-4 flex justify-center items-center">
         <Spinner width={30} borderWidth={4} />
       </div>
     );
@@ -48,25 +48,32 @@ function TestingModeBanner({ className }: Props) {
   return (
     <div
       className={clsx(
-        "flex justify-between items-center bg-gray-100 p-4 rounded-md mb-8",
+        "flex flex-col lg:flex-row justify-between items-center bg-gray-50 p-6 rounded-lg shadow-md mb-8",
         className,
       )}
     >
       {data?.canActivate && (
-        <>
-          <div>
-            <h3 className={"text-lg font-semibold"}>Testing Mode</h3>
-            <p>You can test this tool by activating testing mode</p>
-          </div>
-          <div>
-            <Button size={"lg"} loading={isPending} onClick={() => mutate()}>
-              Activate
-            </Button>
-          </div>
-        </>
+        <div className="flex flex-col space-y-2">
+          <h3 className="text-xl font-semibold text-gray-800">Testing Mode</h3>
+          <p className="text-gray-600">
+            You can test this tool by activating testing mode.
+          </p>
+        </div>
+      )}
+      {data?.canActivate && (
+        <div className="mt-4 lg:mt-0">
+          <Button
+            size="lg"
+            loading={isPending}
+            onClick={() => mutate()}
+            className="bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            Activate
+          </Button>
+        </div>
       )}
       <TestModeCounter
-        label={"Test mode ends in"}
+        label="Test mode ends in"
         expiresAt={data?.expiresAt?.value}
       />
     </div>
