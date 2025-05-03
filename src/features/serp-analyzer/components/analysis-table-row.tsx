@@ -33,7 +33,6 @@ function AnalysisTableRow({ analysis }: Props) {
   } = useQuery(
     createAnalysisProgressQueryOptions(
       analysis.analysisId,
-      // !isCompleted() && !analysis.hasError,
       !isCompleted(),
       3 * 1000,
     ),
