@@ -26,20 +26,29 @@ function AnalysisTableRow({ analysis }: Props) {
     return analysis.progress === 100 || progress === 100;
   };
 
-  const { data: analysisProgress, error } = useQuery(
+  const {
+    data: analysisProgress,
+    error,
+    isPending,
+  } = useQuery(
     createAnalysisProgressQueryOptions(
       analysis.analysisId,
-      !isCompleted() && !analysis.hasError,
+      // !isCompleted() && !analysis.hasError,
+      !isCompleted(),
       3 * 1000,
     ),
   );
 
   useEffect(() => {
     setProgress(analysisProgress?.progress ?? 0);
-    if (analysisProgress?.progress === 100 && analysis.progress !== 100) {
+    if (
+      analysisProgress?.progress === 100 &&
+      analysis.progress !== 100 &&
+      !isPending
+    ) {
       toast.success("Analysis finished");
     }
-  }, [analysisProgress, analysis]);
+  }, [analysisProgress, analysis, isPending]);
 
   useEffect(() => {
     if (error) {
