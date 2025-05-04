@@ -65,12 +65,3 @@ Related repository: https://github.com/spectreitcom/sp-seo-tools-server
    ```
    yarn preview
    ```
-
-## Code Style Guidelines
-- Follow TypeScript best practices
-- Use functional components with hooks
-- Organize code by features
-- Use React Query for data fetching
-- Use Zustand for state management
-- Follow the existing component structure
-- Use Tailwind CSS for styling
