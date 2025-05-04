@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# SP SEO Tool Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+SP SEO Tool Client is a React-based web application for SEO analysis and tracking. The application provides features for tracking search engine rankings and analyzing search engine results pages (SERPs).
 
-Currently, two official plugins are available:
+Related repository: https://github.com/spectreitcom/sp-seo-tools-server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Structure
+- `/src`: Main source code directory
+  - `/assets`: Static assets like images and icons
+  - `/features`: Feature-based modules
+    - `/auth`: Authentication functionality
+    - `/dashboard`: Main dashboard view
+    - `/rank-tracker`: SEO ranking tracking functionality
+    - `/serp-analyzer`: Search engine results page analysis
+    - `/shared`: Shared components and utilities
+  - `/store`: State management (using Zustand)
+  - `axios.ts`: HTTP client configuration
+  - `main.tsx`: Application entry point
+  - `router.tsx`: Routing configuration
+- `/public`: Public static files
+- `/dist`: Build output directory
 
-## Expanding the ESLint configuration
+## Technology Stack
+- React 19
+- TypeScript
+- Vite for building and development
+- React Router for navigation
+- TanStack React Query for data fetching
+- Zustand for state management
+- Tailwind CSS for styling
+- Axios for HTTP requests
+- Zod for validation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Development Workflow
 
-- Configure the top-level `parserOptions` property like this:
+### Setup
+1. Install dependencies:
+   ```
+   yarn install
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Development
+1. Start the development server:
+   ```
+   yarn dev
+   ```
+2. The application will be available at http://localhost:5173 (or another port if 5173 is in use)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Building
+1. Build the application:
+   ```
+   yarn build
+   ```
+2. The build output will be in the `/dist` directory
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Linting
+1. Run ESLint:
+   ```
+   yarn lint
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Preview
+1. Preview the built application:
+   ```
+   yarn preview
+   ```
+
+## Code Style Guidelines
+- Follow TypeScript best practices
+- Use functional components with hooks
+- Organize code by features
+- Use React Query for data fetching
+- Use Zustand for state management
+- Follow the existing component structure
+- Use Tailwind CSS for styling
